@@ -1,26 +1,29 @@
 'use client'
 
 import React from 'react'
-import { redirect } from 'next/navigation'
-
-import { useCreateLogin } from '@/services/hooks/useCreateLogin'
+import { useRouter } from 'next/navigation'
 
 import { Sidebar } from '@/components/sidebar'
+import { useCheckAuth } from '@/services/hooks/useCheckAuth'
 
 export default function PrivateLayout({
   children
 }: {
   children: React.ReactNode
 }) {
-  const { mutate, status } = useCreateLogin()
+  const { isError, isLoading, status } = useCheckAuth()
+  const router = useRouter()
 
   React.useEffect(() => {
-    mutate()
-  }, [])
+    if (status == 'error') {
+      alert('Usuário não autenticado faça o login')
+      router.push('/login')
+    }
+  }, [isError, router, status])
 
-  React.useEffect(() => {
-    if (status === 'error') redirect('/login')
-  }, [status])
+  if (isLoading) {
+    return <p className="p-4 text-center">Carregando...</p>
+  }
 
   return (
     <div className="lg:flex md:flex sm:block h-screen">

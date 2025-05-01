@@ -75,7 +75,6 @@ export default function ProfilePage() {
                 <ProfileForm
                   member={member}
                   setUserEditFalse={() => setUserEdit(false)}
-                  setUserEditTrue={() => setUserEdit(true)}
                 />
               )}
             </CardContent>
@@ -103,7 +102,7 @@ export default function ProfilePage() {
                     </TableCell>
                     <TableCell>
                       {scale.lineup_date &&
-                        formatDate(scale.lineup_date.toISOString())}
+                        formatDate(scale.lineup_date.toString())}
                     </TableCell>
                     <TableCell>{scale.function_name}</TableCell>
                   </TableRow>

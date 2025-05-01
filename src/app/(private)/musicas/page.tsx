@@ -11,11 +11,15 @@ import { MusicTable } from './musicTable'
 
 import { useGetMusicListPage } from '@/services/hooks/useGetMusicListPage'
 import { useGetMusicList } from '@/services/hooks/useGetMusicList'
+import { MusicSerializers } from '@/client/schemas'
+import { useGetMusic } from '@/services/hooks/useGetMusic'
 
 export default function MusicsPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [page, setPage] = useState(1)
   const [musicForm, setMusicForm] = useState(false)
+  const [musicFormEdit, setMusicFormEdit] = useState(false)
+  const [getMusicWithId, setGetMusicWithId] = useState<number | null>(null)
 
   const { data: dataMusicPage } = useGetMusicListPage({
     page
@@ -37,6 +41,24 @@ export default function MusicsPage() {
       setPage((prevPage) => prevPage - 1)
     }
   }
+
+  // Só busca os dados quando temos um ID válido
+  const { data: getMusicData, isLoading } = useGetMusic(getMusicWithId || 0)
+
+  const handleMusicFormEdit = (id?: number) => {
+    if (id) {
+      setGetMusicWithId(id)
+      setMusicFormEdit(true)
+    }
+  }
+
+  const handleCloseForm = () => {
+    setMusicForm(false)
+    setMusicFormEdit(false)
+    setGetMusicWithId(null)
+  }
+
+  const getMusicId = getMusicData?.data
 
   const filteredSongs = searchTerm
     ? musicList?.filter(
@@ -63,7 +85,9 @@ export default function MusicsPage() {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <Button onClick={() => setMusicForm(true)}>Nova Música</Button>
+          <Button type="button" onClick={() => setMusicForm(true)}>
+            Nova Música
+          </Button>
         </div>
       </div>
 
@@ -81,19 +105,38 @@ export default function MusicsPage() {
       </div>
 
       <div className="bg-white rounded-lg shadow overflow-hidden">
-        {filteredSongs && musicForm === false ? (
-          <MusicTable music={filteredSongs} />
+        {filteredSongs && musicForm === false && musicFormEdit === false ? (
+          <MusicTable
+            setMusicFormEdit={handleMusicFormEdit}
+            musics={filteredSongs as MusicSerializers[]}
+          />
         ) : (
           musicListPage &&
-          musicForm === false && <MusicTable music={musicListPage} />
+          musicForm === false &&
+          musicFormEdit === false && (
+            <MusicTable
+              setMusicFormEdit={handleMusicFormEdit}
+              musics={musicListPage}
+            />
+          )
         )}
         {musicForm && (
           <Card className="p-10">
-            <MusicForm setMusicForm={() => setMusicForm(false)} />
+            <MusicForm setMusicForm={handleCloseForm} />
+          </Card>
+        )}
+        {musicFormEdit && getMusicId && !isLoading && (
+          <Card className="p-10">
+            <MusicForm music={getMusicId} setMusicForm={handleCloseForm} />
+          </Card>
+        )}
+        {musicFormEdit && isLoading && (
+          <Card className="p-10 text-center">
+            <p>Carregando dados da música...</p>
           </Card>
         )}
       </div>
-      {!musicForm && (
+      {!musicForm && !musicFormEdit && (
         <div className="flex items-center justify-center w-full">
           <div className="flex items-center gap-2.5">
             <div className="cursor-pointer" onClick={handlePreviousPage}>

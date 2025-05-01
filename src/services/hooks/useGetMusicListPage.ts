@@ -1,14 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
-import { praiseMusicList } from '@/client/sdk.gen'
-import { api } from '@/services/api'
+import { praiseMusicList } from '@/client/praise/praise'
 
 export const useGetMusicListPage = ({ page = 1 }: { page?: number }) => {
   return useQuery({
     queryKey: ['musicPage', page],
     queryFn: () =>
       praiseMusicList({
-        client: api,
-        query: { page }
+        page: page
       })
   })
 }

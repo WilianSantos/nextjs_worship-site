@@ -13,7 +13,7 @@ type OptionType = {
 type SelectOption = {
   options: OptionType[]
   defaultValue?: OptionType[]
-  onChange?: (value: OptionType[]) => void
+  onChange: (value: OptionType[]) => void
 }
 
 const animatedComponents = makeAnimated()

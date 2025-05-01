@@ -57,21 +57,6 @@
             },
             "parameters": []
         },
-        "/praise/login/": {
-            "post": {
-                "operationId": "praise_login_create",
-                "description": "",
-                "responses": {
-                    "201": {
-                        "description": ""
-                    }
-                },
-                "tags": [
-                    "praise"
-                ]
-            },
-            "parameters": []
-        },
         "/praise/logout/": {
             "post": {
                 "operationId": "praise_logout_create",
@@ -116,48 +101,15 @@
             "get": {
                 "operationId": "praise_member-functions_list",
                 "description": "",
-                "parameters": [
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "A page number within the paginated result set.",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "required": [
-                                        "count",
-                                        "results"
-                                    ],
-                                    "type": "object",
-                                    "properties": {
-                                        "count": {
-                                            "type": "integer"
-                                        },
-                                        "next": {
-                                            "type": "string",
-                                            "format": "uri",
-                                            "nullable": true
-                                        },
-                                        "previous": {
-                                            "type": "string",
-                                            "format": "uri",
-                                            "nullable": true
-                                        },
-                                        "results": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/MemberFunctionsSerializers"
-                                            }
-                                        }
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/MemberFunctionsSerializers"
                                     }
                                 }
                             }
@@ -652,15 +604,6 @@
                         "schema": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "A page number within the paginated result set.",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
                     }
                 ],
                 "responses": {
@@ -669,31 +612,9 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "required": [
-                                        "count",
-                                        "results"
-                                    ],
-                                    "type": "object",
-                                    "properties": {
-                                        "count": {
-                                            "type": "integer"
-                                        },
-                                        "next": {
-                                            "type": "string",
-                                            "format": "uri",
-                                            "nullable": true
-                                        },
-                                        "previous": {
-                                            "type": "string",
-                                            "format": "uri",
-                                            "nullable": true
-                                        },
-                                        "results": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/MusicChordSerializers"
-                                            }
-                                        }
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/MusicChordSerializers"
                                     }
                                 }
                             }
@@ -1045,6 +966,63 @@
                                 }
                             }
                         }
+                    }
+                },
+                "tags": [
+                    "praise"
+                ]
+            },
+            "parameters": []
+        },
+        "/praise/music/upload-pdf/": {
+            "post": {
+                "operationId": "praise_music_upload_pdf",
+                "description": "Recebe um arquivo PDF contendo cifras de músicas e retorna o conteúdo formatado para ser exibido no TinyMCE.",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "required": [
+                                    "file"
+                                ]
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "HTML gerado a partir do PDF extraído.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "html": {
+                                            "description": "HTML formatado com as cifras extraídas do PDF, dentro de uma tag <pre>.",
+                                            "type": "string"
+                                        },
+                                        "chords": {
+                                            "description": "Todas as cifras presentes no texto.",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Arquivo inválido ou erro ao processar PDF."
                     }
                 },
                 "tags": [
@@ -2287,20 +2265,11 @@
                         "type": "string",
                         "maxLength": 10,
                         "minLength": 1
-                    },
-                    "chord_image": {
-                        "title": "Chord image",
-                        "type": "string",
-                        "readOnly": true,
-                        "format": "uri",
-                        "nullable": true
                     }
                 }
             },
             "MusicSerializers": {
                 "required": [
-                    "category",
-                    "music_chord",
                     "music_title",
                     "author",
                     "music_tone",
@@ -2311,30 +2280,6 @@
                     "id": {
                         "title": "ID",
                         "type": "integer",
-                        "readOnly": true
-                    },
-                    "category": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/MusicCategorySerializers"
-                        }
-                    },
-                    "music_chord": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/MusicChordSerializers"
-                        }
-                    },
-                    "created_at": {
-                        "title": "Created at",
-                        "type": "string",
-                        "format": "date-time",
-                        "readOnly": true
-                    },
-                    "updated_at": {
-                        "title": "Updated at",
-                        "type": "string",
-                        "format": "date-time",
                         "readOnly": true
                     },
                     "music_title": {
@@ -2365,6 +2310,46 @@
                         "type": "string",
                         "format": "uri",
                         "maxLength": 255
+                    },
+                    "category": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MusicCategorySerializers"
+                        },
+                        "readOnly": true
+                    },
+                    "music_chord": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MusicChordSerializers"
+                        },
+                        "readOnly": true
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "category_ids": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "uniqueItems": true
+                    },
+                    "music_chord_ids": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "uniqueItems": true
                     }
                 }
             },
@@ -2420,7 +2405,7 @@
                         "title": "Playlist date",
                         "type": "string",
                         "format": "date",
-                        "default": "2025-04-18"
+                        "default": "2025-05-01"
                     },
                     "music": {
                         "type": "array",

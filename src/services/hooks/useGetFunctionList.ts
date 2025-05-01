@@ -1,15 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
-import { praiseMemberFunctionsList } from '@/client/sdk.gen'
-import { api } from '../api'
+import { praiseMemberFunctionsList } from '@/client/praise/praise'
 
-const useGetFunctionList = () => {
+export const useGetFunctionList = () => {
   return useQuery({
-    queryKey: ['functionList'],
-    queryFn: () =>
-      praiseMemberFunctionsList({
-        client: api
-      })
+    queryKey: ['member-functions'],
+    queryFn: () => praiseMemberFunctionsList()
   })
 }
-
-export { useGetFunctionList }

@@ -3,72 +3,29 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { Editor } from '@tinymce/tinymce-react'
+import { useQueryClient } from '@tanstack/react-query'
+import { useEffect } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import AnimatedMulti from '@/components/ui/multiple-selector'
 
 import { useGetCategoryList } from '@/services/hooks/useGetCategoryList'
-
-type Category = {
-  id?: number
-  category_name?: string
-}
+import { useCreatePdfUpload } from '@/services/hooks/useCreatePdfUpload'
+import { useCreateMusic } from '@/services/hooks/useCreateMusic'
+import { useGetChordList } from '@/services/hooks/useGetChordList'
+import { MusicSerializers } from '@/client/schemas/musicSerializers'
+import { useUpdateMusic } from '@/services/hooks/useUpdateMusic'
+import { formatToISOStringWithTimezone } from '@/utils/formatDate'
 
 type PropsMusicForm = {
-  music?: {
-    id?: number
-    category?: Category[]
-    music_chord?: {
-      id?: number
-      chord_name?: string
-      chord_image?: string | null
-    }[]
-    created_at?: Date
-    updated_at?: Date
-    music_title?: string
-    author?: string
-    music_tone?: string
-    music_text?: string
-    music_link?: string
-  }
-  onSubmitSuccess?: () => void
+  music?: MusicSerializers
   setMusicForm: () => void
 }
 
-export function MusicForm({
-  music,
-  onSubmitSuccess,
-  setMusicForm
-}: PropsMusicForm) {
-  const validationSchema = Yup.object({
-    music_title: Yup.string().required('Título da música é obrigatório'),
-    author: Yup.string().required('Autor é obrigatório'),
-    music_tone: Yup.string().required('Tom da música é obrigatório'),
-    music_text: Yup.string().required('Texto da música é obrigatório'),
-    music_link: Yup.string().url('Deve ser uma URL válida')
-  })
-
-  const formik = useFormik({
-    initialValues: {
-      music_title: music?.music_title || '',
-      author: music?.author || '',
-      music_tone: music?.music_tone || '',
-      music_text: music?.music_text || '',
-      music_link: music?.music_link || '',
-      category: music?.category?.map((cat) => cat.id) || []
-    },
-    validationSchema,
-    onSubmit: (values) => {
-      console.log('Valores enviados:', values)
-      // Aqui você pode fazer a mutação
-      if (onSubmitSuccess) {
-        onSubmitSuccess()
-      }
-    }
-  })
-
+export function MusicForm({ music, setMusicForm }: PropsMusicForm) {
   const { data: dataCategory } = useGetCategoryList()
+  const { data: dataChords } = useGetChordList()
 
   const categoryList = dataCategory?.data
   const selectCategoryOptions = categoryList
@@ -76,9 +33,164 @@ export function MusicForm({
       (item) => item.id !== undefined && item.category_name !== undefined
     )
     .map((item) => ({
-      value: String(item.id), // Aqui é garantido que id existe
-      label: String(item.category_name) // Aqui é garantido que category_name existe
+      value: String(item.id),
+      label: String(item.category_name)
     }))
+
+  const chordList = dataChords?.data
+
+  const { mutate: mutateMusicCreate, isPending: isPendingMusicCreate } =
+    useCreateMusic()
+  const { mutate: mutateMusicUpdate, isPending: isPendingMusicUpdate } =
+    useUpdateMusic()
+
+  const queryClient = useQueryClient()
+
+  const validationSchema = Yup.object({
+    musicTitle: Yup.string().required('Título da música é obrigatório'),
+    author: Yup.string().required('Autor é obrigatório'),
+    musicTone: Yup.string().required('Tom da música é obrigatório'),
+    musicText: Yup.string().required('Texto da música é obrigatório'),
+    musicLink: Yup.string().url('Deve ser uma URL válida')
+  })
+
+  const formik = useFormik({
+    initialValues: {
+      musicTitle: '',
+      author: '',
+      musicTone: '',
+      musicText: '',
+      musicLink: '',
+      category: [] as number[],
+      pdfUpload: '',
+      musicChord: [] as string[]
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      // Tratamento de dados mais seguro
+      const categoryData = categoryList
+        ? categoryList
+            .filter(
+              (item) =>
+                item.id !== undefined && values.category.includes(item.id)
+            )
+            .map((item) => Number(item.id))
+        : []
+
+      // Verificação para garantir que musicChord é um array antes de usar includes
+      const chordData =
+        chordList && Array.isArray(values.musicChord)
+          ? chordList
+              .filter(
+                (item) =>
+                  item.chord_name &&
+                  (values.musicChord as string[]).includes(item.chord_name)
+              )
+              .map((item) => Number(item.id))
+          : []
+
+      if (music?.id) {
+        const now = new Date()
+        mutateMusicUpdate(
+          {
+            id: music.id,
+            values: {
+              author: values.author,
+              category_ids: categoryData,
+              music_chord_ids: chordData,
+              music_text: values.musicText,
+              music_title: values.musicTitle,
+              music_tone: values.musicTone,
+              music_link: values.musicLink,
+              updated_at: formatToISOStringWithTimezone(now)
+            }
+          },
+          {
+            onError: (error) => {
+              if (error) {
+                const formikErrors: Record<string, string> = {}
+
+                // Mapeamento correto dos erros da API para campos do formik
+                if (error.author) formikErrors.author = error.author
+                if (error.category) formikErrors.category = error.category
+                if (error.music_chord)
+                  formikErrors.musicChord = error.music_chord
+                if (error.music_link) formikErrors.musicLink = error.music_link
+                if (error.music_text) formikErrors.musicText = error.music_text
+                if (error.music_title)
+                  formikErrors.musicTitle = error.music_title
+                if (error.music_tone) formikErrors.musicTone = error.music_tone
+
+                formik.setErrors(formikErrors)
+              }
+            },
+            onSuccess: () => {
+              queryClient.invalidateQueries({
+                queryKey: ['musicList']
+              })
+              setMusicForm()
+            }
+          }
+        )
+      } else {
+        mutateMusicCreate(
+          {
+            author: values.author,
+            category_ids: categoryData,
+            music_chord_ids: chordData,
+            music_text: values.musicText,
+            music_title: values.musicTitle,
+            music_tone: values.musicTone,
+            music_link: values.musicLink
+          },
+          {
+            onError: (error) => {
+              if (error) {
+                const formikErrors: Record<string, string> = {}
+
+                // Mapeamento correto dos erros da API para campos do formik
+                if (error.author) formikErrors.author = error.author
+                if (error.category) formikErrors.category = error.category
+                if (error.music_chord)
+                  formikErrors.musicChord = error.music_chord
+                if (error.music_link) formikErrors.musicLink = error.music_link
+                if (error.music_text) formikErrors.musicText = error.music_text
+                if (error.music_title)
+                  formikErrors.musicTitle = error.music_title
+                if (error.music_tone) formikErrors.musicTone = error.music_tone
+
+                formik.setErrors(formikErrors)
+              }
+            },
+            onSuccess: () => {
+              queryClient.invalidateQueries({
+                queryKey: ['musicList']
+              })
+              setMusicForm()
+            }
+          }
+        )
+      }
+    }
+  })
+
+  // Efeito para atualizar os valores do formulário quando music mudar
+  useEffect(() => {
+    if (music) {
+      formik.setValues({
+        musicTitle: music.music_title || '',
+        author: music.author || '',
+        musicTone: music.music_tone || '',
+        musicText: music.music_text || '',
+        musicLink: music.music_link || '',
+        category: music.category?.map((cat) => Number(cat.id)) || [],
+        pdfUpload: '',
+        musicChord: music.music_chord?.map((chord) => chord.chord_name) || []
+      })
+    }
+  }, [music])
+
+  const { mutate: mutatePdfUpload } = useCreatePdfUpload()
 
   const handlePdfUpload = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -86,16 +198,32 @@ export function MusicForm({
     const file = event.target.files?.[0]
 
     if (file) {
-      const { extractTextFromPdf } = await import('@/utils/extractTextFromPdf')
-      const extractedText = await extractTextFromPdf(file)
+      mutatePdfUpload(
+        { file },
+        {
+          onError: (error) => {
+            formik.setErrors({
+              pdfUpload: error.file || error.detail
+            })
+          },
+          onSuccess: (data) => {
+            const extractedText = data?.html || ''
+            formik.setFieldValue('musicText', extractedText.trim())
 
-      // Atualiza o campo music_text do Formik
-      formik.setFieldValue('music_text', extractedText.trim())
+            const chords = data?.chords || []
+            formik.setFieldValue('musicChord', chords)
+          }
+        }
+      )
     }
   }
 
   return (
-    <form className="space-y-6" onSubmit={formik.handleSubmit}>
+    <form
+      className="space-y-6"
+      onSubmit={formik.handleSubmit}
+      encType="multipart/form-data"
+    >
       <div className="flex flex-col gap-2">
         <label
           htmlFor="pdf-upload"
@@ -105,29 +233,37 @@ export function MusicForm({
         </label>
         <Input
           id="pdf-upload"
+          name="pdfUpload"
           type="file"
           accept="application/pdf"
           onChange={handlePdfUpload}
         />
+        {formik.errors.pdfUpload && (
+          <p className="text-red-500 text-sm">
+            {String(formik.errors.pdfUpload)}
+          </p>
+        )}
       </div>
 
       <div>
         <label
-          htmlFor="music_title"
+          htmlFor="musicTitle"
           className="block mb-2.5 text-sm font-medium text-gray-700"
         >
           Título da Música
         </label>
         <Input
           type="text"
-          id="music_title"
-          name="music_title"
+          id="musicTitle"
+          name="musicTitle"
           className="w-full"
           onChange={formik.handleChange}
-          value={formik.values.music_title}
+          value={formik.values.musicTitle}
         />
-        {formik.errors.music_title && (
-          <p className="text-red-500 text-sm">{formik.errors.music_title}</p>
+        {formik.errors.musicTitle && (
+          <p className="text-red-500 text-sm">
+            {String(formik.errors.musicTitle)}
+          </p>
         )}
       </div>
 
@@ -147,33 +283,35 @@ export function MusicForm({
           value={formik.values.author}
         />
         {formik.errors.author && (
-          <p className="text-red-500 text-sm">{formik.errors.author}</p>
+          <p className="text-red-500 text-sm">{String(formik.errors.author)}</p>
         )}
       </div>
 
       <div>
         <label
-          htmlFor="music_tone"
+          htmlFor="musicTone"
           className="block mb-2.5 text-sm font-medium text-gray-700"
         >
           Tom da Música
         </label>
         <Input
           type="text"
-          id="music_tone"
-          name="music_tone"
+          id="musicTone"
+          name="musicTone"
           className="w-full"
           onChange={formik.handleChange}
-          value={formik.values.music_tone}
+          value={formik.values.musicTone}
         />
-        {formik.errors.music_tone && (
-          <p className="text-red-500 text-sm">{formik.errors.music_tone}</p>
+        {formik.errors.musicTone && (
+          <p className="text-red-500 text-sm">
+            {String(formik.errors.musicTone)}
+          </p>
         )}
       </div>
 
       <div>
         <label
-          htmlFor="music_text"
+          htmlFor="musicText"
           className="block mb-2.5 text-sm font-medium text-gray-700"
         >
           Letra da Música
@@ -188,38 +326,40 @@ export function MusicForm({
             language: 'pt_BR'
           }}
           onEditorChange={(content) =>
-            formik.setFieldValue('music_text', content)
+            formik.setFieldValue('musicText', content)
           }
-          onChange={formik.handleChange}
-          value={formik.values.music_text}
+          value={formik.values.musicText}
         />
 
-        {formik.errors.music_text && (
-          <p className="text-red-500 text-sm">{formik.errors.music_text}</p>
+        {formik.errors.musicText && (
+          <p className="text-red-500 text-sm">
+            {String(formik.errors.musicText)}
+          </p>
         )}
       </div>
 
       <div>
         <label
-          htmlFor="music_link"
+          htmlFor="musicLink"
           className="block mb-2.5 text-sm font-medium text-gray-700"
         >
           Link da Música (opcional)
         </label>
         <Input
           type="text"
-          id="music_link"
-          name="music_link"
+          id="musicLink"
+          name="musicLink"
           className="w-full"
           onChange={formik.handleChange}
-          value={formik.values.music_link}
+          value={formik.values.musicLink}
         />
-        {formik.errors.music_link && (
-          <p className="text-red-500 text-sm">{formik.errors.music_link}</p>
+        {formik.errors.musicLink && (
+          <p className="text-red-500 text-sm">
+            {String(formik.errors.musicLink)}
+          </p>
         )}
       </div>
 
-      {/* 🔥 Select Múltiplo de Categorias */}
       <div>
         <label
           htmlFor="category"
@@ -233,29 +373,40 @@ export function MusicForm({
             onChange={(selectedOptions) => {
               formik.setFieldValue(
                 'category',
-                selectedOptions.map((option) => option.value)
+                selectedOptions.map((option) => Number(option.value))
               )
             }}
+            defaultValue={
+              music?.category?.map((cat) => ({
+                value: String(cat.id),
+                label: String(cat.category_name)
+              })) || []
+            }
           />
         )}
         {formik.errors.category && (
           <p className="text-red-500 text-sm">
-            {formik.errors.category as string}
+            {String(formik.errors.category)}
           </p>
         )}
       </div>
 
-      {/* Botões */}
       <div className="flex justify-end mt-6 gap-2.5">
         <Button
           type="button"
           onClick={setMusicForm}
-          className="bg-red-600 hover:bg-red-700"
+          className="cursor-pointer bg-red-600 hover:bg-red-700"
         >
           Cancelar
         </Button>
-        <Button type="submit" className="bg-indigo-600 hover:bg-indigo-700">
-          Salvar Música
+        <Button
+          type="submit"
+          className="cursor-pointer bg-indigo-600 hover:bg-indigo-700"
+          disabled={isPendingMusicCreate || isPendingMusicUpdate}
+        >
+          {isPendingMusicCreate || isPendingMusicUpdate
+            ? 'Salvando alterações...'
+            : 'Salvar'}
         </Button>
       </div>
     </form>

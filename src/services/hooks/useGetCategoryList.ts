@@ -1,13 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
-import { praiseMusicCategoryList } from '@/client/sdk.gen'
-import { api } from '@/services/api'
+import { praiseMusicCategoryList } from '@/client/praise/praise'
 
 export const useGetCategoryList = () => {
   return useQuery({
-    queryKey: ['categoryList'],
-    queryFn: () =>
-      praiseMusicCategoryList({
-        client: api
-      })
+    queryKey: ['music-category'],
+    queryFn: () => praiseMusicCategoryList()
   })
 }

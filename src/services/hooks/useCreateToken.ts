@@ -1,16 +1,10 @@
 import { useMutation } from '@tanstack/react-query'
-import { tokenCreate } from '@/client/sdk.gen'
-import { api } from '../api'
-import type { TokenCreateData } from '@/client/types.gen'
+import { tokenCreate } from '@/client/token/token'
+import { TokenObtainPair } from '@/client/schemas'
 
-const useCreateToken = () => {
+export const useCreateToken = () => {
   return useMutation({
-    mutationFn: (data: TokenCreateData['body']) =>
-      tokenCreate({
-        client: api,
-        body: data
-      })
+    mutationFn: (values: TokenObtainPair) =>
+      tokenCreate({ username: values.username, password: values.password })
   })
 }
-
-export { useCreateToken }

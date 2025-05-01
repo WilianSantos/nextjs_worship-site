@@ -7,27 +7,39 @@ import { useQueryClient } from '@tanstack/react-query'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import AnimatedMulti from '@/components/ui/multiple-selector'
 
-import { MemberMeReadable } from '@/client/types.gen'
+import { MemberMe } from '@/client/schemas/memberMe'
 import { useUpdateMember } from '@/services/hooks/useUpdateMember'
 import { useGetFunctionList } from '@/services/hooks/useGetFunctionList'
 
 type ProfileFormProps = {
-  member: MemberMeReadable
-  setUserEditTrue: () => void
+  member: MemberMe
   setUserEditFalse: () => void
 }
 
-export function ProfileForm({
-  member,
-  setUserEditTrue,
-  setUserEditFalse
-}: ProfileFormProps) {
+export function ProfileForm({ member, setUserEditFalse }: ProfileFormProps) {
   const { isPending, mutateAsync } = useUpdateMember()
   const { data: functionData } = useGetFunctionList()
   const queryClient = useQueryClient()
 
   const functions = functionData?.data
+  const selectFunctionsOptions = functions
+    ?.filter(
+      (item) => item.id !== undefined && item.function_name !== undefined
+    )
+    .map((item) => ({
+      value: String(item.id),
+      label: String(item.function_name)
+    }))
+  const defaultSelectFunctionsOptions = member.function
+    ?.filter(
+      (item) => item.id !== undefined && item.function_name !== undefined
+    )
+    .map((item) => ({
+      value: String(item.id),
+      label: String(item.function_name)
+    }))
 
   const validationSchema = Yup.object({
     username: Yup.string().required('Nome de usuário é obrigatório'),
@@ -52,9 +64,9 @@ export function ProfileForm({
       availability: member?.availability || false
     },
     validationSchema,
-    onSubmit: (values) => {
-      mutateAsync(
-        {
+    onSubmit: async (values) => {
+      try {
+        await mutateAsync({
           id: Number(member?.id) ?? 0,
           values: {
             user: {
@@ -74,29 +86,26 @@ export function ProfileForm({
             availability: values.availability,
             profile_picture: values.profilePicture as File | string
           }
-        },
-        {
-          onSuccess: () => {
-            setUserEditTrue()
-            queryClient.invalidateQueries({ queryKey: ['member'] })
-          },
-          onError: (error) => {
-            const data = error
-            if (data) {
-              formik.setErrors({
-                firstName: data?.first_name,
-                lastName: data?.last_name,
-                username: data?.username,
-                email: data?.email,
-                function: data?.function,
-                cellPhone: data?.cell_phone,
-                profilePicture: data?.profile_picture,
-                name: data?.name
-              })
-            }
-          }
+        })
+
+        alert('Dados atualizados com sucesso.')
+        setUserEditFalse()
+        queryClient.invalidateQueries({ queryKey: ['member'] })
+      } catch (error: any) {
+        const data = error
+        if (data) {
+          formik.setErrors({
+            firstName: data?.first_name,
+            lastName: data?.last_name,
+            username: data?.username,
+            email: data?.email,
+            function: data?.function,
+            cellPhone: data?.cell_phone,
+            profilePicture: data?.profile_picture,
+            name: data?.name
+          })
         }
-      )
+      }
     }
   })
 
@@ -193,33 +202,21 @@ export function ProfileForm({
         >
           Funções
         </label>
-        #TODO Adicionar um select estilizado
-        <select
-          multiple
-          id="function"
-          name="function"
-          value={formik.values.function.map((item) => String(item || ''))}
-          onChange={({ target }) => {
-            const selectedOptions = Array.from(
-              target.selectedOptions,
-              (option) => option.value
-            )
-            formik.setFieldValue(
-              'function',
-              selectedOptions.map((item) => Number(item))
-            )
-          }}
-        >
-          {functions ? (
-            functions.map((func) => (
-              <option key={func.id} value={func.id}>
-                {func.function_name}
-              </option>
-            ))
-          ) : (
-            <option disabled>Sem funções disponíveis</option>
-          )}
-        </select>
+        {selectFunctionsOptions && (
+          <AnimatedMulti
+            options={selectFunctionsOptions}
+            onChange={(selectedOptions) => {
+              formik.setFieldValue(
+                'function',
+                selectedOptions.map((option) => option.value)
+              )
+            }}
+            defaultValue={defaultSelectFunctionsOptions}
+          />
+        )}
+        {formik.errors.function && (
+          <p className="text-red-500 text-sm">{formik.errors.function}</p>
+        )}
       </div>
 
       <div className="mb-4">
@@ -310,11 +307,11 @@ export function ProfileForm({
         </div>
       </div>
 
-      <div className="flex justify-end mt-6">
+      <div className="flex justify-end mt-6 gap-2.5">
         <Button
           type="button"
-          className="mr-2 bg-gray-300 hover:bg-gray-400"
           onClick={setUserEditFalse}
+          className="bg-red-600 hover:bg-red-700"
         >
           Cancelar
         </Button>

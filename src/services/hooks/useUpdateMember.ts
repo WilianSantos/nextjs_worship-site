@@ -1,5 +1,4 @@
 import { useMutation } from '@tanstack/react-query'
-import { api } from '../api'
 
 export const useUpdateMember = () => {
   return useMutation({
@@ -33,7 +32,7 @@ export const useUpdateMember = () => {
       formDataUser.append('username', values.user.username)
       formDataUser.append('email', values.user.email)
       const responseUser = await fetch(
-        `http://localhost:8000/api/praise/user/${values.user.id}/`,
+        `${process.env.NEXT_PUBLIC_API_URL}/praise/user/${values.user.id}/`,
         {
           method: 'PATCH',
           credentials: 'include',

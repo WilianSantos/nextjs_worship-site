@@ -1,14 +1,8 @@
 import { useMutation } from '@tanstack/react-query'
-import { praiseLogoutCreate } from '@/client/sdk.gen'
-import { api } from '../api'
+import { praiseLogoutCreate } from '@/client/praise/praise'
 
-const useCreateLogout = () => {
+export const useCreateLogout = () => {
   return useMutation({
-    mutationFn: () =>
-      praiseLogoutCreate({
-        client: api
-      })
+    mutationFn: () => praiseLogoutCreate()
   })
 }
-
-export { useCreateLogout }

@@ -1,40 +1,44 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
+const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api'
 
 export const customFetcher = async <T>(
-  config: AxiosRequestConfig,
-  options?: AxiosRequestConfig // caso queira mesclar opções extras
-): Promise<T> => {
-  try {
-    const mergedConfig = {
-      withCredentials: true,
-      ...config,
-      ...options,
-      headers: {
-        'Content-Type': 'application/json',
-        ...(config.headers || {}),
-        ...(options?.headers || {})
-      }
+  url: string,
+  options: RequestInit = {}
+): Promise<{ data: T; status: number }> => {
+  const fullUrl = `${baseUrl}${url.startsWith('/') ? url : `/${url}`}`
+  const { method = 'GET', headers, body, signal, ...rest } = options
+
+  const isFormData = body instanceof FormData
+
+  const res = await fetch(fullUrl, {
+    method,
+    headers: isFormData
+      ? headers
+      : {
+          'Content-Type': 'application/json',
+          ...headers
+        },
+    body: isFormData ? body : body ? body : undefined,
+    credentials: 'include',
+    signal,
+    ...rest
+  })
+
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({}))
+    throw error
+  }
+
+  const contentType = res.headers.get('content-type')
+  if (contentType?.includes('application/json')) {
+    const json = await res.json()
+    return {
+      data: json as T,
+      status: res.status
     }
+  }
 
-    const response: AxiosResponse<T> = await axios(mergedConfig)
-
-    return response.data
-  } catch (error: any) {
-    // Cancelamento do axios (ou do React Query)
-    if (axios.isCancel?.(error) || error?.message === 'canceled') {
-      if (process.env.NODE_ENV === 'development') {
-        console.warn('Requisição cancelada:', error.message)
-      }
-      return Promise.reject(error) // ou simplesmente: return
-    }
-
-    if (process.env.NODE_ENV === 'development') {
-      console.error(
-        'Erro na requisição:',
-        error?.response?.data || error.message
-      )
-    }
-
-    throw error?.response?.data || new Error('Erro desconhecido na requisição')
+  return {
+    data: res as unknown as T,
+    status: res.status
   }
 }
