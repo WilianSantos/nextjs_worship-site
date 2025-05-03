@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/table'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { ProfileForm } from './profileForm'
+import { ProfileForm } from './ProfileForm'
 
 export default function ProfilePage() {
   const { data: memberData } = useGetMember()

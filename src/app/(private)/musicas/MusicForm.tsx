@@ -1,0 +1,247 @@
+'use client'
+
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+import { useQueryClient } from '@tanstack/react-query'
+import { useEffect } from 'react'
+
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { InputTitle } from './components/form-fields/InputTitle'
+import { InputAuthor } from './components/form-fields/InputAuthor'
+import { InputTone } from './components/form-fields/InputTone'
+import { TextEditor } from './components/form-fields/TextEditor'
+import { InputLink } from './components/form-fields/InputLink'
+import { SelectCategory } from './components/form-fields/SelectCategory'
+
+import { usePdfUpload } from './hooks/usePdfUpload'
+import { useGetCategoryList } from '@/services/hooks/useGetCategoryList'
+import { useCreateMusic } from '@/services/hooks/useCreateMusic'
+import { useGetChordList } from '@/services/hooks/useGetChordList'
+import { MusicSerializers } from '@/client/schemas/musicSerializers'
+import { useUpdateMusic } from '@/services/hooks/useUpdateMusic'
+import { formatToISOStringWithTimezone } from '@/utils/formatDate'
+
+export function MusicForm({
+  music,
+  setMusicForm
+}: {
+  music?: MusicSerializers
+  setMusicForm: () => void
+}) {
+  const { data: dataCategory } = useGetCategoryList()
+  const { data: dataChords } = useGetChordList()
+  const categoryList = dataCategory?.data
+  const chordList = dataChords?.data
+  const queryClient = useQueryClient()
+
+  const selectCategoryOptions =
+    categoryList?.map((item) => ({
+      value: String(item.id),
+      label: String(item.category_name)
+    })) || []
+
+  const { mutate: mutateMusicCreate, isPending: isPendingMusicCreate } =
+    useCreateMusic()
+  const { mutate: mutateMusicUpdate, isPending: isPendingMusicUpdate } =
+    useUpdateMusic()
+
+  const validationSchema = Yup.object({
+    musicTitle: Yup.string().required('Título da música é obrigatório'),
+    author: Yup.string().required('Autor é obrigatório'),
+    musicTone: Yup.string().required('Tom da música é obrigatório'),
+    musicText: Yup.string().required('Texto da música é obrigatório'),
+    musicLink: Yup.string().url('Deve ser uma URL válida')
+  })
+
+  const formik = useFormik({
+    initialValues: {
+      musicTitle: '',
+      author: '',
+      musicTone: '',
+      musicText: '',
+      musicLink: '',
+      category: [] as number[],
+      pdfUpload: '',
+      musicChord: [] as string[]
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      const categoryData =
+        categoryList
+          ?.filter((item) => values.category.includes(item.id))
+          .map((item) => Number(item.id)) || []
+      const chordData =
+        chordList
+          ?.filter((item) => values.musicChord.includes(item.chord_name))
+          .map((item) => Number(item.id)) || []
+
+      const payload = {
+        author: values.author,
+        category_ids: categoryData,
+        music_chord_ids: chordData,
+        music_text: values.musicText,
+        music_title: values.musicTitle,
+        music_tone: values.musicTone,
+        music_link: values.musicLink
+      }
+
+      if (music?.id) {
+        mutateMusicUpdate(
+          {
+            id: music.id,
+            values: {
+              ...payload,
+              updated_at: formatToISOStringWithTimezone(new Date())
+            }
+          },
+          {
+            onSuccess: () => {
+              queryClient.invalidateQueries({ queryKey: ['musicList'] })
+              queryClient.invalidateQueries({ queryKey: ['musicPage'] })
+              setMusicForm()
+            },
+            onError: (error) => {
+              const formikErrors: Record<string, string> = {}
+              if (error.author) formikErrors.author = error.author
+              if (error.category) formikErrors.category = error.category
+              if (error.music_chord) formikErrors.musicChord = error.music_chord
+              if (error.music_link) formikErrors.musicLink = error.music_link
+              if (error.music_text) formikErrors.musicText = error.music_text
+              if (error.music_title) formikErrors.musicTitle = error.music_title
+              if (error.music_tone) formikErrors.musicTone = error.music_tone
+              formik.setErrors(formikErrors)
+            }
+          }
+        )
+      } else {
+        mutateMusicCreate(payload, {
+          onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['musicList'] })
+            queryClient.invalidateQueries({ queryKey: ['musicPage'] })
+            setMusicForm()
+          },
+          onError: (error) => {
+            const formikErrors: Record<string, string> = {}
+            if (error.author) formikErrors.author = error.author
+            if (error.category) formikErrors.category = error.category
+            if (error.music_chord) formikErrors.musicChord = error.music_chord
+            if (error.music_link) formikErrors.musicLink = error.music_link
+            if (error.music_text) formikErrors.musicText = error.music_text
+            if (error.music_title) formikErrors.musicTitle = error.music_title
+            if (error.music_tone) formikErrors.musicTone = error.music_tone
+            formik.setErrors(formikErrors)
+          }
+        })
+      }
+    }
+  })
+
+  useEffect(() => {
+    if (music) {
+      formik.setValues({
+        musicTitle: music.music_title || '',
+        author: music.author || '',
+        musicTone: music.music_tone || '',
+        musicText: music.music_text || '',
+        musicLink: music.music_link || '',
+        category: music.category?.map((cat) => Number(cat.id)) || [],
+        pdfUpload: '',
+        musicChord: music.music_chord?.map((chord) => chord.chord_name) || []
+      })
+    }
+  }, [music])
+
+  const handlePdfUpload = usePdfUpload(formik)
+
+  return (
+    <form
+      onSubmit={formik.handleSubmit}
+      encType="multipart/form-data"
+      className="space-y-6"
+    >
+      <div className="flex flex-col gap-2">
+        <label
+          htmlFor="pdf-upload"
+          className="text-sm font-medium text-gray-700"
+        >
+          Carregar Cifra em PDF
+        </label>
+        <Input
+          id="pdf-upload"
+          name="pdfUpload"
+          type="file"
+          accept="application/pdf"
+          onChange={handlePdfUpload}
+          className="cursor-pointer"
+        />
+        {formik.errors.pdfUpload && (
+          <p className="text-red-500 text-sm">
+            {String(formik.errors.pdfUpload)}
+          </p>
+        )}
+      </div>
+
+      <InputTitle
+        value={formik.values.musicTitle}
+        onChange={formik.handleChange}
+        error={formik.errors.musicTitle}
+      />
+      <InputAuthor
+        value={formik.values.author}
+        onChange={formik.handleChange}
+        error={formik.errors.author}
+      />
+      <InputTone
+        value={formik.values.musicTone}
+        onChange={formik.handleChange}
+        error={formik.errors.musicTone}
+      />
+      <TextEditor
+        value={formik.values.musicText}
+        onChange={(value) => formik.setFieldValue('musicText', value)}
+        error={formik.errors.musicText}
+      />
+      <InputLink
+        value={formik.values.musicLink}
+        onChange={formik.handleChange}
+        error={formik.errors.musicLink}
+      />
+      <SelectCategory
+        options={selectCategoryOptions}
+        defaultValue={
+          music?.category?.map((cat) => ({
+            value: String(cat.id),
+            label: String(cat.category_name)
+          })) || []
+        }
+        onChange={(selected) =>
+          formik.setFieldValue(
+            'category',
+            selected.map((opt) => Number(opt.value))
+          )
+        }
+        error={formik.errors.category}
+      />
+
+      <div className="flex justify-end mt-6 gap-2.5">
+        <Button
+          type="button"
+          onClick={setMusicForm}
+          className="cursor-pointer bg-red-600 hover:bg-red-700"
+        >
+          Cancelar
+        </Button>
+        <Button
+          type="submit"
+          className="cursor-pointer bg-indigo-600 hover:bg-indigo-700"
+          disabled={isPendingMusicCreate || isPendingMusicUpdate}
+        >
+          {isPendingMusicCreate || isPendingMusicUpdate
+            ? 'Salvando alterações...'
+            : 'Salvar'}
+        </Button>
+      </div>
+    </form>
+  )
+}

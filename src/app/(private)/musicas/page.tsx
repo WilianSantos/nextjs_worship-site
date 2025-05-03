@@ -1,18 +1,27 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { Search, Music, SkipBack, SkipForward } from 'lucide-react'
-
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { MusicForm } from './musicForm'
-import { MusicTable } from './musicTable'
+import { useState } from 'react'
+import dynamic from 'next/dynamic'
+import { Music } from 'lucide-react'
 
 import { useGetMusicListPage } from '@/services/hooks/useGetMusicListPage'
 import { useGetMusicList } from '@/services/hooks/useGetMusicList'
-import { MusicSerializers } from '@/client/schemas'
 import { useGetMusic } from '@/services/hooks/useGetMusic'
+
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { PaginationControls } from './components/page-controls/PaginationControls'
+import { SearchInput } from './components/page-controls/SearchInput'
+import { MusicSerializers } from '@/client/schemas'
+
+const MusicTable = dynamic(
+  () => import('./MusicTable').then((mod) => mod.MusicTable),
+  { ssr: false }
+)
+const MusicForm = dynamic(
+  () => import('./MusicForm').then((mod) => mod.MusicForm),
+  { ssr: false }
+)
 
 export default function MusicsPage() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -21,29 +30,20 @@ export default function MusicsPage() {
   const [musicFormEdit, setMusicFormEdit] = useState(false)
   const [getMusicWithId, setGetMusicWithId] = useState<number | null>(null)
 
-  const { data: dataMusicPage } = useGetMusicListPage({
-    page
-  })
+  const { data: dataMusicPage } = useGetMusicListPage({ page })
   const { data: dataMusicList } = useGetMusicList()
-  const musicListPage = dataMusicPage?.data?.results
-    ? dataMusicPage.data.results
-    : []
-  const musicList = dataMusicList?.data?.musics ? dataMusicList.data.musics : []
+  const { data: getMusicData, isLoading } = useGetMusic(getMusicWithId || 0)
+
+  const musicListPage = dataMusicPage?.data?.results || []
+  const musicList = dataMusicList?.data.musics || []
 
   const handleNextPage = () => {
-    if (dataMusicPage?.data?.next) {
-      setPage((prevPage) => prevPage + 1)
-    }
+    if (dataMusicPage?.data?.next) setPage((prev) => prev + 1)
   }
 
   const handlePreviousPage = () => {
-    if (dataMusicPage?.data?.previous) {
-      setPage((prevPage) => prevPage - 1)
-    }
+    if (dataMusicPage?.data?.previous) setPage((prev) => prev - 1)
   }
-
-  // Só busca os dados quando temos um ID válido
-  const { data: getMusicData, isLoading } = useGetMusic(getMusicWithId || 0)
 
   const handleMusicFormEdit = (id?: number) => {
     if (id) {
@@ -72,20 +72,19 @@ export default function MusicsPage() {
     : null
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="p-6  md:pt-32 space-y-6">
+      <div className="flex flex-col justify-between gap-2 lg:items-center lg:justify-between lg:flex-row md:flex-row md:items-center md:justify-between">
         <h1 className="text-2xl font-bold">Músicas</h1>
-        <div className="flex items-center gap-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-            <Input
-              placeholder="Pesquisar..."
-              className="pl-10 w-64"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          <Button type="button" onClick={() => setMusicForm(true)}>
+        <div className="flex flex-col items-end lg:flex-row md:flex-row lg:items-center md:items-center gap-4">
+          <SearchInput
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <Button
+            className="cursor-pointer"
+            type="button"
+            onClick={() => setMusicForm(true)}
+          >
             Nova Música
           </Button>
         </div>
@@ -105,20 +104,11 @@ export default function MusicsPage() {
       </div>
 
       <div className="bg-white rounded-lg shadow overflow-hidden">
-        {filteredSongs && musicForm === false && musicFormEdit === false ? (
+        {!musicForm && !musicFormEdit && (
           <MusicTable
             setMusicFormEdit={handleMusicFormEdit}
-            musics={filteredSongs as MusicSerializers[]}
+            musics={filteredSongs || musicListPage}
           />
-        ) : (
-          musicListPage &&
-          musicForm === false &&
-          musicFormEdit === false && (
-            <MusicTable
-              setMusicFormEdit={handleMusicFormEdit}
-              musics={musicListPage}
-            />
-          )
         )}
         {musicForm && (
           <Card className="p-10">
@@ -127,7 +117,10 @@ export default function MusicsPage() {
         )}
         {musicFormEdit && getMusicId && !isLoading && (
           <Card className="p-10">
-            <MusicForm music={getMusicId} setMusicForm={handleCloseForm} />
+            <MusicForm
+              music={getMusicId as MusicSerializers}
+              setMusicForm={handleCloseForm}
+            />
           </Card>
         )}
         {musicFormEdit && isLoading && (
@@ -136,17 +129,13 @@ export default function MusicsPage() {
           </Card>
         )}
       </div>
+
       {!musicForm && !musicFormEdit && (
-        <div className="flex items-center justify-center w-full">
-          <div className="flex items-center gap-2.5">
-            <div className="cursor-pointer" onClick={handlePreviousPage}>
-              <SkipBack size={20} />
-            </div>
-            <div className="cursor-pointer" onClick={handleNextPage}>
-              <SkipForward size={20} />
-            </div>
-          </div>
-        </div>
+        <PaginationControls
+          page={page}
+          onNext={handleNextPage}
+          onPrev={handlePreviousPage}
+        />
       )}
     </div>
   )

@@ -7,7 +7,6 @@ export const useUpdateMusic = () => {
     onError: () => {},
     onSuccess: () => {},
     mutationFn: ({ values, id }: { values: MusicSerializers; id: number }) => {
-      console.log('CORPO', values)
       return praiseMusicPartialUpdate(id, {
         author: values.author,
         category_ids: values.category_ids,

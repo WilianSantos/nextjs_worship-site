@@ -93,8 +93,9 @@ export function Sidebar() {
         </div>
       </div>
       <nav
-        data-menu={menuIsOpen}
-        className={`pt-2 pb-2 lg:flex-1 overflow-y-auto ${menuIsOpen ? 'md:block sm:block lg:block' : 'md:hidden sm:hidden lg:block'} md:w-full`}
+        className={`pt-2 pb-2 lg:flex-1 overflow-y-auto ${
+          menuIsOpen ? 'block md:block lg:block' : 'hidden md:hidden lg:block'
+        } md:w-full`}
       >
         <ul className="space-y-1 px-2">
           {menuItems.map((item) => {
