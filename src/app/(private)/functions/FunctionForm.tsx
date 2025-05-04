@@ -130,7 +130,7 @@ export const FunctionForm = ({
         </Button>
         <Button
           type="submit"
-          className="cursor-pointer bg-indigo-600 hover:bg-indigo-700"
+          className="cursor-pointer bg-purple-600 hover:bg-purple-700"
           disabled={isPendingCreate || isPendingUpdate}
         >
           {isPendingCreate || isPendingUpdate

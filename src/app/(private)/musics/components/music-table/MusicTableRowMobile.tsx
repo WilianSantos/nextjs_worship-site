@@ -29,7 +29,7 @@ export function MusicTableRowMobile({
       <TableCell className="relative overflow-visible">
         <Button
           variant="outline"
-          size="sm"
+          size="icon"
           className="cursor-pointer"
           onClick={() => setMobileTableMenuIsActive(!mobileTableMenuIsActive)}
         >

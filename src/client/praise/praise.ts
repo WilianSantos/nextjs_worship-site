@@ -42,8 +42,11 @@ import type {
   PraiseScaleHistoryList200,
   PraiseUserList200,
   PraiseUserListParams,
+  PraiseVerifyRegistrationTokenListParams,
   RegisterUser,
   RequestPasswordReset,
+  SendEmail,
+  TokenVerification,
   UserSerializers,
   UserSerializersBody
 } from '.././schemas';
@@ -1897,6 +1900,43 @@ export const praiseScaleHistoryList = async ( options?: RequestInit): Promise<pr
 );}
 
 
+export type praiseSendRegistrationEmailCreateResponse200 = {
+  data: void
+  status: 200
+}
+
+export type praiseSendRegistrationEmailCreateResponse400 = {
+  data: void
+  status: 400
+}
+    
+export type praiseSendRegistrationEmailCreateResponseComposite = praiseSendRegistrationEmailCreateResponse200 | praiseSendRegistrationEmailCreateResponse400;
+    
+export type praiseSendRegistrationEmailCreateResponse = praiseSendRegistrationEmailCreateResponseComposite & {
+  headers: Headers;
+}
+
+export const getPraiseSendRegistrationEmailCreateUrl = () => {
+
+
+  
+
+  return `/praise/send-registration-email/`
+}
+
+export const praiseSendRegistrationEmailCreate = async (sendEmail: SendEmail, options?: RequestInit): Promise<praiseSendRegistrationEmailCreateResponse> => {
+  
+  return customFetcher<praiseSendRegistrationEmailCreateResponse>(getPraiseSendRegistrationEmailCreateUrl(),
+  {      
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      sendEmail,)
+  }
+);}
+
+
 /**
  * Rota para gerar um token temporário.
  */
@@ -2124,6 +2164,49 @@ export const praiseUserDelete = async (id: number, options?: RequestInit): Promi
   {      
     ...options,
     method: 'DELETE'
+    
+    
+  }
+);}
+
+
+export type praiseVerifyRegistrationTokenListResponse200 = {
+  data: TokenVerification
+  status: 200
+}
+
+export type praiseVerifyRegistrationTokenListResponse400 = {
+  data: void
+  status: 400
+}
+    
+export type praiseVerifyRegistrationTokenListResponseComposite = praiseVerifyRegistrationTokenListResponse200 | praiseVerifyRegistrationTokenListResponse400;
+    
+export type praiseVerifyRegistrationTokenListResponse = praiseVerifyRegistrationTokenListResponseComposite & {
+  headers: Headers;
+}
+
+export const getPraiseVerifyRegistrationTokenListUrl = (params: PraiseVerifyRegistrationTokenListParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/praise/verify-registration-token/?${stringifiedParams}` : `/praise/verify-registration-token/`
+}
+
+export const praiseVerifyRegistrationTokenList = async (params: PraiseVerifyRegistrationTokenListParams, options?: RequestInit): Promise<praiseVerifyRegistrationTokenListResponse> => {
+  
+  return customFetcher<praiseVerifyRegistrationTokenListResponse>(getPraiseVerifyRegistrationTokenListUrl(params),
+  {      
+    ...options,
+    method: 'GET'
     
     
   }

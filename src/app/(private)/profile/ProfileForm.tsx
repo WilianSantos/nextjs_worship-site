@@ -304,7 +304,7 @@ export function ProfileForm({
         </Button>
         <Button
           type="submit"
-          className="bg-indigo-600 hover:bg-indigo-700"
+          className="bg-purple-500 hover:bg-purple-700"
           disabled={isPending}
         >
           {isPending ? 'Salvando alterações...' : 'Salvar'}

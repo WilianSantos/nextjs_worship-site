@@ -6,13 +6,9 @@
  * OpenAPI spec version: v1
  */
 
-export type PraiseMembersMeListParams = {
+export type PraiseVerifyRegistrationTokenListParams = {
 /**
- * Which field to use when ordering the results.
+ * Token de verificação recebido por e-mail
  */
-ordering?: string;
-/**
- * A search term.
- */
-search?: string;
+token: string;
 };

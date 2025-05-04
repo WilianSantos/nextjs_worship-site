@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 
 import { Sidebar } from '@/components/sidebar'
 import { useCheckAuth } from '@/services/hooks/token/useCheckAuth'
+import { Loader } from '@/components/Loader'
 
 export default function PrivateLayout({
   children
@@ -22,7 +23,7 @@ export default function PrivateLayout({
   }, [isError, router, status])
 
   if (isLoading) {
-    return <p className="p-4 text-center">Carregando...</p>
+    return <Loader />
   }
 
   return (

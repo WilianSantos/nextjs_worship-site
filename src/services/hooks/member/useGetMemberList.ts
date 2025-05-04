@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import { praiseMembersMeList } from '@/client/praise/praise'
 
-export const useGetMemberList = () => {
+export const useGetMemberList = ({ search }: { search: string }) => {
   return useQuery({
-    queryKey: ['memberList'],
-    queryFn: () => praiseMembersMeList({ ordering: 'name' })
+    queryKey: ['memberList', search],
+    queryFn: () => praiseMembersMeList({ ordering: 'name', search: search })
   })
 }

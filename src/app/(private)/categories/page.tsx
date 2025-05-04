@@ -15,7 +15,7 @@ import { CategoryForm } from './CategoryForm'
 import { MusicCategorySerializers } from '@/client/schemas'
 import { useDeleteCategory } from '@/services/hooks/category/useDeleteCategory'
 
-export default function CategoriasPage() {
+export default function CategoriesPage() {
   const [searchTerm, setSearchTerm] = useState('')
 
   const { data: dataCategory } = useGetCategoryList({ search: searchTerm })

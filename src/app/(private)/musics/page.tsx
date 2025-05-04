@@ -69,7 +69,7 @@ export default function MusicsPage() {
       <div className="flex flex-col justify-between gap-2 lg:items-center lg:justify-between lg:flex-row md:flex-row md:items-center md:justify-between">
         <h1 className="text-2xl font-bold">Músicas</h1>
         <div>
-          <p className="text-2xl text-green-500">{messageSuccess}</p>
+          <p className="text-lg text-green-500">{messageSuccess}</p>
         </div>
         <div className="flex flex-col items-end lg:flex-row md:flex-row lg:items-center md:items-center gap-4">
           <SearchInput

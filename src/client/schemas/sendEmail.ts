@@ -6,13 +6,7 @@
  * OpenAPI spec version: v1
  */
 
-export type PraiseMembersMeListParams = {
-/**
- * Which field to use when ordering the results.
- */
-ordering?: string;
-/**
- * A search term.
- */
-search?: string;
-};
+export interface SendEmail {
+  /** Lista de e-mails para os quais o convite será enviado. */
+  emails: string[];
+}
