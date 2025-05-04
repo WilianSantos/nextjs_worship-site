@@ -9,7 +9,7 @@ export function SelectCategory({
   options: { label: string; value: string }[]
   defaultValue: { label: string; value: string }[]
   onChange: (selected: { label: string; value: string }[]) => void
-  error?: string
+  error?: string | string[] | undefined
 }) {
   return (
     <div>

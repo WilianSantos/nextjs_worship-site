@@ -7,7 +7,7 @@ import {
   MusicSerializers,
   PraiseMusicMusics200MusicsItem
 } from '@/client/schemas'
-import { useDeleteMusic } from '@/services/hooks/useDeleteMusic'
+import { useDeleteMusic } from '@/services/hooks/music/useDeleteMusic'
 
 import { Table, TableBody } from '@/components/ui/table'
 import { MusicTableHeader } from './components/music-table/MusicTableHeader'

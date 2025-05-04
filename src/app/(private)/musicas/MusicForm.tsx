@@ -15,21 +15,22 @@ import { InputLink } from './components/form-fields/InputLink'
 import { SelectCategory } from './components/form-fields/SelectCategory'
 
 import { usePdfUpload } from './hooks/usePdfUpload'
-import { useGetCategoryList } from '@/services/hooks/useGetCategoryList'
-import { useCreateMusic } from '@/services/hooks/useCreateMusic'
-import { useGetChordList } from '@/services/hooks/useGetChordList'
+import { useGetCategoryList } from '@/services/hooks/category/useGetCategoryList'
+import { useCreateMusic } from '@/services/hooks/music/useCreateMusic'
+import { useGetChordList } from '@/services/hooks/chord/useGetChordList'
 import { MusicSerializers } from '@/client/schemas/musicSerializers'
-import { useUpdateMusic } from '@/services/hooks/useUpdateMusic'
-import { formatToISOStringWithTimezone } from '@/utils/formatDate'
+import { useUpdateMusic } from '@/services/hooks/music/useUpdateMusic'
 
 export function MusicForm({
   music,
-  setMusicForm
+  setMusicForm,
+  setMessageSuccess
 }: {
   music?: MusicSerializers
   setMusicForm: () => void
+  setMessageSuccess: (message: string) => void
 }) {
-  const { data: dataCategory } = useGetCategoryList()
+  const { data: dataCategory } = useGetCategoryList({})
   const { data: dataChords } = useGetChordList()
   const categoryList = dataCategory?.data
   const chordList = dataChords?.data
@@ -91,8 +92,7 @@ export function MusicForm({
           {
             id: music.id,
             values: {
-              ...payload,
-              updated_at: formatToISOStringWithTimezone(new Date())
+              ...payload
             }
           },
           {
@@ -100,6 +100,7 @@ export function MusicForm({
               queryClient.invalidateQueries({ queryKey: ['musicList'] })
               queryClient.invalidateQueries({ queryKey: ['musicPage'] })
               setMusicForm()
+              setMessageSuccess('Musica atualizada com sucesso.')
             },
             onError: (error) => {
               const formikErrors: Record<string, string> = {}
@@ -120,6 +121,7 @@ export function MusicForm({
             queryClient.invalidateQueries({ queryKey: ['musicList'] })
             queryClient.invalidateQueries({ queryKey: ['musicPage'] })
             setMusicForm()
+            setMessageSuccess('Musica criada com sucesso.')
           },
           onError: (error) => {
             const formikErrors: Record<string, string> = {}
@@ -162,13 +164,13 @@ export function MusicForm({
     >
       <div className="flex flex-col gap-2">
         <label
-          htmlFor="pdf-upload"
+          htmlFor="pdfUpload"
           className="text-sm font-medium text-gray-700"
         >
           Carregar Cifra em PDF
         </label>
         <Input
-          id="pdf-upload"
+          id="pdfUpload"
           name="pdfUpload"
           type="file"
           accept="application/pdf"

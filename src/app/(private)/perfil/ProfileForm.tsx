@@ -3,25 +3,43 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { IMaskInput } from 'react-imask'
-import { useQueryClient } from '@tanstack/react-query'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import AnimatedMulti from '@/components/ui/multiple-selector'
 
-import { MemberMe } from '@/client/schemas/memberMe'
-import { useUpdateMember } from '@/services/hooks/useUpdateMember'
-import { useGetFunctionList } from '@/services/hooks/useGetFunctionList'
+import { useGetFunctionList } from '@/services/hooks/function/useGetFunctionList'
+import { MemberFunctionsSerializers } from '@/client/schemas'
+
+export type valueForm = {
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  function: (number | undefined)[]
+  profilePicture: File | null
+  cellPhone: string
+  name: string
+  availability: boolean
+}
 
 type ProfileFormProps = {
-  member: MemberMe
+  onSubmit: (
+    values: valueForm,
+    functions: MemberFunctionsSerializers[] | undefined
+  ) => void
+  initialValue: valueForm
+  isPending: boolean
   setUserEditFalse: () => void
 }
 
-export function ProfileForm({ member, setUserEditFalse }: ProfileFormProps) {
-  const { isPending, mutateAsync } = useUpdateMember()
+export function ProfileForm({
+  onSubmit,
+  initialValue,
+  isPending,
+  setUserEditFalse
+}: ProfileFormProps) {
   const { data: functionData } = useGetFunctionList()
-  const queryClient = useQueryClient()
 
   const functions = functionData?.data
   const selectFunctionsOptions = functions
@@ -32,9 +50,12 @@ export function ProfileForm({ member, setUserEditFalse }: ProfileFormProps) {
       value: String(item.id),
       label: String(item.function_name)
     }))
-  const defaultSelectFunctionsOptions = member.function
+  const defaultSelectFunctionsOptions = functions
     ?.filter(
-      (item) => item.id !== undefined && item.function_name !== undefined
+      (item) =>
+        item.id !== undefined &&
+        item.function_name !== undefined &&
+        initialValue.function.includes(item.id)
     )
     .map((item) => ({
       value: String(item.id),
@@ -52,45 +73,11 @@ export function ProfileForm({ member, setUserEditFalse }: ProfileFormProps) {
   })
 
   const formik = useFormik({
-    initialValues: {
-      firstName: member?.user?.first_name || '',
-      lastName: member?.user?.last_name || '',
-      username: member?.user?.username || '',
-      email: member?.user?.email || '',
-      function: member?.function?.map((item) => item.id) || [],
-      profilePicture: member?.profile_picture as unknown as File | null,
-      cellPhone: member?.cell_phone || '',
-      name: member?.name || '',
-      availability: member?.availability || false
-    },
+    initialValues: initialValue,
     validationSchema,
     onSubmit: async (values) => {
       try {
-        await mutateAsync({
-          id: Number(member?.id) ?? 0,
-          values: {
-            user: {
-              id: Number(member?.user?.id),
-              first_name: values.firstName,
-              last_name: values.lastName,
-              username: values.username,
-              email: values.email
-            },
-            function: functions
-              ? functions
-                  .filter((item) => values.function.includes(item.id))
-                  .map((item) => Number(item.id))
-              : [],
-            cell_phone: values.cellPhone,
-            name: values.name,
-            availability: values.availability,
-            profile_picture: values.profilePicture as File | string
-          }
-        })
-
-        alert('Dados atualizados com sucesso.')
-        setUserEditFalse()
-        queryClient.invalidateQueries({ queryKey: ['member'] })
+        await onSubmit(values, functions)
       } catch (error: any) {
         const data = error
         if (data) {

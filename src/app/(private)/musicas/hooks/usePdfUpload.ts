@@ -1,4 +1,4 @@
-import { useCreatePdfUpload } from '@/services/hooks/useCreatePdfUpload'
+import { useCreatePdfUpload } from '@/services/hooks/music/useCreatePdfUpload'
 
 export function usePdfUpload(formik: any) {
   const { mutate: mutatePdfUpload } = useCreatePdfUpload()

@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
-import { useCreateToken } from '@/services/hooks/useCreateToken'
+import { useCreateToken } from '@/services/hooks/token/useCreateToken'
 
 export default function LoginForm() {
   const { mutate, isSuccess, isError, isPending } = useCreateToken()

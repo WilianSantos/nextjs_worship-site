@@ -4,7 +4,7 @@ import React from 'react'
 import { useRouter } from 'next/navigation'
 
 import { Sidebar } from '@/components/sidebar'
-import { useCheckAuth } from '@/services/hooks/useCheckAuth'
+import { useCheckAuth } from '@/services/hooks/token/useCheckAuth'
 
 export default function PrivateLayout({
   children

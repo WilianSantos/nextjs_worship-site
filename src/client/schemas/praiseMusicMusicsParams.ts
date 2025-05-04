@@ -8,6 +8,10 @@
 
 export type PraiseMusicMusicsParams = {
 /**
+ * category
+ */
+category?: string;
+/**
  * Which field to use when ordering the results.
  */
 ordering?: string;

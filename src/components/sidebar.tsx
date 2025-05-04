@@ -17,8 +17,8 @@ import {
   Menu
 } from 'lucide-react'
 
-import { useGetMember } from '@/services/hooks/useGetMember'
-import { useCreateLogout } from '@/services/hooks/useCreateLogout'
+import { useGetMember } from '@/services/hooks/member/useGetMember'
+import { useCreateLogout } from '@/services/hooks/token/useCreateLogout'
 import React from 'react'
 
 const menuItems = [

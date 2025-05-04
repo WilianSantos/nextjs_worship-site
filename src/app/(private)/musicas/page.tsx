@@ -4,9 +4,9 @@ import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import { Music } from 'lucide-react'
 
-import { useGetMusicListPage } from '@/services/hooks/useGetMusicListPage'
-import { useGetMusicList } from '@/services/hooks/useGetMusicList'
-import { useGetMusic } from '@/services/hooks/useGetMusic'
+import { useGetMusicListPage } from '@/services/hooks/music/useGetMusicListPage'
+import { useGetMusicsList } from '@/services/hooks/music/useGetMusicsList'
+import { useGetMusic } from '@/services/hooks/music/useGetMusic'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -24,18 +24,21 @@ const MusicForm = dynamic(
 )
 
 export default function MusicsPage() {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [page, setPage] = useState(1)
+  const [searchTerm, setSearchTerm] = useState<string | undefined>(undefined)
   const [musicForm, setMusicForm] = useState(false)
   const [musicFormEdit, setMusicFormEdit] = useState(false)
-  const [getMusicWithId, setGetMusicWithId] = useState<number | null>(null)
+  const [messageSuccess, setMessageSuccess] = useState('')
 
+  const [page, setPage] = useState(1)
   const { data: dataMusicPage } = useGetMusicListPage({ page })
-  const { data: dataMusicList } = useGetMusicList()
-  const { data: getMusicData, isLoading } = useGetMusic(getMusicWithId || 0)
-
   const musicListPage = dataMusicPage?.data?.results || []
-  const musicList = dataMusicList?.data.musics || []
+
+  const [getMusicWithId, setGetMusicWithId] = useState<number | null>(null)
+  const { data: getMusicData, isLoading } = useGetMusic(getMusicWithId || 0)
+  const getMusicId = getMusicData?.data
+
+  const { data: dataMusicList } = useGetMusicsList({ search: searchTerm })
+  const filteredSongs = dataMusicList?.data.musics
 
   const handleNextPage = () => {
     if (dataMusicPage?.data?.next) setPage((prev) => prev + 1)
@@ -58,23 +61,16 @@ export default function MusicsPage() {
     setGetMusicWithId(null)
   }
 
-  const getMusicId = getMusicData?.data
-
-  const filteredSongs = searchTerm
-    ? musicList?.filter(
-        (song) =>
-          song.music_title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          song.author?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          song.category?.some((item) =>
-            item.category_name?.toLowerCase().includes(searchTerm.toLowerCase())
-          )
-      )
-    : null
-
+  const handleMessageSuccess = (message: string) => {
+    setMessageSuccess(message)
+  }
   return (
     <div className="p-6  md:pt-32 space-y-6">
       <div className="flex flex-col justify-between gap-2 lg:items-center lg:justify-between lg:flex-row md:flex-row md:items-center md:justify-between">
         <h1 className="text-2xl font-bold">Músicas</h1>
+        <div>
+          <p className="text-2xl text-green-500">{messageSuccess}</p>
+        </div>
         <div className="flex flex-col items-end lg:flex-row md:flex-row lg:items-center md:items-center gap-4">
           <SearchInput
             value={searchTerm}
@@ -104,15 +100,25 @@ export default function MusicsPage() {
       </div>
 
       <div className="bg-white rounded-lg shadow overflow-hidden">
-        {!musicForm && !musicFormEdit && (
-          <MusicTable
-            setMusicFormEdit={handleMusicFormEdit}
-            musics={filteredSongs || musicListPage}
-          />
-        )}
+        {!musicForm &&
+          !musicFormEdit &&
+          (searchTerm && filteredSongs ? (
+            <MusicTable
+              setMusicFormEdit={handleMusicFormEdit}
+              musics={filteredSongs}
+            />
+          ) : (
+            <MusicTable
+              setMusicFormEdit={handleMusicFormEdit}
+              musics={musicListPage}
+            />
+          ))}
         {musicForm && (
           <Card className="p-10">
-            <MusicForm setMusicForm={handleCloseForm} />
+            <MusicForm
+              setMusicForm={handleCloseForm}
+              setMessageSuccess={handleMessageSuccess}
+            />
           </Card>
         )}
         {musicFormEdit && getMusicId && !isLoading && (
@@ -120,6 +126,7 @@ export default function MusicsPage() {
             <MusicForm
               music={getMusicId as MusicSerializers}
               setMusicForm={handleCloseForm}
+              setMessageSuccess={handleMessageSuccess}
             />
           </Card>
         )}

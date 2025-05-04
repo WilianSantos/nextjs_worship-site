@@ -5,7 +5,7 @@ export function SearchInput({
   value,
   onChange
 }: {
-  value: string
+  value: string | undefined
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }) {
   return (
