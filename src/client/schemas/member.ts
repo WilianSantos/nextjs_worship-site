@@ -21,5 +21,5 @@ export interface Member {
   /** @nullable */
   readonly profile_picture?: string | null;
   user: number;
-  function: number[];
+  function?: number[];
 }

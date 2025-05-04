@@ -78,7 +78,9 @@ export function Sidebar() {
                 )}
               </div>
               <div>
-                <p className="text-sm font-medium">{member?.name}</p>
+                <p className="text-sm font-medium">
+                  {member?.user?.first_name}
+                </p>
               </div>
             </div>
             <Link

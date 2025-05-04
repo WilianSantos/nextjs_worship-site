@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input'
 import { InputTitle } from './components/form-fields/InputTitle'
 import { InputAuthor } from './components/form-fields/InputAuthor'
 import { InputTone } from './components/form-fields/InputTone'
-import { TextEditor } from './components/form-fields/TextEditor'
+import { TextEditor } from '../../../components/ui/TextEditor'
 import { InputLink } from './components/form-fields/InputLink'
 import { SelectCategory } from './components/form-fields/SelectCategory'
 

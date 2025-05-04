@@ -17,5 +17,5 @@ export type PraiseMemberCreateBody = {
   cell_phone?: string;
   profile_picture?: Blob;
   user: number;
-  function: number[];
+  function?: number[];
 };

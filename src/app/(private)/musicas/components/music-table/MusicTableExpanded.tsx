@@ -4,7 +4,7 @@ import {
 } from '@/client/schemas'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { formatChordToParagraph } from '@/utils/formatChordToParagraph'
+import { formatToParagraph } from '@/utils/formatToParagraph'
 
 export function MusicTableExpanded({
   music,
@@ -25,7 +25,7 @@ export function MusicTableExpanded({
       </ul>
       <div
         dangerouslySetInnerHTML={{
-          __html: formatChordToParagraph(music.music_text)
+          __html: formatToParagraph(music.music_text)
         }}
       />
       <div>

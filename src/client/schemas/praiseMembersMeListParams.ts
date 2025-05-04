@@ -6,13 +6,9 @@
  * OpenAPI spec version: v1
  */
 
-export type PraiseMemberListParams = {
+export type PraiseMembersMeListParams = {
 /**
  * Which field to use when ordering the results.
  */
 ordering?: string;
-/**
- * A search term.
- */
-search?: string;
 };

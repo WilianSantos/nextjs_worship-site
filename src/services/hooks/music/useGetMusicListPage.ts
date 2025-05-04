@@ -6,7 +6,8 @@ export const useGetMusicListPage = ({ page = 1 }: { page?: number }) => {
     queryKey: ['musicPage', page],
     queryFn: () =>
       praiseMusicList({
-        page: page
+        page: page,
+        ordering: 'music_title'
       })
   })
 }

@@ -6,7 +6,7 @@
  * OpenAPI spec version: v1
  */
 
-export type PraiseMemberListParams = {
+export type PraiseMemberFunctionsListParams = {
 /**
  * Which field to use when ordering the results.
  */

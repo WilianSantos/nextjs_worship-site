@@ -24,8 +24,9 @@ import type {
   PraiseLineupSerializers,
   PraiseLineupSerializersBody,
   PraiseMemberCreateBody,
-  PraiseMemberList200,
+  PraiseMemberFunctionsListParams,
   PraiseMemberListParams,
+  PraiseMembersMeListParams,
   PraiseMusicCategoryListParams,
   PraiseMusicChordListParams,
   PraiseMusicList200,
@@ -170,17 +171,24 @@ export type praiseMemberFunctionsListResponse = praiseMemberFunctionsListRespons
   headers: Headers;
 }
 
-export const getPraiseMemberFunctionsListUrl = () => {
+export const getPraiseMemberFunctionsListUrl = (params?: PraiseMemberFunctionsListParams,) => {
+  const normalizedParams = new URLSearchParams();
 
+  Object.entries(params || {}).forEach(([key, value]) => {
+    
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-  
+  const stringifiedParams = normalizedParams.toString();
 
-  return `/praise/member-functions/`
+  return stringifiedParams.length > 0 ? `/praise/member-functions/?${stringifiedParams}` : `/praise/member-functions/`
 }
 
-export const praiseMemberFunctionsList = async ( options?: RequestInit): Promise<praiseMemberFunctionsListResponse> => {
+export const praiseMemberFunctionsList = async (params?: PraiseMemberFunctionsListParams, options?: RequestInit): Promise<praiseMemberFunctionsListResponse> => {
   
-  return customFetcher<praiseMemberFunctionsListResponse>(getPraiseMemberFunctionsListUrl(),
+  return customFetcher<praiseMemberFunctionsListResponse>(getPraiseMemberFunctionsListUrl(params),
   {      
     ...options,
     method: 'GET'
@@ -351,7 +359,7 @@ export const praiseMemberFunctionsDelete = async (id: number, options?: RequestI
 
 
 export type praiseMemberListResponse200 = {
-  data: PraiseMemberList200
+  data: Member[]
   status: 200
 }
     
@@ -420,7 +428,9 @@ if(praiseMemberCreateBody.profile_picture !== undefined) {
  formData.append(`profile_picture`, praiseMemberCreateBody.profile_picture)
  }
 formData.append(`user`, praiseMemberCreateBody.user.toString())
-praiseMemberCreateBody.function.forEach(value => formData.append(`function`, value.toString()));
+if(praiseMemberCreateBody.function !== undefined) {
+ praiseMemberCreateBody.function.forEach(value => formData.append(`function`, value.toString()));
+ }
 
   return customFetcher<praiseMemberCreateResponse>(getPraiseMemberCreateUrl(),
   {      
@@ -497,7 +507,9 @@ if(praiseMemberCreateBody.profile_picture !== undefined) {
  formData.append(`profile_picture`, praiseMemberCreateBody.profile_picture)
  }
 formData.append(`user`, praiseMemberCreateBody.user.toString())
-praiseMemberCreateBody.function.forEach(value => formData.append(`function`, value.toString()));
+if(praiseMemberCreateBody.function !== undefined) {
+ praiseMemberCreateBody.function.forEach(value => formData.append(`function`, value.toString()));
+ }
 
   return customFetcher<praiseMemberUpdateResponse>(getPraiseMemberUpdateUrl(id),
   {      
@@ -543,7 +555,9 @@ if(praiseMemberCreateBody.profile_picture !== undefined) {
  formData.append(`profile_picture`, praiseMemberCreateBody.profile_picture)
  }
 formData.append(`user`, praiseMemberCreateBody.user.toString())
-praiseMemberCreateBody.function.forEach(value => formData.append(`function`, value.toString()));
+if(praiseMemberCreateBody.function !== undefined) {
+ praiseMemberCreateBody.function.forEach(value => formData.append(`function`, value.toString()));
+ }
 
   return customFetcher<praiseMemberPartialUpdateResponse>(getPraiseMemberPartialUpdateUrl(id),
   {      
@@ -581,6 +595,44 @@ export const praiseMemberDelete = async (id: number, options?: RequestInit): Pro
   {      
     ...options,
     method: 'DELETE'
+    
+    
+  }
+);}
+
+
+export type praiseMembersMeListResponse200 = {
+  data: MemberMe[]
+  status: 200
+}
+    
+export type praiseMembersMeListResponseComposite = praiseMembersMeListResponse200;
+    
+export type praiseMembersMeListResponse = praiseMembersMeListResponseComposite & {
+  headers: Headers;
+}
+
+export const getPraiseMembersMeListUrl = (params?: PraiseMembersMeListParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/praise/members-me?${stringifiedParams}` : `/praise/members-me`
+}
+
+export const praiseMembersMeList = async (params?: PraiseMembersMeListParams, options?: RequestInit): Promise<praiseMembersMeListResponse> => {
+  
+  return customFetcher<praiseMembersMeListResponse>(getPraiseMembersMeListUrl(params),
+  {      
+    ...options,
+    method: 'GET'
     
     
   }

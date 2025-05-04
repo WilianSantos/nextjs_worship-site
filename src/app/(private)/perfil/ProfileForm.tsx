@@ -39,7 +39,7 @@ export function ProfileForm({
   isPending,
   setUserEditFalse
 }: ProfileFormProps) {
-  const { data: functionData } = useGetFunctionList()
+  const { data: functionData } = useGetFunctionList({})
 
   const functions = functionData?.data
   const selectFunctionsOptions = functions

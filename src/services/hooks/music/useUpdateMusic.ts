@@ -14,8 +14,7 @@ export const useUpdateMusic = () => {
         music_text: values.music_text,
         music_title: values.music_title,
         music_tone: values.music_tone,
-        music_link: values.music_link,
-        updated_at: values.updated_at
+        music_link: values.music_link
       })
     }
   })

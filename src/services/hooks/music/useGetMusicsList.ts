@@ -10,7 +10,12 @@ export const useGetMusicsList = ({
 }) => {
   return useQuery({
     queryKey: ['musicList', categoryId, search],
-    queryFn: () => praiseMusicMusics({ category: categoryId, search: search }),
+    queryFn: () =>
+      praiseMusicMusics({
+        category: categoryId,
+        search: search,
+        ordering: 'music_title'
+      }),
     enabled: categoryId !== undefined || search !== undefined || search !== ''
   })
 }

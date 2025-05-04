@@ -71,8 +71,8 @@ export default function CategoriasPage() {
   }
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="p-6 space-y-6 md:pt-32">
+      <div className="flex flex-col gap-1 lg:flex-row lg:items-center lg:justify-between md:flex-row md:items-center md:justify-between">
         <h1 className="text-2xl font-bold">Categorias</h1>
         <div>
           <p className="text-2xl text-green-500">{messageSuccess}</p>
@@ -80,7 +80,7 @@ export default function CategoriasPage() {
         <div>
           <p className="text-2xl text-red-400">{messageError}</p>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col lg:items-center lg:flex-row md:flex-row md:items-center gap-4">
           <div className="relative">
             <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
             <Input

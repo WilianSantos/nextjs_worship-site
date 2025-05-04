@@ -13,4 +13,5 @@ export interface MemberFunctionsSerializers {
    * @maxLength 50
    */
   function_name: string;
+  description?: string;
 }

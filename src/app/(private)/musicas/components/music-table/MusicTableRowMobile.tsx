@@ -42,19 +42,19 @@ export function MusicTableRowMobile({
               className="mb-1 cursor-pointer"
               onClick={() => onEdit(song.id)}
               variant="outline"
-              size="sm"
+              size="icon"
             >
               <SquarePen className="mr-1" /> Editar
             </Button>
             <Button
               onClick={() => onDelete(song.id)}
               variant="outline"
-              size="sm"
+              size="icon"
               className="mb-1 cursor-pointer"
             >
               <Trash2 className="text-red-500 mr-1" /> Excluir
             </Button>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="icon">
               {song.music_link && (
                 <a
                   href={song.music_link}
