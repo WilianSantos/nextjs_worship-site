@@ -8,20 +8,22 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { Loader } from '@/components/Loader'
+import { CategoryForm } from './CategoryForm'
 
 import { useGetCategoryList } from '@/services/hooks/category/useGetCategoryList'
 import { useGetMusicsList } from '@/services/hooks/music/useGetMusicsList'
-import { CategoryForm } from './CategoryForm'
-import { MusicCategorySerializers } from '@/client/schemas'
 import { useDeleteCategory } from '@/services/hooks/category/useDeleteCategory'
+import { MusicCategorySerializers } from '@/client/schemas'
 
 export default function CategoriesPage() {
   const [searchTerm, setSearchTerm] = useState('')
 
-  const { data: dataCategory } = useGetCategoryList({ search: searchTerm })
+  const { data: dataCategory, isLoading: isLoadingCategory } =
+    useGetCategoryList({ search: searchTerm })
   const categories = dataCategory?.data
 
-  const { data: dataMusics } = useGetMusicsList({})
+  const { data: dataMusics, isLoading: isLoadingMusics } = useGetMusicsList({})
 
   const [categoryForm, setCategoryForm] = useState(false)
   const [categoryFormEdit, setCategoryFormEdit] = useState(false)
@@ -40,7 +42,7 @@ export default function CategoriesPage() {
     }
   }
 
-  const { mutate: mutateDelete } = useDeleteCategory()
+  const { mutate: mutateDelete, isPending } = useDeleteCategory()
   const [messageError, setMessageError] = useState('')
   const queryClient = useQueryClient()
   const deleteCategory = (id: number | undefined) => {
@@ -70,15 +72,21 @@ export default function CategoriesPage() {
     return musicCount
   }
 
+  if (isLoadingCategory || isLoadingMusics || isPending) {
+    return <Loader />
+  }
+
   return (
     <div className="p-6 space-y-6 md:pt-32">
       <div className="flex flex-col gap-1 lg:flex-row lg:items-center lg:justify-between md:flex-row md:items-center md:justify-between">
-        <h1 className="text-2xl font-bold">Categorias</h1>
+        <h1 className="text-2xl font-bold font-parkinsans text-orange-500">
+          Categorias
+        </h1>
         <div>
           <p className="text-2xl text-green-500">{messageSuccess}</p>
         </div>
         <div>
-          <p className="text-2xl text-red-400">{messageError}</p>
+          <p className="text-2xl text-red-500">{messageError}</p>
         </div>
         <div className="flex flex-col lg:items-center lg:flex-row md:flex-row md:items-center gap-4">
           <div className="relative">
@@ -90,38 +98,33 @@ export default function CategoriesPage() {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <Button onClick={() => setCategoryForm(true)}>Nova Categoria</Button>
+          <Button
+            className="cursor-pointer"
+            onClick={() => setCategoryForm(true)}
+          >
+            Nova Categoria
+          </Button>
         </div>
       </div>
 
-      {categoryForm || categoryFormEdit ? (
-        <>
-          {categoryFormEdit && initialFormValue && (
-            <Card>
-              <CategoryForm
-                setMessageSuccess={(message: string) =>
-                  setMessageSuccess(message)
-                }
-                setCategoryForm={() => setCategoryFormEdit(false)}
-                initialValue={initialFormValue}
-              />
-            </Card>
-          )}
-
-          {categoryForm && (
-            <Card>
-              <CategoryForm
-                setMessageSuccess={(message: string) =>
-                  setMessageSuccess(message)
-                }
-                setCategoryForm={() => setCategoryForm(false)}
-              />
-            </Card>
-          )}
-        </>
+      {categoryFormEdit && initialFormValue ? (
+        <Card>
+          <CategoryForm
+            setMessageSuccess={setMessageSuccess}
+            setCategoryForm={() => setCategoryFormEdit(false)}
+            initialValue={initialFormValue}
+          />
+        </Card>
+      ) : categoryForm ? (
+        <Card>
+          <CategoryForm
+            setMessageSuccess={setMessageSuccess}
+            setCategoryForm={() => setCategoryForm(false)}
+          />
+        </Card>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {categories &&
+          {categories && categories.length > 0 ? (
             categories.map((category) => (
               <Card key={category.id}>
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -140,6 +143,7 @@ export default function CategoriesPage() {
                         onClick={() => handlingTheEditingForm(category.id)}
                         variant="ghost"
                         size="icon"
+                        className="cursor-pointer"
                       >
                         <Edit className="h-4 w-4" />
                       </Button>
@@ -147,6 +151,7 @@ export default function CategoriesPage() {
                         onClick={() => deleteCategory(category.id)}
                         variant="ghost"
                         size="icon"
+                        className="cursor-pointer"
                       >
                         <Trash className="h-4 w-4 text-red-500" />
                       </Button>
@@ -154,7 +159,12 @@ export default function CategoriesPage() {
                   </div>
                 </CardContent>
               </Card>
-            ))}
+            ))
+          ) : (
+            <div className="flex items-center justify-center col-span-full">
+              <p className="text-sm text-gray-600">Sem registros</p>
+            </div>
+          )}
         </div>
       )}
     </div>

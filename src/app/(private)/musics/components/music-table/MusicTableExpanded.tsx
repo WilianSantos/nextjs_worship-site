@@ -1,9 +1,10 @@
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+
 import {
   MusicSerializers,
   PraiseMusicMusics200MusicsItem
 } from '@/client/schemas'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
 import { formatToParagraph } from '@/utils/formatToParagraph'
 
 export function MusicTableExpanded({

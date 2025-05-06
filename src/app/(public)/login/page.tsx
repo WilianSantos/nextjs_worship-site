@@ -10,7 +10,9 @@ export default function LoginPage() {
           </h1>
         </div>
 
-        <h2 className="text-xl font-semibold text-center">Login</h2>
+        <h2 className="text-xl font-semibold text-center font-parkinsans text-orange-600">
+          Login
+        </h2>
 
         <LoginForm />
       </div>

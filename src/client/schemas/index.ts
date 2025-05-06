@@ -52,6 +52,8 @@ export * from './praiseVerifyRegistrationTokenListParams';
 export * from './registerUser';
 export * from './requestPasswordReset';
 export * from './sendEmail';
+export * from './sendEmailResponse';
+export * from './sendEmailResponseFailedItem';
 export * from './tokenObtainPair';
 export * from './tokenRefresh';
 export * from './tokenVerification';

@@ -3,7 +3,7 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { Search } from 'lucide-react'
-import { useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
@@ -12,12 +12,9 @@ import { Input } from '@/components/ui/input'
 import { useCreateToken } from '@/services/hooks/token/useCreateToken'
 
 export default function LoginForm() {
-  const { mutate, isSuccess, isError, isPending } = useCreateToken()
+  const [messageError, setMessageError] = useState<string | null>(null)
+  const { mutate, isPending } = useCreateToken()
   const router = useRouter()
-
-  useEffect(() => {
-    if (isSuccess) router.push('/')
-  }, [isSuccess, router])
 
   const formik = useFormik({
     initialValues: {
@@ -29,24 +26,40 @@ export default function LoginForm() {
       password: Yup.string().required('Campo obrigatório')
     }),
     onSubmit: (values) => {
-      mutate({
-        username: values.username,
-        password: values.password
-      })
+      mutate(
+        {
+          username: values.username,
+          password: values.password
+        },
+        {
+          onSuccess: () => {
+            router.push('/')
+          },
+          onError: (error) => {
+            const data = error
+            if (data) {
+              formik.setErrors({
+                username: data?.username,
+                password: data?.password
+              })
+              if (data.detail) setMessageError(`${data.detail}`)
+
+              if (data.message) setMessageError(`${data.message}`)
+            }
+          }
+        }
+      )
     }
   })
 
   return (
     <>
-      {isError && (
-        <div
-          className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-          role="alert"
-        >
-          <span className="block sm:inline"></span>
-        </div>
-      )}
       <form className="space-y-6" onSubmit={formik.handleSubmit}>
+        <div>
+          <p className="text-lg text-red-500">
+            {messageError ? messageError : ''}
+          </p>
+        </div>
         <div>
           <div className="relative">
             <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
@@ -60,6 +73,9 @@ export default function LoginForm() {
               value={formik.values.username}
               required
             />
+            {formik.touched.username && formik.errors.username && (
+              <p className="text-red-500 text-sm">{formik.errors.username}</p>
+            )}
           </div>
         </div>
         <div>
@@ -72,11 +88,14 @@ export default function LoginForm() {
             onBlur={formik.handleBlur}
             required
           />
+          {formik.touched.password && formik.errors.password && (
+            <p className="text-red-500 text-sm">{formik.errors.password}</p>
+          )}
         </div>
         <div>
           <Button
             type="submit"
-            className="w-full bg-indigo-600 hover:bg-indigo-700"
+            className="w-full bg-purple-600 hover:bg-purple-700"
             disabled={isPending}
           >
             {isPending ? 'Entrando...' : 'Entrar'}

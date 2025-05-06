@@ -13,6 +13,7 @@ import { Card } from '@/components/ui/card'
 import { PaginationControls } from './components/page-controls/PaginationControls'
 import { SearchInput } from './components/page-controls/SearchInput'
 import { MusicSerializers } from '@/client/schemas'
+import { Loader } from '@/components/Loader'
 
 const MusicTable = dynamic(
   () => import('./MusicTable').then((mod) => mod.MusicTable),
@@ -67,15 +68,24 @@ export default function MusicsPage() {
   return (
     <div className="p-6  md:pt-32 space-y-6">
       <div className="flex flex-col justify-between gap-2 lg:items-center lg:justify-between lg:flex-row md:flex-row md:items-center md:justify-between">
-        <h1 className="text-2xl font-bold">Músicas</h1>
+        <h1 className="text-2xl font-bold font-parkinsans text-orange-500">
+          Músicas
+        </h1>
         <div>
           <p className="text-lg text-green-500">{messageSuccess}</p>
         </div>
         <div className="flex flex-col items-end lg:flex-row md:flex-row lg:items-center md:items-center gap-4">
-          <SearchInput
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+          {searchTerm ? (
+            <SearchInput
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          ) : (
+            <SearchInput
+              value=""
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          )}
           <Button
             className="cursor-pointer"
             type="button"
@@ -102,16 +112,22 @@ export default function MusicsPage() {
       <div className="bg-white rounded-lg shadow overflow-hidden">
         {!musicForm &&
           !musicFormEdit &&
-          (searchTerm && filteredSongs ? (
+          (searchTerm && filteredSongs && filteredSongs.length > 0 ? (
             <MusicTable
               setMusicFormEdit={handleMusicFormEdit}
               musics={filteredSongs}
+              setMessageSuccess={handleMessageSuccess}
             />
-          ) : (
+          ) : musicListPage && musicListPage.length > 0 ? (
             <MusicTable
               setMusicFormEdit={handleMusicFormEdit}
               musics={musicListPage}
+              setMessageSuccess={handleMessageSuccess}
             />
+          ) : (
+            <div className="flex items-center justify-center">
+              <p className="text-lg text-gray-600">Sem registros.</p>
+            </div>
           ))}
         {musicForm && (
           <Card className="p-10">
@@ -132,7 +148,7 @@ export default function MusicsPage() {
         )}
         {musicFormEdit && isLoading && (
           <Card className="p-10 text-center">
-            <p>Carregando dados da música...</p>
+            <Loader />
           </Card>
         )}
       </div>

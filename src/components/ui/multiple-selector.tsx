@@ -30,6 +30,7 @@ export default function AnimatedMulti({
       defaultValue={defaultValue}
       isMulti
       options={options}
+      className="z-10"
       onChange={onChange}
       styles={{
         control: (base) => ({

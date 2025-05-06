@@ -14,12 +14,12 @@ import {
 } from '@/components/ui/table'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { ProfileForm, valueForm } from './ProfileForm'
 
 import { formatDate } from '@/utils/formatDate'
 import { useGetMember } from '@/services/hooks/member/useGetMember'
 import { usePraiseScaleHistoryList } from '@/services/hooks/scale/usePraiseScaleHistoryList'
 import { useUpdateMember } from '@/services/hooks/member/useUpdateMember'
-import { ProfileForm, valueForm } from './ProfileForm'
 
 export default function ProfilePage() {
   const [userEdit, setUserEdit] = React.useState(false)
@@ -43,7 +43,7 @@ export default function ProfilePage() {
 
   const { isPending, mutateAsync } = useUpdateMember()
   const queryClient = useQueryClient()
-  const [messageSuccess, setMessageSuccess] = useState('')
+  const [messageSuccess, setMessageSuccess] = useState<string | null>(null)
 
   const submitForm = (values: valueForm) => {
     mutateAsync(
@@ -75,10 +75,14 @@ export default function ProfilePage() {
   }
   return (
     <div className="p-6 space-y-6 md:pt-32 sm:pt-32">
-      <h1 className="text-2xl font-bold">Perfil do Usuário</h1>
+      <h1 className="text-2xl font-parkinsans font-bold text-orange-500">
+        Perfil do Usuário
+      </h1>
 
       <div>
-        <p className="text-2xl text-green-500">{messageSuccess}</p>
+        <p className="text-lg text-green-500">
+          {messageSuccess ? messageSuccess : ''}
+        </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
@@ -101,7 +105,7 @@ export default function ProfilePage() {
                 </div>
                 <h2 className="text-xl font-bold">{member?.name}</h2>
 
-                <div className="w-full mt-6 space-y-4">
+                <div className="w-full mt-6 space-y-4 flex flex-col items-center">
                   <div className="flex items-center gap-3">
                     <Mail className="h-5 w-5 text-indigo-600" />
                     <span>{member?.user?.email}</span>
@@ -113,7 +117,10 @@ export default function ProfilePage() {
                 </div>
 
                 <div className="w-full mt-6">
-                  <Button onClick={() => setUserEdit(true)} className="w-full">
+                  <Button
+                    onClick={() => setUserEdit(true)}
+                    className="w-full cursor-pointer"
+                  >
                     Editar Perfil
                   </Button>
                 </div>
@@ -136,29 +143,35 @@ export default function ProfilePage() {
             <CardTitle>Histórico de Escalas</CardTitle>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Evento</TableHead>
-                  <TableHead>Data</TableHead>
-                  <TableHead>Função</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {scales?.scales?.map((scale) => (
-                  <TableRow key={scale.id}>
-                    <TableCell className="font-medium">
-                      {scale.lineup_event}
-                    </TableCell>
-                    <TableCell>
-                      {scale.lineup_date &&
-                        formatDate(scale.lineup_date.toString())}
-                    </TableCell>
-                    <TableCell>{scale.function_name}</TableCell>
+            {scales?.scales && scales.scales.length > 0 ? (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="text-orange-500">Evento</TableHead>
+                    <TableHead className="text-orange-500">Data</TableHead>
+                    <TableHead className="text-orange-500">Função</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {scales.scales?.map((scale) => (
+                    <TableRow key={scale.id}>
+                      <TableCell className="font-medium">
+                        {scale.lineup_event}
+                      </TableCell>
+                      <TableCell>
+                        {scale.lineup_date &&
+                          formatDate(scale.lineup_date.toString())}
+                      </TableCell>
+                      <TableCell>{scale.function_name}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            ) : (
+              <div className="flex items-center justify-center">
+                <p className="text-sm text-gray-600">Sem registros.</p>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>

@@ -13,13 +13,14 @@ import { InputTone } from './components/form-fields/InputTone'
 import { TextEditor } from '../../../components/ui/TextEditor'
 import { InputLink } from './components/form-fields/InputLink'
 import { SelectCategory } from './components/form-fields/SelectCategory'
+import { Loader } from '@/components/Loader'
 
 import { usePdfUpload } from './hooks/usePdfUpload'
 import { useGetCategoryList } from '@/services/hooks/category/useGetCategoryList'
 import { useCreateMusic } from '@/services/hooks/music/useCreateMusic'
 import { useGetChordList } from '@/services/hooks/chord/useGetChordList'
-import { MusicSerializers } from '@/client/schemas/musicSerializers'
 import { useUpdateMusic } from '@/services/hooks/music/useUpdateMusic'
+import { MusicSerializers } from '@/client/schemas/musicSerializers'
 
 export function MusicForm({
   music,
@@ -70,7 +71,11 @@ export function MusicForm({
     onSubmit: (values) => {
       const categoryData =
         categoryList
-          ?.filter((item) => values.category.includes(item.id))
+          ?.filter((item) => {
+            if (item.id) {
+              return values.category.includes(item.id)
+            }
+          })
           .map((item) => Number(item.id)) || []
       const chordData =
         chordList
@@ -156,6 +161,10 @@ export function MusicForm({
 
   const handlePdfUpload = usePdfUpload(formik)
 
+  if (isPendingMusicCreate || isPendingMusicUpdate) {
+    return <Loader />
+  }
+
   return (
     <form
       onSubmit={formik.handleSubmit}
@@ -199,16 +208,6 @@ export function MusicForm({
         onChange={formik.handleChange}
         error={formik.errors.musicTone}
       />
-      <TextEditor
-        value={formik.values.musicText}
-        onChange={(value) => formik.setFieldValue('musicText', value)}
-        error={formik.errors.musicText}
-      />
-      <InputLink
-        value={formik.values.musicLink}
-        onChange={formik.handleChange}
-        error={formik.errors.musicLink}
-      />
       <SelectCategory
         options={selectCategoryOptions}
         defaultValue={
@@ -224,6 +223,16 @@ export function MusicForm({
           )
         }
         error={formik.errors.category}
+      />
+      <TextEditor
+        value={formik.values.musicText}
+        onChange={(value) => formik.setFieldValue('musicText', value)}
+        error={formik.errors.musicText}
+      />
+      <InputLink
+        value={formik.values.musicLink}
+        onChange={formik.handleChange}
+        error={formik.errors.musicLink}
       />
 
       <div className="flex justify-end mt-6 gap-2.5">

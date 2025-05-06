@@ -11,6 +11,7 @@ import { useUpdateFunction } from '@/services/hooks/function/useUpdateFunction'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { TextEditor } from '@/components/ui/TextEditor'
+import { Loader } from '@/components/Loader'
 
 const validationSchema = Yup.object({
   functionName: Yup.string()
@@ -87,6 +88,10 @@ export const FunctionForm = ({
       }
     }
   })
+
+  if (isPendingCreate || isPendingUpdate) {
+    return <Loader />
+  }
 
   return (
     <form onSubmit={formik.handleSubmit} className="space-y-4 p-2.5">

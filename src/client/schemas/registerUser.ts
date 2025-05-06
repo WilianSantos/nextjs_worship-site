@@ -12,6 +12,8 @@ export interface RegisterUser {
   /** @minLength 1 */
   last_name: string;
   /** @minLength 1 */
+  name: string;
+  /** @minLength 1 */
   username: string;
   /** @minLength 1 */
   password: string;

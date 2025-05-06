@@ -10,6 +10,7 @@ import { useUpdateCategory } from '@/services/hooks/category/useUpdateCategory'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Loader } from '@/components/Loader'
 
 const validationSchema = Yup.object({
   categoryName: Yup.string() // Alterado para corresponder ao nome do campo no formulário
@@ -81,6 +82,10 @@ export const CategoryForm = ({
     }
   })
 
+  if (isPendingCreate || isPendingUpdate) {
+    return <Loader />
+  }
+
   return (
     <form onSubmit={formik.handleSubmit} className="space-y-4 p-2.5">
       <div>
@@ -112,7 +117,7 @@ export const CategoryForm = ({
         </Button>
         <Button
           type="submit"
-          className="cursor-pointer bg-indigo-600 hover:bg-indigo-700"
+          className="cursor-pointer bg-purple-600 hover:bg-purple-700"
           disabled={isPendingCreate || isPendingUpdate}
         >
           {isPendingCreate || isPendingUpdate

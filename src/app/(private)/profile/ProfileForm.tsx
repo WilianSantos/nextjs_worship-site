@@ -10,6 +10,7 @@ import AnimatedMulti from '@/components/ui/multiple-selector'
 
 import { useGetFunctionList } from '@/services/hooks/function/useGetFunctionList'
 import { MemberFunctionsSerializers } from '@/client/schemas'
+import { Loader } from '@/components/Loader'
 
 export type valueForm = {
   firstName: string
@@ -95,6 +96,10 @@ export function ProfileForm({
       }
     }
   })
+
+  if (isPending) {
+    return <Loader />
+  }
 
   return (
     <form
@@ -217,7 +222,7 @@ export function ProfileForm({
           type="file"
           id="profilePicture"
           name="profilePicture"
-          className="w-full"
+          className="w-full cursor-pointer"
           onChange={(event) =>
             formik.setFieldValue(
               'profilePicture',
@@ -298,13 +303,13 @@ export function ProfileForm({
         <Button
           type="button"
           onClick={setUserEditFalse}
-          className="bg-red-600 hover:bg-red-700"
+          className="bg-red-600 hover:bg-red-700 cursor-pointer"
         >
           Cancelar
         </Button>
         <Button
           type="submit"
-          className="bg-purple-500 hover:bg-purple-700"
+          className="bg-purple-500 hover:bg-purple-700 cursor-pointer"
           disabled={isPending}
         >
           {isPending ? 'Salvando alterações...' : 'Salvar'}

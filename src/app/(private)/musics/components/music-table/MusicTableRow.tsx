@@ -1,11 +1,13 @@
+import { Youtube, Trash2, SquarePen } from 'lucide-react'
+
 import {
   MusicSerializers,
   PraiseMusicMusics200MusicsItem
 } from '@/client/schemas'
+
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { TableCell, TableRow } from '@/components/ui/table'
-import { Youtube, Trash2, SquarePen } from 'lucide-react'
 
 export function MusicTableRow({
   song,
@@ -16,7 +18,7 @@ export function MusicTableRow({
   song: MusicSerializers | PraiseMusicMusics200MusicsItem
   onEdit: (id: number | undefined) => void
   onDelete: (id: number | undefined) => void
-  onSee: (music: MusicSerializers) => void
+  onSee: (music: MusicSerializers | PraiseMusicMusics200MusicsItem) => void
 }) {
   return (
     <TableRow>

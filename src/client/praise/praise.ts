@@ -7,7 +7,6 @@
  */
 import type {
   ChangePassword,
-  GenerateTemporaryToken,
   Member,
   MemberFunctionsSerializers,
   MemberFunctionsSerializersBody,
@@ -46,6 +45,7 @@ import type {
   RegisterUser,
   RequestPasswordReset,
   SendEmail,
+  SendEmailResponse,
   TokenVerification,
   UserSerializers,
   UserSerializersBody
@@ -1787,7 +1787,7 @@ export const praisePraiseLineupDelete = async (id: string, options?: RequestInit
 
 
 /**
- * Rota para registrar o usuário no banco.
+ * Rota para registrar o usuário.
  */
 export type praiseRegisterUserCreateResponse201 = {
   data: void
@@ -1900,8 +1900,12 @@ export const praiseScaleHistoryList = async ( options?: RequestInit): Promise<pr
 );}
 
 
+/**
+ * Recebe uma lista de e-mails e envia convites personalizados com um link de registro.
+ * @summary Enviar convites por e-mail
+ */
 export type praiseSendRegistrationEmailCreateResponse200 = {
-  data: void
+  data: SendEmailResponse
   status: 200
 }
 
@@ -1933,41 +1937,6 @@ export const praiseSendRegistrationEmailCreate = async (sendEmail: SendEmail, op
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(
       sendEmail,)
-  }
-);}
-
-
-/**
- * Rota para gerar um token temporário.
- */
-export type praiseTokenTemporaryCreateResponse201 = {
-  data: void
-  status: 201
-}
-    
-export type praiseTokenTemporaryCreateResponseComposite = praiseTokenTemporaryCreateResponse201;
-    
-export type praiseTokenTemporaryCreateResponse = praiseTokenTemporaryCreateResponseComposite & {
-  headers: Headers;
-}
-
-export const getPraiseTokenTemporaryCreateUrl = () => {
-
-
-  
-
-  return `/praise/token-temporary/`
-}
-
-export const praiseTokenTemporaryCreate = async (generateTemporaryToken: GenerateTemporaryToken, options?: RequestInit): Promise<praiseTokenTemporaryCreateResponse> => {
-  
-  return customFetcher<praiseTokenTemporaryCreateResponse>(getPraiseTokenTemporaryCreateUrl(),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      generateTemporaryToken,)
   }
 );}
 
@@ -2170,6 +2139,10 @@ export const praiseUserDelete = async (id: number, options?: RequestInit): Promi
 );}
 
 
+/**
+ * Verifica se o token recebido por e-mail ainda é válido. Retorna o e-mail original se válido.
+ * @summary Verificar token de registro
+ */
 export type praiseVerifyRegistrationTokenListResponse200 = {
   data: TokenVerification
   status: 200

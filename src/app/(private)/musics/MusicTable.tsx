@@ -15,13 +15,16 @@ import { MusicTableRow } from './components/music-table/MusicTableRow'
 import { MusicTableExpanded } from './components/music-table/MusicTableExpanded'
 import { MusicTableHeaderMobile } from './components/music-table/MusicTableHeaderMobile'
 import { MusicTableRowMobile } from './components/music-table/MusicTableRowMobile'
+import { Loader } from '@/components/Loader'
 
 export function MusicTable({
   musics,
-  setMusicFormEdit
+  setMusicFormEdit,
+  setMessageSuccess
 }: {
   musics: MusicSerializers[] | PraiseMusicMusics200MusicsItem[]
   setMusicFormEdit: (id?: number) => void
+  setMessageSuccess: (message: string) => void
 }) {
   const [seeMusic, setSeeMusic] = useState(false)
   const [music, setMusic] = useState<
@@ -29,7 +32,7 @@ export function MusicTable({
   >(null)
 
   const queryClient = useQueryClient()
-  const { mutate } = useDeleteMusic()
+  const { mutate, isPending } = useDeleteMusic()
 
   const handleDelete = (id: number | undefined) => {
     if (id)
@@ -39,6 +42,7 @@ export function MusicTable({
           onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['musicList'] })
             queryClient.invalidateQueries({ queryKey: ['musicPage'] })
+            setMessageSuccess('Musica deletada com sucesso')
           }
         }
       )
@@ -57,42 +61,58 @@ export function MusicTable({
     )
   }
 
+  if (isPending) {
+    return <Loader />
+  }
+
   return (
     <>
       {/* Versão desktop/tablet */}
       <div className="hidden md:block lg:block">
-        <Table>
-          <MusicTableHeader />
-          <TableBody>
-            {musics?.map((song) => (
-              <MusicTableRow
-                key={song.id}
-                song={song}
-                onEdit={setMusicFormEdit}
-                onDelete={handleDelete}
-                onSee={handleSeeMusic}
-              />
-            ))}
-          </TableBody>
-        </Table>
+        {musics && musics.length > 0 ? (
+          <Table>
+            <MusicTableHeader />
+            <TableBody>
+              {musics?.map((song) => (
+                <MusicTableRow
+                  key={song.id}
+                  song={song}
+                  onEdit={setMusicFormEdit}
+                  onDelete={handleDelete}
+                  onSee={handleSeeMusic}
+                />
+              ))}
+            </TableBody>
+          </Table>
+        ) : (
+          <div className="flex items-center justify-center">
+            <p className="text-lg text-gray-600">Sem registros</p>
+          </div>
+        )}
       </div>
 
       {/* Versão mobile */}
       <div className="block md:hidden lg:hidden">
-        <Table>
-          <MusicTableHeaderMobile />
-          <TableBody>
-            {musics?.map((song) => (
-              <MusicTableRowMobile
-                key={song.id}
-                song={song}
-                onEdit={setMusicFormEdit}
-                onDelete={handleDelete}
-                onSee={handleSeeMusic}
-              />
-            ))}
-          </TableBody>
-        </Table>
+        {musics && musics.length > 0 ? (
+          <Table>
+            <MusicTableHeaderMobile />
+            <TableBody>
+              {musics?.map((song) => (
+                <MusicTableRowMobile
+                  key={song.id}
+                  song={song}
+                  onEdit={setMusicFormEdit}
+                  onDelete={handleDelete}
+                  onSee={handleSeeMusic}
+                />
+              ))}
+            </TableBody>
+          </Table>
+        ) : (
+          <div className="flex items-center justify-center">
+            <p className="text-lg text-gray-600">Sem registros</p>
+          </div>
+        )}
       </div>
     </>
   )

@@ -4,6 +4,8 @@ import { TokenObtainPair } from '@/client/schemas'
 
 export const useCreateToken = () => {
   return useMutation({
+    onSuccess: () => {},
+    onError: () => {},
     mutationFn: (values: TokenObtainPair) =>
       tokenCreate({ username: values.username, password: values.password })
   })

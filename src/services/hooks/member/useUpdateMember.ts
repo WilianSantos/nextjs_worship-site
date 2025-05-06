@@ -58,7 +58,7 @@ export const useUpdateMember = () => {
       }
 
       const responseMember = await fetch(
-        `http://localhost:8000/api/praise/member/${id}/`,
+        `${process.env.NEXT_PUBLIC_API_URL}/praise/member/${id}/`,
         {
           method: 'PATCH',
           credentials: 'include',

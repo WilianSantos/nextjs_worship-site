@@ -13,6 +13,7 @@ import { useCreateEmail } from '@/services/hooks/member/useCreateEmail'
 interface MemberFormProps {
   setMemberForm: () => void
   setMessageSuccess: (message: string) => void
+  setErrorPage: (message: string) => void
 }
 
 const validationSchema = Yup.object({
@@ -21,7 +22,8 @@ const validationSchema = Yup.object({
 
 export const MemberForm = ({
   setMemberForm,
-  setMessageSuccess
+  setMessageSuccess,
+  setErrorPage
 }: MemberFormProps) => {
   const [emailList, setEmailList] = useState<string[]>([])
   const [messageError, setMessageError] = useState<string>('')
@@ -38,23 +40,29 @@ export const MemberForm = ({
     mutate(
       { emails: emailList },
       {
-        onSuccess: () => {
-          setMessageSuccess('Todos os convites foram enviados com sucesso.')
+        onSuccess: (responseData) => {
+          setMessageSuccess(
+            `Os e-mails ${responseData?.sent.map((item) => `${item}, `)}foram enviados com sucesso.`
+          )
+
+          setErrorPage(
+            `Os e-mails ${responseData?.failed.map((item) => `${item.email}, ocorreu o seguinte erro: ${item.detail}, `)}tente novamente.`
+          )
+
           setEmailList([])
           formik.resetForm()
           setMemberForm()
         },
         onError: (error) => {
-          setMessageError(
-            error.detail || `Erro ao enviar o email ${error.email}`
-          )
+          setMessageError(`${error.message}` || `${error.detail}`)
         }
       }
     )
   }
 
   const addEmail = (email: string) => {
-    if (!email || !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) return
+    if (!email || !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email))
+      return setMessageError('E-mail invalido')
     if (emailList.includes(email)) return
 
     setEmailList((prev) => [...prev, email])
@@ -84,7 +92,11 @@ export const MemberForm = ({
             value={formik.values.email}
             placeholder="exemplo@email.com"
           />
-          <Button type="button" onClick={() => addEmail(formik.values.email)}>
+          <Button
+            className="cursor-pointer"
+            type="button"
+            onClick={() => addEmail(formik.values.email)}
+          >
             Adicionar
           </Button>
         </div>
@@ -106,7 +118,7 @@ export const MemberForm = ({
                 <button
                   type="button"
                   onClick={() => removeEmail(email)}
-                  className="text-red-500 hover:underline text-xs"
+                  className="text-red-500 hover:underline text-xs cursor-pointer"
                 >
                   Remover
                 </button>
@@ -122,7 +134,7 @@ export const MemberForm = ({
         <Button
           type="button"
           onClick={setMemberForm}
-          className="bg-red-600 hover:bg-red-700"
+          className="bg-red-600 hover:bg-red-700 cursor-pointer"
         >
           Cancelar
         </Button>
@@ -130,7 +142,7 @@ export const MemberForm = ({
           type="button"
           onClick={handleSubmit}
           disabled={emailList.length === 0 || isPending}
-          className="bg-purple-600"
+          className="bg-purple-600 cursor-pointer"
         >
           {isPending ? 'Enviando convites' : 'Enviar Convites'}
         </Button>
