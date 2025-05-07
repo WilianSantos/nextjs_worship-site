@@ -12,10 +12,6 @@ export type PraiseMusicMusicsParams = {
  */
 category?: string;
 /**
- * Which field to use when ordering the results.
- */
-ordering?: string;
-/**
  * A search term.
  */
 search?: string;

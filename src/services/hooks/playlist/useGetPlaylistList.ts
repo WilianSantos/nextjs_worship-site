@@ -1,22 +1,22 @@
 import { useQuery } from '@tanstack/react-query'
-import { praiseMusicList } from '@/client/praise/praise'
+import { praisePlaylistList } from '@/client/praise/praise'
 
-export const useGetMusicListPage = ({
-  page = 1,
-  search
+export const useGetPlaylistList = ({
+  search,
+  page
 }: {
-  page?: number
   search?: string
+  page: number
 }) => {
   return useQuery({
-    queryKey: ['musicPage', page, search],
+    queryKey: ['playlistList', search, page],
     queryFn: () => {
       if (search) {
-        return praiseMusicList({
+        return praisePlaylistList({
           search: search
         })
       } else {
-        return praiseMusicList({
+        return praisePlaylistList({
           page: page
         })
       }

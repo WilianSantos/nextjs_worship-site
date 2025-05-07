@@ -35,7 +35,7 @@ export default function MembersPage() {
   const functions = dataFunction?.data
 
   return (
-    <div className="p-6 space-y-6 md:pt-32">
+    <div className="p-6 space-y-6 md:pt-32 lg:p-6">
       <div className="flex flex-col items-center gap-1 justify-between lg:flex-row lg:items-center lg:justify-between md:flex-row md:items-center md:justify-between">
         <h1 className="text-2xl font-parkinsans text-orange-500 font-bold">
           Membros

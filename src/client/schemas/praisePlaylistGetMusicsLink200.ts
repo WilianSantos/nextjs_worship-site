@@ -6,17 +6,6 @@
  * OpenAPI spec version: v1
  */
 
-export type PraiseMusicListParams = {
-/**
- * category
- */
-category?: string;
-/**
- * A search term.
- */
-search?: string;
-/**
- * A page number within the paginated result set.
- */
-page?: number;
+export type PraisePlaylistGetMusicsLink200 = {
+  links?: string[];
 };

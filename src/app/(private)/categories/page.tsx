@@ -12,7 +12,7 @@ import { Loader } from '@/components/Loader'
 import { CategoryForm } from './CategoryForm'
 
 import { useGetCategoryList } from '@/services/hooks/category/useGetCategoryList'
-import { useGetMusicsList } from '@/services/hooks/music/useGetMusicsList'
+import { useGetMusicList } from '@/services/hooks/music/useGetMusicList'
 import { useDeleteCategory } from '@/services/hooks/category/useDeleteCategory'
 import { MusicCategorySerializers } from '@/client/schemas'
 
@@ -23,7 +23,7 @@ export default function CategoriesPage() {
     useGetCategoryList({ search: searchTerm })
   const categories = dataCategory?.data
 
-  const { data: dataMusics, isLoading: isLoadingMusics } = useGetMusicsList({})
+  const { data: dataMusics, isLoading: isLoadingMusics } = useGetMusicList()
 
   const [categoryForm, setCategoryForm] = useState(false)
   const [categoryFormEdit, setCategoryFormEdit] = useState(false)
@@ -77,7 +77,7 @@ export default function CategoriesPage() {
   }
 
   return (
-    <div className="p-6 space-y-6 md:pt-32">
+    <div className="p-6 space-y-6 md:pt-32 lg:p-6">
       <div className="flex flex-col gap-1 lg:flex-row lg:items-center lg:justify-between md:flex-row md:items-center md:justify-between">
         <h1 className="text-2xl font-bold font-parkinsans text-orange-500">
           Categorias
@@ -88,7 +88,7 @@ export default function CategoriesPage() {
         <div>
           <p className="text-2xl text-red-500">{messageError}</p>
         </div>
-        <div className="flex flex-col lg:items-center lg:flex-row md:flex-row md:items-center gap-4">
+        <div className="flex flex-col items-end lg:items-center lg:flex-row md:flex-row md:items-center gap-4">
           <div className="relative">
             <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
             <Input

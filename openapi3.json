@@ -786,15 +786,6 @@
                         }
                     },
                     {
-                        "name": "ordering",
-                        "in": "query",
-                        "description": "Which field to use when ordering the results.",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
                         "name": "search",
                         "in": "query",
                         "description": "A search term.",
@@ -902,15 +893,6 @@
                         "name": "category",
                         "in": "query",
                         "description": "category",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "ordering",
-                        "in": "query",
-                        "description": "Which field to use when ordering the results.",
                         "required": false,
                         "schema": {
                             "type": "string"
@@ -1297,6 +1279,81 @@
             },
             "parameters": []
         },
+        "/praise/playlist/musics-link/": {
+            "get": {
+                "operationId": "praise_playlist_get_musics_link",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "ordering",
+                        "in": "query",
+                        "description": "Which field to use when ordering the results.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "A search term.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "A page number within the paginated result set.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID da playlist",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Links das músicas da playlist",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "links": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "format": "url"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "ID da playlist é obrigatório."
+                    },
+                    "404": {
+                        "description": "Playlist não encontrada."
+                    }
+                },
+                "tags": [
+                    "praise"
+                ]
+            },
+            "parameters": []
+        },
         "/praise/playlist/{id}/": {
             "get": {
                 "operationId": "praise_playlist_read",
@@ -1407,15 +1464,6 @@
                         "schema": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "A page number within the paginated result set.",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
                     }
                 ],
                 "responses": {
@@ -1424,31 +1472,9 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "required": [
-                                        "count",
-                                        "results"
-                                    ],
-                                    "type": "object",
-                                    "properties": {
-                                        "count": {
-                                            "type": "integer"
-                                        },
-                                        "next": {
-                                            "type": "string",
-                                            "format": "uri",
-                                            "nullable": true
-                                        },
-                                        "previous": {
-                                            "type": "string",
-                                            "format": "uri",
-                                            "nullable": true
-                                        },
-                                        "results": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/PraiseLineupSerializers"
-                                            }
-                                        }
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PraiseLineupSerializers"
                                     }
                                 }
                             }
@@ -1563,9 +1589,10 @@
                 {
                     "name": "id",
                     "in": "path",
+                    "description": "A unique integer value identifying this praise lineup.",
                     "required": true,
                     "schema": {
-                        "type": "string"
+                        "type": "integer"
                     }
                 }
             ]
@@ -2510,7 +2537,7 @@
                         "title": "Playlist date",
                         "type": "string",
                         "format": "date",
-                        "default": "2025-05-05"
+                        "default": "2025-05-07"
                     },
                     "music": {
                         "type": "array",

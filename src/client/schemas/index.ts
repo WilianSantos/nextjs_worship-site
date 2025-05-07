@@ -40,6 +40,8 @@ export * from './praiseMusicMusics200MusicsItemMusicChordItem';
 export * from './praiseMusicMusicsParams';
 export * from './praiseMusicUploadPdf200';
 export * from './praiseMusicUploadPdfBody';
+export * from './praisePlaylistGetMusicsLink200';
+export * from './praisePlaylistGetMusicsLinkParams';
 export * from './praisePlaylistList200';
 export * from './praisePlaylistListParams';
 export * from './praisePraiseLineupList200';

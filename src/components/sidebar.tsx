@@ -95,7 +95,7 @@ export function Sidebar() {
         </div>
       </div>
       <nav
-        className={`pt-2 pb-2 lg:flex-1 overflow-y-auto ${
+        className={`pt-2 pb-2 overflow-y-auto ${
           menuIsOpen ? 'block md:block lg:block' : 'hidden md:hidden lg:block'
         } md:w-full`}
       >
@@ -109,7 +109,7 @@ export function Sidebar() {
                   className={`flex items-center gap-3 px-4 py-3 rounded-md transition-colors ${
                     isActive
                       ? 'bg-purple-800 text-orange-400'
-                      : 'text-indigo-100 hover:bg-purple-800 hover:text-white'
+                      : 'text-indigo-100 hover:bg-purple-800 hover:text-orange-500'
                   }`}
                 >
                   <item.icon size={20} />

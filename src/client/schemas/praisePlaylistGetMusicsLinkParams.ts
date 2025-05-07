@@ -6,11 +6,11 @@
  * OpenAPI spec version: v1
  */
 
-export type PraiseMusicListParams = {
+export type PraisePlaylistGetMusicsLinkParams = {
 /**
- * category
+ * Which field to use when ordering the results.
  */
-category?: string;
+ordering?: string;
 /**
  * A search term.
  */
@@ -19,4 +19,8 @@ search?: string;
  * A page number within the paginated result set.
  */
 page?: number;
+/**
+ * ID da playlist
+ */
+id: number;
 };

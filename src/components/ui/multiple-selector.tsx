@@ -1,45 +1,51 @@
 'use client'
 
 import React from 'react'
-
-import Select from 'react-select'
+import Select, { ActionMeta, MultiValue } from 'react-select'
 import makeAnimated from 'react-select/animated'
 
-type OptionType = {
-  value: string
-  label: string
+export type OptionType = {
+  value: string | undefined
+  label: string | undefined
 }
 
-type SelectOption = {
+type Props = {
   options: OptionType[]
   defaultValue?: OptionType[]
   onChange: (value: OptionType[]) => void
+  placeholder?: string
 }
 
 const animatedComponents = makeAnimated()
 
 export default function AnimatedMulti({
   options,
-  defaultValue,
-  onChange
-}: SelectOption) {
+  defaultValue = [],
+  onChange,
+  placeholder = 'Selecione...'
+}: Props) {
   return (
     <Select
-      closeMenuOnSelect={false}
-      components={animatedComponents}
-      defaultValue={defaultValue}
       isMulti
+      components={animatedComponents}
       options={options}
-      className="z-10"
-      onChange={onChange}
+      defaultValue={defaultValue}
+      onChange={(
+        newValue: MultiValue<OptionType>,
+        _actionMeta: ActionMeta<OptionType>
+      ) => {
+        onChange([...newValue])
+      }}
+      placeholder={placeholder}
+      filterOption={(candidate, input) =>
+        candidate.label.toLowerCase().includes(input.toLowerCase())
+      }
       styles={{
         control: (base) => ({
           ...base,
           backgroundColor: '#f9fafb',
           borderColor: '#d1d5db',
-          '&:hover': {
-            borderColor: '#4f46e5'
-          },
+          '&:hover': { borderColor: '#4f46e5' },
           boxShadow: 'none'
         }),
         option: (base, { isFocused, isSelected }) => ({
@@ -66,8 +72,15 @@ export default function AnimatedMulti({
             backgroundColor: '#4f46e5',
             color: 'white'
           }
+        }),
+        menuPortal: (base) => ({
+          ...base,
+          zIndex: 10
         })
       }}
+      menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+      menuShouldBlockScroll
+      menuPlacement="auto"
     />
   )
 }

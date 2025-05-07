@@ -10,10 +10,11 @@ import { useGetMusic } from '@/services/hooks/music/useGetMusic'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { PaginationControls } from './components/page-controls/PaginationControls'
-import { SearchInput } from './components/page-controls/SearchInput'
+import { PaginationControls } from '../../../components/page-controls/PaginationControls'
+import { SearchInput } from '../../../components/page-controls/SearchInput'
 import { MusicSerializers } from '@/client/schemas'
 import { Loader } from '@/components/Loader'
+import { handleNextPage, handlePreviousPage } from '@/utils/pageControls'
 
 const MusicTable = dynamic(
   () => import('./MusicTable').then((mod) => mod.MusicTable),
@@ -31,23 +32,15 @@ export default function MusicsPage() {
   const [messageSuccess, setMessageSuccess] = useState('')
 
   const [page, setPage] = useState(1)
-  const { data: dataMusicPage } = useGetMusicListPage({ page })
-  const musicListPage = dataMusicPage?.data?.results || []
+  const { data: dataMusicPage } = useGetMusicListPage({
+    page: page,
+    search: searchTerm
+  })
+  const musicListPage = dataMusicPage?.data?.results
 
   const [getMusicWithId, setGetMusicWithId] = useState<number | null>(null)
   const { data: getMusicData, isLoading } = useGetMusic(getMusicWithId || 0)
   const getMusicId = getMusicData?.data
-
-  const { data: dataMusicList } = useGetMusicsList({ search: searchTerm })
-  const filteredSongs = dataMusicList?.data.musics
-
-  const handleNextPage = () => {
-    if (dataMusicPage?.data?.next) setPage((prev) => prev + 1)
-  }
-
-  const handlePreviousPage = () => {
-    if (dataMusicPage?.data?.previous) setPage((prev) => prev - 1)
-  }
 
   const handleMusicFormEdit = (id?: number) => {
     if (id) {
@@ -66,7 +59,7 @@ export default function MusicsPage() {
     setMessageSuccess(message)
   }
   return (
-    <div className="p-6  md:pt-32 space-y-6">
+    <div className="p-6 md:pt-32 lg:p-6 space-y-6">
       <div className="flex flex-col justify-between gap-2 lg:items-center lg:justify-between lg:flex-row md:flex-row md:items-center md:justify-between">
         <h1 className="text-2xl font-bold font-parkinsans text-orange-500">
           Músicas
@@ -103,7 +96,7 @@ export default function MusicsPage() {
             <Music className="h-5 w-5 text-indigo-600" />
           </div>
           <p className="text-3xl font-bold mt-2">
-            {dataMusicList?.data?.counts}
+            {dataMusicPage?.data?.count}
           </p>
           <p className="text-sm text-gray-500">músicas</p>
         </div>
@@ -112,10 +105,10 @@ export default function MusicsPage() {
       <div className="bg-white rounded-lg shadow overflow-hidden">
         {!musicForm &&
           !musicFormEdit &&
-          (searchTerm && filteredSongs && filteredSongs.length > 0 ? (
+          (searchTerm && musicListPage && musicListPage.length > 0 ? (
             <MusicTable
               setMusicFormEdit={handleMusicFormEdit}
-              musics={filteredSongs}
+              musics={musicListPage}
               setMessageSuccess={handleMessageSuccess}
             />
           ) : musicListPage && musicListPage.length > 0 ? (
@@ -156,8 +149,10 @@ export default function MusicsPage() {
       {!musicForm && !musicFormEdit && (
         <PaginationControls
           page={page}
-          onNext={handleNextPage}
-          onPrev={handlePreviousPage}
+          onNext={() => handleNextPage(dataMusicPage?.data.next, setPage)}
+          onPrev={() =>
+            handlePreviousPage(dataMusicPage?.data.previous, setPage)
+          }
         />
       )}
     </div>
