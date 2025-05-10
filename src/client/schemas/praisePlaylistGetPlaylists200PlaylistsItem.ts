@@ -6,13 +6,10 @@
  * OpenAPI spec version: v1
  */
 
-export interface PlaylistSerializers {
-  readonly id?: number;
-  readonly playlist_link_display?: string;
-  readonly created_at?: string;
-  readonly updated_at?: string;
-  /** @maxLength 100 */
-  playlist_name: string;
+export type PraisePlaylistGetPlaylists200PlaylistsItem = {
+  id?: number;
+  playlist_name?: string;
   playlist_date?: string;
   music?: number[];
-}
+  playlist_link_display?: string[];
+};

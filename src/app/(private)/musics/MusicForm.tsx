@@ -38,10 +38,12 @@ export function MusicForm({
   const queryClient = useQueryClient()
 
   const selectCategoryOptions =
-    categoryList?.map((item) => ({
-      value: String(item.id),
-      label: String(item.category_name)
-    })) || []
+    (categoryList &&
+      categoryList?.map((item) => ({
+        value: String(item.id),
+        label: String(item.category_name)
+      }))) ||
+    []
 
   const { mutate: mutateMusicCreate, isPending: isPendingMusicCreate } =
     useCreateMusic()

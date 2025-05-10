@@ -7,6 +7,8 @@
  */
 import type {
   ChangePassword,
+  LineupMemberSerializers,
+  LineupMemberSerializersBody,
   Member,
   MemberFunctionsSerializers,
   MemberFunctionsSerializersBody,
@@ -20,6 +22,7 @@ import type {
   PasswordReset,
   PlaylistSerializers,
   PlaylistSerializersBody,
+  PraiseLineupMemberListParams,
   PraiseLineupSerializers,
   PraiseLineupSerializersBody,
   PraiseMemberCreateBody,
@@ -34,10 +37,13 @@ import type {
   PraiseMusicMusicsParams,
   PraiseMusicUploadPdf200,
   PraiseMusicUploadPdfBody,
-  PraisePlaylistGetMusicsLink200,
-  PraisePlaylistGetMusicsLinkParams,
+  PraisePlaylistGetPlaylists200,
+  PraisePlaylistGetPlaylistsParams,
   PraisePlaylistList200,
   PraisePlaylistListParams,
+  PraisePraiseLineupGetScales200,
+  PraisePraiseLineupGetScalesParams,
+  PraisePraiseLineupList200,
   PraisePraiseLineupListParams,
   PraiseScaleHistoryList200,
   PraiseUserList200,
@@ -90,6 +96,204 @@ export const praiseChangePasswordCreate = async (changePassword: ChangePassword,
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(
       changePassword,)
+  }
+);}
+
+
+export type praiseLineupMemberListResponse200 = {
+  data: LineupMemberSerializers[]
+  status: 200
+}
+    
+export type praiseLineupMemberListResponseComposite = praiseLineupMemberListResponse200;
+    
+export type praiseLineupMemberListResponse = praiseLineupMemberListResponseComposite & {
+  headers: Headers;
+}
+
+export const getPraiseLineupMemberListUrl = (params?: PraiseLineupMemberListParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/praise/lineup-member/?${stringifiedParams}` : `/praise/lineup-member/`
+}
+
+export const praiseLineupMemberList = async (params?: PraiseLineupMemberListParams, options?: RequestInit): Promise<praiseLineupMemberListResponse> => {
+  
+  return customFetcher<praiseLineupMemberListResponse>(getPraiseLineupMemberListUrl(params),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+);}
+
+
+export type praiseLineupMemberCreateResponse201 = {
+  data: LineupMemberSerializers
+  status: 201
+}
+    
+export type praiseLineupMemberCreateResponseComposite = praiseLineupMemberCreateResponse201;
+    
+export type praiseLineupMemberCreateResponse = praiseLineupMemberCreateResponseComposite & {
+  headers: Headers;
+}
+
+export const getPraiseLineupMemberCreateUrl = () => {
+
+
+  
+
+  return `/praise/lineup-member/`
+}
+
+export const praiseLineupMemberCreate = async (lineupMemberSerializersBody: LineupMemberSerializersBody, options?: RequestInit): Promise<praiseLineupMemberCreateResponse> => {
+  
+  return customFetcher<praiseLineupMemberCreateResponse>(getPraiseLineupMemberCreateUrl(),
+  {      
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      lineupMemberSerializersBody,)
+  }
+);}
+
+
+export type praiseLineupMemberReadResponse200 = {
+  data: LineupMemberSerializers
+  status: 200
+}
+    
+export type praiseLineupMemberReadResponseComposite = praiseLineupMemberReadResponse200;
+    
+export type praiseLineupMemberReadResponse = praiseLineupMemberReadResponseComposite & {
+  headers: Headers;
+}
+
+export const getPraiseLineupMemberReadUrl = (id: number,) => {
+
+
+  
+
+  return `/praise/lineup-member/${id}/`
+}
+
+export const praiseLineupMemberRead = async (id: number, options?: RequestInit): Promise<praiseLineupMemberReadResponse> => {
+  
+  return customFetcher<praiseLineupMemberReadResponse>(getPraiseLineupMemberReadUrl(id),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+);}
+
+
+export type praiseLineupMemberUpdateResponse200 = {
+  data: LineupMemberSerializers
+  status: 200
+}
+    
+export type praiseLineupMemberUpdateResponseComposite = praiseLineupMemberUpdateResponse200;
+    
+export type praiseLineupMemberUpdateResponse = praiseLineupMemberUpdateResponseComposite & {
+  headers: Headers;
+}
+
+export const getPraiseLineupMemberUpdateUrl = (id: number,) => {
+
+
+  
+
+  return `/praise/lineup-member/${id}/`
+}
+
+export const praiseLineupMemberUpdate = async (id: number,
+    lineupMemberSerializersBody: LineupMemberSerializersBody, options?: RequestInit): Promise<praiseLineupMemberUpdateResponse> => {
+  
+  return customFetcher<praiseLineupMemberUpdateResponse>(getPraiseLineupMemberUpdateUrl(id),
+  {      
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      lineupMemberSerializersBody,)
+  }
+);}
+
+
+export type praiseLineupMemberPartialUpdateResponse200 = {
+  data: LineupMemberSerializers
+  status: 200
+}
+    
+export type praiseLineupMemberPartialUpdateResponseComposite = praiseLineupMemberPartialUpdateResponse200;
+    
+export type praiseLineupMemberPartialUpdateResponse = praiseLineupMemberPartialUpdateResponseComposite & {
+  headers: Headers;
+}
+
+export const getPraiseLineupMemberPartialUpdateUrl = (id: number,) => {
+
+
+  
+
+  return `/praise/lineup-member/${id}/`
+}
+
+export const praiseLineupMemberPartialUpdate = async (id: number,
+    lineupMemberSerializersBody: LineupMemberSerializersBody, options?: RequestInit): Promise<praiseLineupMemberPartialUpdateResponse> => {
+  
+  return customFetcher<praiseLineupMemberPartialUpdateResponse>(getPraiseLineupMemberPartialUpdateUrl(id),
+  {      
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      lineupMemberSerializersBody,)
+  }
+);}
+
+
+export type praiseLineupMemberDeleteResponse204 = {
+  data: void
+  status: 204
+}
+    
+export type praiseLineupMemberDeleteResponseComposite = praiseLineupMemberDeleteResponse204;
+    
+export type praiseLineupMemberDeleteResponse = praiseLineupMemberDeleteResponseComposite & {
+  headers: Headers;
+}
+
+export const getPraiseLineupMemberDeleteUrl = (id: number,) => {
+
+
+  
+
+  return `/praise/lineup-member/${id}/`
+}
+
+export const praiseLineupMemberDelete = async (id: number, options?: RequestInit): Promise<praiseLineupMemberDeleteResponse> => {
+  
+  return customFetcher<praiseLineupMemberDeleteResponse>(getPraiseLineupMemberDeleteUrl(id),
+  {      
+    ...options,
+    method: 'DELETE'
+    
+    
   }
 );}
 
@@ -1461,23 +1665,18 @@ export const praisePlaylistCreate = async (playlistSerializersBody: PlaylistSeri
 );}
 
 
-export type praisePlaylistGetMusicsLinkResponse200 = {
-  data: PraisePlaylistGetMusicsLink200
+export type praisePlaylistGetPlaylistsResponse200 = {
+  data: PraisePlaylistGetPlaylists200
   status: 200
 }
-
-export type praisePlaylistGetMusicsLinkResponse400 = {
-  data: void
-  status: 400
-}
     
-export type praisePlaylistGetMusicsLinkResponseComposite = praisePlaylistGetMusicsLinkResponse200 | praisePlaylistGetMusicsLinkResponse400;
+export type praisePlaylistGetPlaylistsResponseComposite = praisePlaylistGetPlaylistsResponse200;
     
-export type praisePlaylistGetMusicsLinkResponse = praisePlaylistGetMusicsLinkResponseComposite & {
+export type praisePlaylistGetPlaylistsResponse = praisePlaylistGetPlaylistsResponseComposite & {
   headers: Headers;
 }
 
-export const getPraisePlaylistGetMusicsLinkUrl = (params: PraisePlaylistGetMusicsLinkParams,) => {
+export const getPraisePlaylistGetPlaylistsUrl = (params?: PraisePlaylistGetPlaylistsParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
@@ -1489,12 +1688,12 @@ export const getPraisePlaylistGetMusicsLinkUrl = (params: PraisePlaylistGetMusic
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `/praise/playlist/musics-link/?${stringifiedParams}` : `/praise/playlist/musics-link/`
+  return stringifiedParams.length > 0 ? `/praise/playlist/playlists/?${stringifiedParams}` : `/praise/playlist/playlists/`
 }
 
-export const praisePlaylistGetMusicsLink = async (params: PraisePlaylistGetMusicsLinkParams, options?: RequestInit): Promise<praisePlaylistGetMusicsLinkResponse> => {
+export const praisePlaylistGetPlaylists = async (params?: PraisePlaylistGetPlaylistsParams, options?: RequestInit): Promise<praisePlaylistGetPlaylistsResponse> => {
   
-  return customFetcher<praisePlaylistGetMusicsLinkResponse>(getPraisePlaylistGetMusicsLinkUrl(params),
+  return customFetcher<praisePlaylistGetPlaylistsResponse>(getPraisePlaylistGetPlaylistsUrl(params),
   {      
     ...options,
     method: 'GET'
@@ -1633,7 +1832,7 @@ export const praisePlaylistDelete = async (id: number, options?: RequestInit): P
 
 
 export type praisePraiseLineupListResponse200 = {
-  data: PraiseLineupSerializers[]
+  data: PraisePraiseLineupList200
   status: 200
 }
     
@@ -1698,6 +1897,47 @@ export const praisePraiseLineupCreate = async (praiseLineupSerializersBody: Prai
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(
       praiseLineupSerializersBody,)
+  }
+);}
+
+
+/**
+ * Lista de escalas com links da playlist
+ */
+export type praisePraiseLineupGetScalesResponse200 = {
+  data: PraisePraiseLineupGetScales200
+  status: 200
+}
+    
+export type praisePraiseLineupGetScalesResponseComposite = praisePraiseLineupGetScalesResponse200;
+    
+export type praisePraiseLineupGetScalesResponse = praisePraiseLineupGetScalesResponseComposite & {
+  headers: Headers;
+}
+
+export const getPraisePraiseLineupGetScalesUrl = (params?: PraisePraiseLineupGetScalesParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/praise/praise-lineup/scales/?${stringifiedParams}` : `/praise/praise-lineup/scales/`
+}
+
+export const praisePraiseLineupGetScales = async (params?: PraisePraiseLineupGetScalesParams, options?: RequestInit): Promise<praisePraiseLineupGetScalesResponse> => {
+  
+  return customFetcher<praisePraiseLineupGetScalesResponse>(getPraisePraiseLineupGetScalesUrl(params),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
   }
 );}
 

@@ -57,6 +57,161 @@
             },
             "parameters": []
         },
+        "/praise/lineup-member/": {
+            "get": {
+                "operationId": "praise_lineup-member_list",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "ordering",
+                        "in": "query",
+                        "description": "Which field to use when ordering the results.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "A search term.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/LineupMemberSerializers"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "praise"
+                ]
+            },
+            "post": {
+                "operationId": "praise_lineup-member_create",
+                "description": "",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/LineupMemberSerializers"
+                },
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LineupMemberSerializers"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "praise"
+                ]
+            },
+            "parameters": []
+        },
+        "/praise/lineup-member/{id}/": {
+            "get": {
+                "operationId": "praise_lineup-member_read",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LineupMemberSerializers"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "praise"
+                ]
+            },
+            "put": {
+                "operationId": "praise_lineup-member_update",
+                "description": "",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/LineupMemberSerializers"
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LineupMemberSerializers"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "praise"
+                ]
+            },
+            "patch": {
+                "operationId": "praise_lineup-member_partial_update",
+                "description": "",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/LineupMemberSerializers"
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LineupMemberSerializers"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "praise"
+                ]
+            },
+            "delete": {
+                "operationId": "praise_lineup-member_delete",
+                "description": "",
+                "responses": {
+                    "204": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "praise"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this lineup member.",
+                    "required": true,
+                    "schema": {
+                        "type": "integer"
+                    }
+                }
+            ]
+        },
         "/praise/logout/": {
             "post": {
                 "operationId": "praise_logout_create",
@@ -1279,9 +1434,9 @@
             },
             "parameters": []
         },
-        "/praise/playlist/musics-link/": {
+        "/praise/playlist/playlists/": {
             "get": {
-                "operationId": "praise_playlist_get_musics_link",
+                "operationId": "praise_playlist_get_playlists",
                 "description": "",
                 "parameters": [
                     {
@@ -1310,42 +1465,50 @@
                         "schema": {
                             "type": "integer"
                         }
-                    },
-                    {
-                        "name": "id",
-                        "in": "query",
-                        "description": "ID da playlist",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Links das músicas da playlist",
+                        "description": "Lista das playlists",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "links": {
+                                        "playlists": {
                                             "type": "array",
                                             "items": {
-                                                "type": "string",
-                                                "format": "url"
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "playlist_name": {
+                                                        "type": "string"
+                                                    },
+                                                    "playlist_date": {
+                                                        "type": "string",
+                                                        "format": "date"
+                                                    },
+                                                    "music": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "integer"
+                                                        }
+                                                    },
+                                                    "playlist_link_display": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
                                     }
                                 }
                             }
                         }
-                    },
-                    "400": {
-                        "description": "ID da playlist é obrigatório."
-                    },
-                    "404": {
-                        "description": "Playlist não encontrada."
                     }
                 },
                 "tags": [
@@ -1464,6 +1627,15 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "A page number within the paginated result set.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
                     }
                 ],
                 "responses": {
@@ -1472,9 +1644,31 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/PraiseLineupSerializers"
+                                    "required": [
+                                        "count",
+                                        "results"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "count": {
+                                            "type": "integer"
+                                        },
+                                        "next": {
+                                            "type": "string",
+                                            "format": "uri",
+                                            "nullable": true
+                                        },
+                                        "previous": {
+                                            "type": "string",
+                                            "format": "uri",
+                                            "nullable": true
+                                        },
+                                        "results": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/PraiseLineupSerializers"
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -1498,6 +1692,89 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/PraiseLineupSerializers"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "praise"
+                ]
+            },
+            "parameters": []
+        },
+        "/praise/praise-lineup/scales/": {
+            "get": {
+                "operationId": "praise_praise-lineup_get_scales",
+                "description": "Lista de escalas com links da playlist",
+                "parameters": [
+                    {
+                        "name": "ordering",
+                        "in": "query",
+                        "description": "Which field to use when ordering the results.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "A search term.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "A page number within the paginated result set.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de escalas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "scales": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "lineup_event": {
+                                                        "type": "string"
+                                                    },
+                                                    "lineup_date": {
+                                                        "type": "string",
+                                                        "format": "date"
+                                                    },
+                                                    "playlist": {
+                                                        "type": "integer"
+                                                    },
+                                                    "playlist_display": {
+                                                        "type": "string"
+                                                    },
+                                                    "playlist_link_display": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -2104,6 +2381,16 @@
                 },
                 "required": true
             },
+            "LineupMemberSerializers": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/LineupMemberSerializers"
+                        }
+                    }
+                },
+                "required": true
+            },
             "MusicCategorySerializers": {
                 "content": {
                     "application/json": {
@@ -2178,6 +2465,67 @@
                         "title": "New password",
                         "type": "string",
                         "minLength": 1
+                    }
+                }
+            },
+            "LineupMemberSerializers": {
+                "required": [
+                    "lineup",
+                    "member",
+                    "function"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "member_display": {
+                        "title": "Member display",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "function_display": {
+                        "title": "Function display",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "member_name_snapshot": {
+                        "title": "Member name snapshot",
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "function_name_snapshot": {
+                        "title": "Function name snapshot",
+                        "type": "string",
+                        "maxLength": 100
+                    },
+                    "lineup": {
+                        "title": "Lineup",
+                        "type": "integer"
+                    },
+                    "member": {
+                        "title": "Member",
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "function": {
+                        "title": "Function",
+                        "type": "integer",
+                        "nullable": true
                     }
                 }
             },
@@ -2516,6 +2864,11 @@
                         "type": "integer",
                         "readOnly": true
                     },
+                    "playlist_link_display": {
+                        "title": "Playlist link display",
+                        "type": "string",
+                        "readOnly": true
+                    },
                     "created_at": {
                         "title": "Created at",
                         "type": "string",
@@ -2537,7 +2890,7 @@
                         "title": "Playlist date",
                         "type": "string",
                         "format": "date",
-                        "default": "2025-05-07"
+                        "default": "2025-05-09"
                     },
                     "music": {
                         "type": "array",
@@ -2554,6 +2907,16 @@
                     "id": {
                         "title": "ID",
                         "type": "integer",
+                        "readOnly": true
+                    },
+                    "playlist_display": {
+                        "title": "Playlist display",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "playlist_link_display": {
+                        "title": "Playlist link display",
+                        "type": "string",
                         "readOnly": true
                     },
                     "created_at": {

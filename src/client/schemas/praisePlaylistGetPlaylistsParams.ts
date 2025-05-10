@@ -6,7 +6,7 @@
  * OpenAPI spec version: v1
  */
 
-export type PraisePraiseLineupListParams = {
+export type PraisePlaylistGetPlaylistsParams = {
 /**
  * Which field to use when ordering the results.
  */

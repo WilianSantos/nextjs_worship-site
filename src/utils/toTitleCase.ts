@@ -1,4 +1,4 @@
-export function toTitleCase(str: string): string {
+export function toTitleCase(str: string | undefined): string {
   return str
     .toLowerCase()
     .split(' ')

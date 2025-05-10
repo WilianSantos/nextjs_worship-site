@@ -6,15 +6,19 @@
  * OpenAPI spec version: v1
  */
 
-export interface PraiseLineupSerializers {
+export interface LineupMemberSerializers {
   readonly id?: number;
-  readonly playlist_display?: string;
-  readonly playlist_link_display?: string;
+  readonly member_display?: string;
+  readonly function_display?: string;
   readonly created_at?: string;
   readonly updated_at?: string;
-  lineup_date?: string;
+  /** @maxLength 150 */
+  member_name_snapshot?: string;
   /** @maxLength 100 */
-  lineup_event?: string;
+  function_name_snapshot?: string;
+  lineup: number;
   /** @nullable */
-  playlist?: number | null;
+  member: number | null;
+  /** @nullable */
+  function: number | null;
 }

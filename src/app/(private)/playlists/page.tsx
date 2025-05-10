@@ -1,7 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { Input } from '@/components/ui/input'
+import { ListMusic, Edit, Trash, Ellipsis } from 'lucide-react'
+import { useQueryClient } from '@tanstack/react-query'
+
 import { Button } from '@/components/ui/button'
 import {
   Table,
@@ -11,22 +13,21 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import { ListMusic, Eye, Share2, Edit, Trash, Ellipsis } from 'lucide-react'
-import { useGetPlaylistList } from '@/services/hooks/playlist/useGetPlaylistList'
 import { SearchInput } from '@/components/page-controls/SearchInput'
-import { formatDate } from '@/utils/formatDate'
 import { PaginationControls } from '@/components/page-controls/PaginationControls'
-import { handleNextPage, handlePreviousPage } from '@/utils/pageControls'
-import { useGetScaleList } from '@/services/hooks/scale/useGetScaleList'
-import { PlaylistForm } from './PlaylistForm'
 import { Card } from '@/components/ui/card'
-import { PlaylistSerializers } from '@/client/schemas'
-import { useGetPlaylist } from '@/services/hooks/playlist/useGetPlaylist'
-import { useGetPlaylistLink } from '@/services/hooks/playlist/useGetPlaylistLink'
 import { ShareWhatsAppButton } from '@/components/ui/ShareWhatsAppButton'
-import { extractYouTubeId } from '@/utils/extractYouTubeId'
+import { PlaylistForm } from './PlaylistForm'
+
+import { useGetPlaylistListPage } from '@/services/hooks/playlist/useGetPlaylistListPage'
+import { useGetScaleList } from '@/services/hooks/scale/useGetScaleList'
+import { useGetPlaylist } from '@/services/hooks/playlist/useGetPlaylist'
+import { useGetPlaylistList } from '@/services/hooks/playlist/useGetPlaylistList'
 import { useDeletePlaylist } from '@/services/hooks/playlist/useDeletePlaylist'
-import { useQueryClient } from '@tanstack/react-query'
+import { formatDate } from '@/utils/formatDate'
+import { handleNextPage, handlePreviousPage } from '@/utils/pageControls'
+import { extractYouTubeId } from '@/utils/extractYouTubeId'
+import { PlaylistSerializers } from '@/client/schemas'
 
 export default function PlaylistsPage() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -38,20 +39,24 @@ export default function PlaylistsPage() {
 
   const [messageSuccess, setMessageSuccess] = useState('')
 
-  const { data: dataPlaylistList } = useGetPlaylistList({
+  const { data: dataPlaylistList } = useGetPlaylistListPage({
     search: searchTerm,
     page: page
   })
 
-  const { data: dataScale } = useGetScaleList({})
+  const { data: dataScale } = useGetScaleList()
 
   const filteredPlaylists = dataPlaylistList?.data.results
   const scaleList = dataScale?.data
 
+  // Função para verificar o ultimo uso da playlist em uma escala
   const lastPlaylistEntry = (id: number | undefined) => {
     const today = new Date()
     const lastPlaylist =
-      scaleList && scaleList?.find((item) => item.playlist === id)
+      scaleList?.scales &&
+      scaleList?.scales
+        .filter((item) => item.playlist === id)
+        .find((item) => item.lineup_date && new Date(item.lineup_date) < today)
 
     if (!lastPlaylist?.lineup_date) return ''
 
@@ -96,6 +101,19 @@ export default function PlaylistsPage() {
         }
       )
     }
+  }
+
+  const { data: playlists } = useGetPlaylistList({})
+
+  // Separando links do youtub para a playlist
+  const messageWhats = (id: number | undefined) => {
+    const playlist = playlists?.data.playlists?.find((item) => item.id === id)
+    const links = Array.isArray(playlist?.playlist_link_display)
+      ? playlist?.playlist_link_display.map((item) => extractYouTubeId(item))
+      : []
+    const playlistUrl = `https://www.youtube.com/watch_videos?video_ids=${links?.join(',')}`
+
+    return `Playlists: ${playlistUrl}`
   }
 
   return (
@@ -182,7 +200,7 @@ export default function PlaylistsPage() {
                             size="sm"
                             className="cursor-pointer"
                           >
-                            <Edit className="h-4 w-4 mr-1" /> Editar
+                            <Edit className="h-4 w-4 mr-1" />
                           </Button>
                           <Button
                             onClick={() => deletePlaylist(playlist.id)}
@@ -190,14 +208,16 @@ export default function PlaylistsPage() {
                             size="sm"
                             className="cursor-pointer"
                           >
-                            <Trash className="h-4 w-4 text-red-500" /> Excluir
+                            <Trash className="h-4 w-4 text-red-500" />
                           </Button>
                           <Button
                             variant="outline"
                             size="sm"
                             className="cursor-pointer"
                           >
-                            <ShareWhatsAppButton id={playlist.id} />
+                            <ShareWhatsAppButton
+                              messageWhats={messageWhats(playlist.id)}
+                            />
                           </Button>
                         </div>
                       </TableCell>
@@ -260,7 +280,7 @@ export default function PlaylistsPage() {
                               size="sm"
                               className="cursor-pointer"
                             >
-                              <Edit className="h-4 w-4 mr-1" /> Editar
+                              <Edit className="h-4 w-4 mr-1" />
                             </Button>
                             <Button
                               onClick={() => deletePlaylist(playlist.id)}
@@ -268,14 +288,16 @@ export default function PlaylistsPage() {
                               size="sm"
                               className="cursor-pointer"
                             >
-                              <Trash className="h-4 w-4 text-red-500" /> Excluir
+                              <Trash className="h-4 w-4 text-red-500" />
                             </Button>
                             <Button
                               variant="outline"
                               size="sm"
                               className="cursor-pointer"
                             >
-                              <ShareWhatsAppButton id={playlist.id} />
+                              <ShareWhatsAppButton
+                                messageWhats={messageWhats(playlist.id)}
+                              />
                             </Button>
                           </div>
                         )}
@@ -290,17 +312,13 @@ export default function PlaylistsPage() {
               </div>
             )}
           </div>
-          {!playlistForm && !playlistFormEdit && (
-            <PaginationControls
-              onNext={() =>
-                handleNextPage(dataPlaylistList?.data.next, setPage)
-              }
-              onPrev={() =>
-                handlePreviousPage(dataPlaylistList?.data.previous, setPage)
-              }
-              page={page}
-            />
-          )}
+          <PaginationControls
+            onNext={() => handleNextPage(dataPlaylistList?.data.next, setPage)}
+            onPrev={() =>
+              handlePreviousPage(dataPlaylistList?.data.previous, setPage)
+            }
+            page={page}
+          />
         </>
       )}
     </div>

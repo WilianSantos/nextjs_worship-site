@@ -44,13 +44,13 @@ export const PlaylistForm = ({
 
   const { data } = useGetMusicList()
 
-  const musics = data?.data?.musics
+  const musics = data?.data?.musics && data?.data?.musics
 
   const loadOptions = musics
     ?.filter((item) => item.id !== undefined && item.music_title !== undefined)
     .map((item) => ({
       value: String(item.id),
-      label: String(item.music_title)
+      label: `${item.music_title} - ${item.author}`
     }))
 
   const defaultMusicOptions = musics
@@ -80,7 +80,7 @@ export const PlaylistForm = ({
       }
 
       const onSuccess = () => {
-        queryClient.invalidateQueries({ queryKey: ['playlistList'] })
+        queryClient.invalidateQueries({ queryKey: ['playlistListPage'] })
         setPlaylistForm()
         setMessageSuccess('Playlist salva com sucesso.')
       }
