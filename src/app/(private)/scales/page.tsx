@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ScaleForm } from './ScaleForm'
 import { useQueryClient } from '@tanstack/react-query'
 
@@ -143,13 +143,17 @@ export default function ScalesPage() {
 
   const handlingFormEditing = (id: number | undefined) => {
     const scale = scaleListPage?.find((item) => item.id === id)
-    setInitialScale(scale)
-
-    const scaleMembers = scaleMemberList.filter(
+    const scaleMembers = scaleMemberList?.filter(
       (item) => item.lineup === scale?.id
     )
-    setInitialScaleMembers(scaleMembers)
 
+    // Use diretamente aqui
+    console.log('Scale:', scale)
+    console.log('Members:', scaleMembers)
+
+    // Agora seta os estados
+    setInitialScale(scale)
+    setInitialScaleMembers(scaleMembers)
     setScaleFormEditVisible(true)
   }
 
@@ -204,14 +208,18 @@ export default function ScalesPage() {
             />
           </Card>
         ) : (
-          <Card>
-            <ScaleForm
-              initialValue={initialScale}
-              initialValueScaleMember={initialScaleMembers}
-              setScaleForm={() => setScaleFormEditVisible(false)}
-              setMessageSuccess={setMessageSuccess}
-            />
-          </Card>
+          scaleFormEditVisible &&
+          initialScale &&
+          initialScaleMembers && (
+            <Card>
+              <ScaleForm
+                initialValue={initialScale}
+                initialValueScaleMember={initialScaleMembers}
+                setScaleForm={() => setScaleFormEditVisible(false)}
+                setMessageSuccess={setMessageSuccess}
+              />
+            </Card>
+          )
         )
       ) : (
         <>
@@ -234,7 +242,7 @@ export default function ScalesPage() {
             scaleListPage={scaleListPage}
             scaleMemberList={scaleMemberList}
             selectedIds={selectedIds}
-            setPage={() => setPage}
+            setPage={setPage}
             toggleSelect={(id: number) => toggleSelect(id)}
             toggleSelectAll={toggleSelectAll}
           />

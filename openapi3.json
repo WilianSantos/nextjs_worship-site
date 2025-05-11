@@ -474,6 +474,91 @@
             },
             "parameters": []
         },
+        "/praise/member/most-escalated": {
+            "get": {
+                "operationId": "praise_member_most-escalated_list",
+                "description": "Retorna os 10 membros mais escalados no último ano.",
+                "responses": {
+                    "200": {
+                        "description": "Lista de membros mais escalados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "top_members": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "total-member": {
+                                                        "type": "integer"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "praise"
+                ]
+            },
+            "parameters": []
+        },
+        "/praise/member/total-member/": {
+            "get": {
+                "operationId": "praise_member_get_total_member",
+                "description": "Retorna o numero de membros",
+                "parameters": [
+                    {
+                        "name": "ordering",
+                        "in": "query",
+                        "description": "Which field to use when ordering the results.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "A search term.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Total de membros",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "total": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "praise"
+                ]
+            },
+            "parameters": []
+        },
         "/praise/member/{id}/": {
             "get": {
                 "operationId": "praise_member_read",
@@ -1027,10 +1112,36 @@
         "/praise/music/most-played": {
             "get": {
                 "operationId": "praise_music_most-played_list",
-                "description": "",
+                "description": "Retorna as 5 músicas mais tocadas nas playlists dos últimos 6 meses.",
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Lista das músicas mais tocadas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "top_musics": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "music": {
+                                                        "type": "string"
+                                                    },
+                                                    "author": {
+                                                        "type": "string"
+                                                    },
+                                                    "total": {
+                                                        "type": "integer"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -1150,6 +1261,62 @@
                                                     }
                                                 }
                                             }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "praise"
+                ]
+            },
+            "parameters": []
+        },
+        "/praise/music/total-music/": {
+            "get": {
+                "operationId": "praise_music_get_total_music",
+                "description": "Retorna o numero de musicas",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "query",
+                        "description": "category",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "A search term.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "A page number within the paginated result set.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Total de musicas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "total": {
+                                            "type": "integer"
                                         }
                                     }
                                 }
@@ -1517,6 +1684,62 @@
             },
             "parameters": []
         },
+        "/praise/playlist/total-playlist/": {
+            "get": {
+                "operationId": "praise_playlist_get_total_playlist",
+                "description": "Retorna o numero de playlist",
+                "parameters": [
+                    {
+                        "name": "ordering",
+                        "in": "query",
+                        "description": "Which field to use when ordering the results.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "A search term.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "A page number within the paginated result set.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Total de playlist",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "total": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "praise"
+                ]
+            },
+            "parameters": []
+        },
         "/praise/playlist/{id}/": {
             "get": {
                 "operationId": "praise_playlist_read",
@@ -1703,6 +1926,142 @@
             },
             "parameters": []
         },
+        "/praise/praise-lineup/next-scales/": {
+            "get": {
+                "operationId": "praise_praise-lineup_get_next_scales",
+                "description": "Retorna as próximas 5 escalas dentro de 6 meses a partir da data atual.",
+                "parameters": [
+                    {
+                        "name": "ordering",
+                        "in": "query",
+                        "description": "Which field to use when ordering the results.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "A search term.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "A page number within the paginated result set.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista das próximas escalas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "next-scales": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "event": {
+                                                        "type": "string"
+                                                    },
+                                                    "date": {
+                                                        "type": "string",
+                                                        "format": "date"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "praise"
+                ]
+            },
+            "parameters": []
+        },
+        "/praise/praise-lineup/previous-scales/": {
+            "get": {
+                "operationId": "praise_praise-lineup_get_previous_scales",
+                "description": "Retorna as últimas 5 escalas dos 6 meses anteriores à data atual.",
+                "parameters": [
+                    {
+                        "name": "ordering",
+                        "in": "query",
+                        "description": "Which field to use when ordering the results.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "A search term.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "A page number within the paginated result set.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista das escalas anteriores",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "previous-scales": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "event": {
+                                                        "type": "string"
+                                                    },
+                                                    "date": {
+                                                        "type": "string",
+                                                        "format": "date"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "praise"
+                ]
+            },
+            "parameters": []
+        },
         "/praise/praise-lineup/scales/": {
             "get": {
                 "operationId": "praise_praise-lineup_get_scales",
@@ -1773,6 +2132,62 @@
                                                     }
                                                 }
                                             }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "praise"
+                ]
+            },
+            "parameters": []
+        },
+        "/praise/praise-lineup/total-scales/": {
+            "get": {
+                "operationId": "praise_praise-lineup_get_total_scales",
+                "description": "Retorna total de escalas",
+                "parameters": [
+                    {
+                        "name": "ordering",
+                        "in": "query",
+                        "description": "Which field to use when ordering the results.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "A search term.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "A page number within the paginated result set.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de escalas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "total": {
+                                            "type": "integer"
                                         }
                                     }
                                 }
@@ -2890,7 +3305,7 @@
                         "title": "Playlist date",
                         "type": "string",
                         "format": "date",
-                        "default": "2025-05-09"
+                        "default": "2025-05-11"
                     },
                     "music": {
                         "type": "array",

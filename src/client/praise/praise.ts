@@ -27,22 +27,36 @@ import type {
   PraiseLineupSerializersBody,
   PraiseMemberCreateBody,
   PraiseMemberFunctionsListParams,
+  PraiseMemberGetTotalMember200,
+  PraiseMemberGetTotalMemberParams,
   PraiseMemberListParams,
+  PraiseMemberMostEscalatedList200,
   PraiseMembersMeListParams,
   PraiseMusicCategoryListParams,
   PraiseMusicChordListParams,
+  PraiseMusicGetTotalMusic200,
+  PraiseMusicGetTotalMusicParams,
   PraiseMusicList200,
   PraiseMusicListParams,
+  PraiseMusicMostPlayedList200,
   PraiseMusicMusics200,
   PraiseMusicMusicsParams,
   PraiseMusicUploadPdf200,
   PraiseMusicUploadPdfBody,
   PraisePlaylistGetPlaylists200,
   PraisePlaylistGetPlaylistsParams,
+  PraisePlaylistGetTotalPlaylist200,
+  PraisePlaylistGetTotalPlaylistParams,
   PraisePlaylistList200,
   PraisePlaylistListParams,
+  PraisePraiseLineupGetNextScales200,
+  PraisePraiseLineupGetNextScalesParams,
+  PraisePraiseLineupGetPreviousScales200,
+  PraisePraiseLineupGetPreviousScalesParams,
   PraisePraiseLineupGetScales200,
   PraisePraiseLineupGetScalesParams,
+  PraisePraiseLineupGetTotalScales200,
+  PraisePraiseLineupGetTotalScalesParams,
   PraisePraiseLineupList200,
   PraisePraiseLineupListParams,
   PraiseScaleHistoryList200,
@@ -647,6 +661,81 @@ if(praiseMemberCreateBody.function !== undefined) {
     ,
     body: 
       formData,
+  }
+);}
+
+
+/**
+ * Retorna os 10 membros mais escalados no último ano.
+ */
+export type praiseMemberMostEscalatedListResponse200 = {
+  data: PraiseMemberMostEscalatedList200
+  status: 200
+}
+    
+export type praiseMemberMostEscalatedListResponseComposite = praiseMemberMostEscalatedListResponse200;
+    
+export type praiseMemberMostEscalatedListResponse = praiseMemberMostEscalatedListResponseComposite & {
+  headers: Headers;
+}
+
+export const getPraiseMemberMostEscalatedListUrl = () => {
+
+
+  
+
+  return `/praise/member/most-escalated`
+}
+
+export const praiseMemberMostEscalatedList = async ( options?: RequestInit): Promise<praiseMemberMostEscalatedListResponse> => {
+  
+  return customFetcher<praiseMemberMostEscalatedListResponse>(getPraiseMemberMostEscalatedListUrl(),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+);}
+
+
+/**
+ * Retorna o numero de membros
+ */
+export type praiseMemberGetTotalMemberResponse200 = {
+  data: PraiseMemberGetTotalMember200
+  status: 200
+}
+    
+export type praiseMemberGetTotalMemberResponseComposite = praiseMemberGetTotalMemberResponse200;
+    
+export type praiseMemberGetTotalMemberResponse = praiseMemberGetTotalMemberResponseComposite & {
+  headers: Headers;
+}
+
+export const getPraiseMemberGetTotalMemberUrl = (params?: PraiseMemberGetTotalMemberParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/praise/member/total-member/?${stringifiedParams}` : `/praise/member/total-member/`
+}
+
+export const praiseMemberGetTotalMember = async (params?: PraiseMemberGetTotalMemberParams, options?: RequestInit): Promise<praiseMemberGetTotalMemberResponse> => {
+  
+  return customFetcher<praiseMemberGetTotalMemberResponse>(getPraiseMemberGetTotalMemberUrl(params),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
   }
 );}
 
@@ -1313,8 +1402,11 @@ export const praiseMusicCreate = async (musicSerializersBody: MusicSerializersBo
 );}
 
 
+/**
+ * Retorna as 5 músicas mais tocadas nas playlists dos últimos 6 meses.
+ */
 export type praiseMusicMostPlayedListResponse200 = {
-  data: void
+  data: PraiseMusicMostPlayedList200
   status: 200
 }
     
@@ -1376,6 +1468,47 @@ export const getPraiseMusicMusicsUrl = (params?: PraiseMusicMusicsParams,) => {
 export const praiseMusicMusics = async (params?: PraiseMusicMusicsParams, options?: RequestInit): Promise<praiseMusicMusicsResponse> => {
   
   return customFetcher<praiseMusicMusicsResponse>(getPraiseMusicMusicsUrl(params),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+);}
+
+
+/**
+ * Retorna o numero de musicas
+ */
+export type praiseMusicGetTotalMusicResponse200 = {
+  data: PraiseMusicGetTotalMusic200
+  status: 200
+}
+    
+export type praiseMusicGetTotalMusicResponseComposite = praiseMusicGetTotalMusicResponse200;
+    
+export type praiseMusicGetTotalMusicResponse = praiseMusicGetTotalMusicResponseComposite & {
+  headers: Headers;
+}
+
+export const getPraiseMusicGetTotalMusicUrl = (params?: PraiseMusicGetTotalMusicParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/praise/music/total-music/?${stringifiedParams}` : `/praise/music/total-music/`
+}
+
+export const praiseMusicGetTotalMusic = async (params?: PraiseMusicGetTotalMusicParams, options?: RequestInit): Promise<praiseMusicGetTotalMusicResponse> => {
+  
+  return customFetcher<praiseMusicGetTotalMusicResponse>(getPraiseMusicGetTotalMusicUrl(params),
   {      
     ...options,
     method: 'GET'
@@ -1703,6 +1836,47 @@ export const praisePlaylistGetPlaylists = async (params?: PraisePlaylistGetPlayl
 );}
 
 
+/**
+ * Retorna o numero de playlist
+ */
+export type praisePlaylistGetTotalPlaylistResponse200 = {
+  data: PraisePlaylistGetTotalPlaylist200
+  status: 200
+}
+    
+export type praisePlaylistGetTotalPlaylistResponseComposite = praisePlaylistGetTotalPlaylistResponse200;
+    
+export type praisePlaylistGetTotalPlaylistResponse = praisePlaylistGetTotalPlaylistResponseComposite & {
+  headers: Headers;
+}
+
+export const getPraisePlaylistGetTotalPlaylistUrl = (params?: PraisePlaylistGetTotalPlaylistParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/praise/playlist/total-playlist/?${stringifiedParams}` : `/praise/playlist/total-playlist/`
+}
+
+export const praisePlaylistGetTotalPlaylist = async (params?: PraisePlaylistGetTotalPlaylistParams, options?: RequestInit): Promise<praisePlaylistGetTotalPlaylistResponse> => {
+  
+  return customFetcher<praisePlaylistGetTotalPlaylistResponse>(getPraisePlaylistGetTotalPlaylistUrl(params),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+);}
+
+
 export type praisePlaylistReadResponse200 = {
   data: PlaylistSerializers
   status: 200
@@ -1902,6 +2076,88 @@ export const praisePraiseLineupCreate = async (praiseLineupSerializersBody: Prai
 
 
 /**
+ * Retorna as próximas 5 escalas dentro de 6 meses a partir da data atual.
+ */
+export type praisePraiseLineupGetNextScalesResponse200 = {
+  data: PraisePraiseLineupGetNextScales200
+  status: 200
+}
+    
+export type praisePraiseLineupGetNextScalesResponseComposite = praisePraiseLineupGetNextScalesResponse200;
+    
+export type praisePraiseLineupGetNextScalesResponse = praisePraiseLineupGetNextScalesResponseComposite & {
+  headers: Headers;
+}
+
+export const getPraisePraiseLineupGetNextScalesUrl = (params?: PraisePraiseLineupGetNextScalesParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/praise/praise-lineup/next-scales/?${stringifiedParams}` : `/praise/praise-lineup/next-scales/`
+}
+
+export const praisePraiseLineupGetNextScales = async (params?: PraisePraiseLineupGetNextScalesParams, options?: RequestInit): Promise<praisePraiseLineupGetNextScalesResponse> => {
+  
+  return customFetcher<praisePraiseLineupGetNextScalesResponse>(getPraisePraiseLineupGetNextScalesUrl(params),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+);}
+
+
+/**
+ * Retorna as últimas 5 escalas dos 6 meses anteriores à data atual.
+ */
+export type praisePraiseLineupGetPreviousScalesResponse200 = {
+  data: PraisePraiseLineupGetPreviousScales200
+  status: 200
+}
+    
+export type praisePraiseLineupGetPreviousScalesResponseComposite = praisePraiseLineupGetPreviousScalesResponse200;
+    
+export type praisePraiseLineupGetPreviousScalesResponse = praisePraiseLineupGetPreviousScalesResponseComposite & {
+  headers: Headers;
+}
+
+export const getPraisePraiseLineupGetPreviousScalesUrl = (params?: PraisePraiseLineupGetPreviousScalesParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/praise/praise-lineup/previous-scales/?${stringifiedParams}` : `/praise/praise-lineup/previous-scales/`
+}
+
+export const praisePraiseLineupGetPreviousScales = async (params?: PraisePraiseLineupGetPreviousScalesParams, options?: RequestInit): Promise<praisePraiseLineupGetPreviousScalesResponse> => {
+  
+  return customFetcher<praisePraiseLineupGetPreviousScalesResponse>(getPraisePraiseLineupGetPreviousScalesUrl(params),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+);}
+
+
+/**
  * Lista de escalas com links da playlist
  */
 export type praisePraiseLineupGetScalesResponse200 = {
@@ -1933,6 +2189,47 @@ export const getPraisePraiseLineupGetScalesUrl = (params?: PraisePraiseLineupGet
 export const praisePraiseLineupGetScales = async (params?: PraisePraiseLineupGetScalesParams, options?: RequestInit): Promise<praisePraiseLineupGetScalesResponse> => {
   
   return customFetcher<praisePraiseLineupGetScalesResponse>(getPraisePraiseLineupGetScalesUrl(params),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+);}
+
+
+/**
+ * Retorna total de escalas
+ */
+export type praisePraiseLineupGetTotalScalesResponse200 = {
+  data: PraisePraiseLineupGetTotalScales200
+  status: 200
+}
+    
+export type praisePraiseLineupGetTotalScalesResponseComposite = praisePraiseLineupGetTotalScalesResponse200;
+    
+export type praisePraiseLineupGetTotalScalesResponse = praisePraiseLineupGetTotalScalesResponseComposite & {
+  headers: Headers;
+}
+
+export const getPraisePraiseLineupGetTotalScalesUrl = (params?: PraisePraiseLineupGetTotalScalesParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/praise/praise-lineup/total-scales/?${stringifiedParams}` : `/praise/praise-lineup/total-scales/`
+}
+
+export const praisePraiseLineupGetTotalScales = async (params?: PraisePraiseLineupGetTotalScalesParams, options?: RequestInit): Promise<praisePraiseLineupGetTotalScalesResponse> => {
+  
+  return customFetcher<praisePraiseLineupGetTotalScalesResponse>(getPraisePraiseLineupGetTotalScalesUrl(params),
   {      
     ...options,
     method: 'GET'
