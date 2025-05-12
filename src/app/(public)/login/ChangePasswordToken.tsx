@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
 import { Loader } from '@/components/Loader'
-import { useCreatePassword } from '@/services/hooks/member/useCreatePassword'
+import { useCreatePasswordToken } from '@/services/hooks/member/useCreatePasswordToken'
 
 const commonPasswords = [
   '123456',
@@ -18,8 +18,6 @@ const commonPasswords = [
 ]
 
 const validationSchema = Yup.object({
-  oldPassword: Yup.string().required('Senha atual é obrigatória'),
-
   newPassword: Yup.string()
     .required('Nova senha é obrigatória')
     .min(8, 'A senha deve ter pelo menos 8 caracteres')
@@ -35,16 +33,18 @@ const validationSchema = Yup.object({
     .oneOf([Yup.ref('newPassword')], 'As senhas não coincidem')
 })
 
-type ChangePasswordFormProps = {
-  setChangePasswordForm: () => void
+type ChangePasswordTokenFormProps = {
+  setIsValid: () => void
   setMessageSuccess: (message: string) => void
+  reset_token: string
 }
 
-export function ChangePasswordForm({
-  setChangePasswordForm,
-  setMessageSuccess
-}: ChangePasswordFormProps) {
-  const { mutate, isPending } = useCreatePassword()
+export function ChangePasswordTokenForm({
+  setIsValid,
+  setMessageSuccess,
+  reset_token
+}: ChangePasswordTokenFormProps) {
+  const { mutate, isPending } = useCreatePasswordToken()
 
   const formik = useFormik({
     initialValues: {
@@ -57,12 +57,12 @@ export function ChangePasswordForm({
       mutate(
         {
           new_password: values.newPassword,
-          old_password: values.oldPassword
+          token: reset_token
         },
         {
           onSuccess: () => {
             setMessageSuccess('Senha alterada com sucesso')
-            setChangePasswordForm()
+            setIsValid()
           }
         }
       )
@@ -79,27 +79,6 @@ export function ChangePasswordForm({
       onSubmit={formik.handleSubmit}
       encType="multipart/form-data"
     >
-      <div>
-        <label
-          htmlFor="oldPassword"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Senha antiga
-        </label>
-        <Input
-          type="password"
-          id="oldPassword"
-          name="oldPassword"
-          className={`${formik.touched.oldPassword ? 'border-red-500' : ''} w-full`}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.oldPassword}
-        />
-        {formik.errors.oldPassword && formik.touched.oldPassword && (
-          <p className="text-red-500 text-sm">{formik.errors.oldPassword}</p>
-        )}
-      </div>
-
       <div>
         <label
           htmlFor="newPassword"
@@ -147,7 +126,7 @@ export function ChangePasswordForm({
       <div className="flex justify-end mt-6 gap-2.5">
         <Button
           type="button"
-          onClick={setChangePasswordForm}
+          onClick={setIsValid}
           className="bg-red-600 hover:bg-red-700 cursor-pointer"
         >
           Cancelar

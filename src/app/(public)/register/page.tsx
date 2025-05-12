@@ -13,7 +13,7 @@ export default function RegisterPage() {
   const token = searchParams.get('token')
   const temporary_token = searchParams.get('temporary_token')
 
-  const { data, isError } = useGetVerifyRegistration({ token: token })
+  const { data } = useGetVerifyRegistration({ token: token })
 
   useEffect(() => {
     const verify = () => {

@@ -66,7 +66,7 @@ export default function LoginForm() {
             <Input
               type="text"
               placeholder="Usuário"
-              className="pl-10"
+              className={`${formik.touched.username ? 'border-red-500' : ''} pl-10`}
               name="username"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -83,6 +83,7 @@ export default function LoginForm() {
             type="password"
             placeholder="Senha"
             name="password"
+            className={`${formik.touched.password ? 'border-red-500' : ''} pl-10`}
             onChange={formik.handleChange}
             value={formik.values.password}
             onBlur={formik.handleBlur}
