@@ -37,7 +37,7 @@ export default function LoginPage() {
           </h1>
         </div>
 
-        <h2 className="text-xl font-semibold text-center font-parkinsans text-orange-600">
+        <h2 className="text-xl font-semibold text-center text-orange-600">
           Login
         </h2>
         <p className="text-lg text-green-500">{messageSuccess}</p>

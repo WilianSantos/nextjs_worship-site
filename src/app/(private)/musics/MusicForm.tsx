@@ -109,7 +109,7 @@ export function MusicForm({
               setMusicForm()
               setMessageSuccess('Musica atualizada com sucesso.')
             },
-            onError: (error) => {
+            onError: (error: any) => {
               const formikErrors: Record<string, string> = {}
               if (error.author) formikErrors.author = error.author
               if (error.category) formikErrors.category = error.category
@@ -130,7 +130,7 @@ export function MusicForm({
             setMusicForm()
             setMessageSuccess('Musica criada com sucesso.')
           },
-          onError: (error) => {
+          onError: (error: any) => {
             const formikErrors: Record<string, string> = {}
             if (error.author) formikErrors.author = error.author
             if (error.category) formikErrors.category = error.category

@@ -77,9 +77,7 @@ export default function ProfilePage() {
   }
   return (
     <div className="p-6 space-y-6 md:pt-32 lg:p-6">
-      <h1 className="text-2xl font-parkinsans font-bold text-orange-500">
-        Perfil do Usuário
-      </h1>
+      <h1 className="text-2xl font-bold text-orange-500">Perfil do Usuário</h1>
 
       <div>
         <p className="text-lg text-green-500">

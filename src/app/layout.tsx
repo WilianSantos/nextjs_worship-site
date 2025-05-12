@@ -1,6 +1,6 @@
 import type React from 'react'
 import type { Metadata } from 'next'
-import { Inter, Parkinsans } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import './globals.css'
 import { QueryClientProviderWrapper } from '@/components/query-client'
 
@@ -8,12 +8,6 @@ const inter = Inter({
   weight: ['400'],
   subsets: ['latin'],
   variable: '--font-inter'
-})
-
-const parkinsans = Parkinsans({
-  weight: ['500', '600', '700', '800'],
-  subsets: ['latin'],
-  variable: '--font-parkinsans'
 })
 
 export const metadata: Metadata = {
@@ -28,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="pt-BR" className={`${inter.variable} ${parkinsans.variable}`}>
+    <html lang="pt-BR" className={`${inter.variable}`}>
       <QueryClientProviderWrapper>
         <body className="font-inter">{children}</body>
       </QueryClientProviderWrapper>

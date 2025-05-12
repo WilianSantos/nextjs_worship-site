@@ -79,9 +79,7 @@ export default function CategoriesPage() {
   return (
     <div className="p-6 space-y-6 md:pt-32 lg:p-6">
       <div className="flex flex-col gap-1 lg:flex-row lg:items-center lg:justify-between md:flex-row md:items-center md:justify-between">
-        <h1 className="text-2xl font-bold font-parkinsans text-orange-500">
-          Categorias
-        </h1>
+        <h1 className="text-2xl font-bold text-orange-500">Categorias</h1>
         <div>
           <p className="text-2xl text-green-500">{messageSuccess}</p>
         </div>

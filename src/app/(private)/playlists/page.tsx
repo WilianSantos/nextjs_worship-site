@@ -119,9 +119,7 @@ export default function PlaylistsPage() {
   return (
     <div className="p-6 space-y-6 md:pt-32 lg:p-6">
       <div className="flex flex-col items-center justify-between gap-1 md:flex-row lg:flex-row">
-        <h1 className="text-2xl font-bold font-parkinsans text-orange-500">
-          Playlists
-        </h1>
+        <h1 className="text-2xl font-bold text-orange-500">Playlists</h1>
         <div className="flex items-center justify-center">
           <p className="text-lg text-green-500">{messageSuccess}</p>
         </div>

@@ -35,7 +35,7 @@ export default function LoginForm() {
           onSuccess: () => {
             router.push('/')
           },
-          onError: (error) => {
+          onError: (error: any) => {
             const data = error
             if (data) {
               formik.setErrors({

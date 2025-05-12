@@ -53,7 +53,7 @@ export const MemberForm = ({
           formik.resetForm()
           setMemberForm()
         },
-        onError: (error) => {
+        onError: (error: any) => {
           setMessageError(`${error.message}` || `${error.detail}`)
         }
       }

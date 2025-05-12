@@ -40,7 +40,7 @@ export default function SendEmailForm({
 
             setSendEmailForm()
           },
-          onError: (error) => {
+          onError: (error: any) => {
             const data = error
             if (data) {
               formik.setErrors({

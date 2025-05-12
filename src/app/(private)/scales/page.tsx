@@ -160,7 +160,7 @@ export default function ScalesPage() {
   return (
     <div className="p-6 space-y-6 md:pt-32 lg:p-6">
       <div className="flex items-center justify-between flex-col lg:flex-row md:flex-row">
-        <h1 className="text-2xl font-bold min-w-3/12 font-parkinsans text-orange-500">
+        <h1 className="text-2xl font-bold min-w-3/12 text-orange-500">
           Escalas
         </h1>
         <div className="flex items-end w-full gap-4 lg:items-center flex-col lg:flex-row md:items-end">

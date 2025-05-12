@@ -90,9 +90,7 @@ export default function FunctionsPage() {
   return (
     <div className="p-6 space-y-6 md:pt-32 lg:p-6">
       <div className="flex flex-col items-center gap-1 justify-between lg:flex-row lg:items-center lg:justify-between md:items-center md:justify-between md:flex-row">
-        <h1 className="text-2xl font-bold font-parkinsans text-orange-500">
-          Funções
-        </h1>
+        <h1 className="text-2xl font-bold text-orange-500">Funções</h1>
         <div>
           <p className="text-lg text-green-500">{messageSuccess}</p>
         </div>
