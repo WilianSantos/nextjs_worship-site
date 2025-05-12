@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Mail, Phone, User } from 'lucide-react'
 import { useQueryClient } from '@tanstack/react-query'
 
@@ -20,9 +20,11 @@ import { formatDate } from '@/utils/formatDate'
 import { useGetMember } from '@/services/hooks/member/useGetMember'
 import { usePraiseScaleHistoryList } from '@/services/hooks/scale/usePraiseScaleHistoryList'
 import { useUpdateMember } from '@/services/hooks/member/useUpdateMember'
+import { ChangePasswordForm } from './ChangePasswordForm'
 
 export default function ProfilePage() {
-  const [userEdit, setUserEdit] = React.useState(false)
+  const [userEdit, setUserEdit] = useState(false)
+  const [changePasswordForm, setChangePasswordForm] = useState(false)
 
   const { data: scalesData } = usePraiseScaleHistoryList()
   const scales = scalesData?.data
@@ -87,7 +89,7 @@ export default function ProfilePage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
         <Card className="md:col-span-2 lg:col-span-1">
-          {!userEdit ? (
+          {!userEdit && !changePasswordForm ? (
             <CardContent className="pt-6 ">
               <div className="flex flex-col items-center">
                 <div className="relative mb-4">
@@ -116,23 +118,38 @@ export default function ProfilePage() {
                   </div>
                 </div>
 
-                <div className="w-full mt-6">
+                <div className="flex items-center justify-center w-full gap-1 mt-6">
                   <Button
                     onClick={() => setUserEdit(true)}
-                    className="w-full cursor-pointer"
+                    className="w-1/2 cursor-pointer"
                   >
                     Editar Perfil
+                  </Button>
+                  <Button
+                    onClick={() => setChangePasswordForm(true)}
+                    className="w-1/2 cursor-pointer"
+                  >
+                    Mudar Senha
                   </Button>
                 </div>
               </div>
             </CardContent>
-          ) : (
+          ) : userEdit && !changePasswordForm ? (
             <CardContent>
               <ProfileForm
                 initialValue={initialValues}
                 onSubmit={submitForm}
                 setUserEditFalse={() => setUserEdit(false)}
                 isPending={isPending}
+              />
+            </CardContent>
+          ) : (
+            <CardContent>
+              <ChangePasswordForm
+                setChangePasswordForm={() => setChangePasswordForm(false)}
+                setMessageSuccess={(message: string) =>
+                  setMessageSuccess(message)
+                }
               />
             </CardContent>
           )}
