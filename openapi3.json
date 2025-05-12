@@ -2429,6 +2429,111 @@
             },
             "parameters": []
         },
+        "/praise/slides-generator/": {
+            "post": {
+                "operationId": "praise_slides-generator_create",
+                "description": "Gera e retorna um arquivo .pptx com as músicas da playlist (sem acordes).",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "playlist_id"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "playlist_id": {
+                                        "description": "ID da playlist cujas músicas serão usadas para gerar os slides",
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Arquivo .pptx com os slides das músicas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "ID da playlist não foi informado."
+                    },
+                    "404": {
+                        "description": "Playlist não encontrada."
+                    }
+                },
+                "tags": [
+                    "praise"
+                ]
+            },
+            "parameters": []
+        },
+        "/praise/slides-music/": {
+            "post": {
+                "operationId": "praise_slides-music_create",
+                "description": "Retorna os dados das músicas de uma playlist formatadas para slides (letras sem acordes).",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "playlist_id"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "playlist_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Lista de músicas da playlist formatadas para slides",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "title": {
+                                                "type": "string"
+                                            },
+                                            "lyrics": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "ID da playlist não foi passado."
+                    },
+                    "404": {
+                        "description": "Playlist não encontrada."
+                    }
+                },
+                "tags": [
+                    "praise"
+                ]
+            },
+            "parameters": []
+        },
         "/praise/user/": {
             "get": {
                 "operationId": "praise_user_list",
@@ -3305,7 +3410,7 @@
                         "title": "Playlist date",
                         "type": "string",
                         "format": "date",
-                        "default": "2025-05-11"
+                        "default": "2025-05-12"
                     },
                     "music": {
                         "type": "array",

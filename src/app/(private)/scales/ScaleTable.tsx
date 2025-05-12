@@ -5,6 +5,7 @@ import {
 } from '@/client/schemas'
 import { PaginationControls } from '@/components/page-controls/PaginationControls'
 import { Button } from '@/components/ui/button'
+import { DownloadButton } from '@/components/ui/DownloadButton'
 import { ShareWhatsAppButton } from '@/components/ui/ShareWhatsAppButton'
 import {
   Table,
@@ -14,6 +15,7 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
+
 import { formatDate } from '@/utils/formatDate'
 import { handleNextPage, handlePreviousPage } from '@/utils/pageControls'
 import { Edit, Ellipsis, Share2, Trash } from 'lucide-react'
@@ -57,6 +59,7 @@ export function ScaleTable({
   const [activeMenuId, setActiveMenuId] = useState<number | undefined>(
     undefined
   )
+
   return (
     <>
       {selectedIds.length > 0 && (
@@ -158,6 +161,7 @@ export function ScaleTable({
                           messageWhats={messageWhats(item.id)}
                         />
                       </Button>
+                      <DownloadButton playlistId={item.playlist} />
                     </div>
                   </TableCell>
                 </TableRow>
@@ -255,6 +259,7 @@ export function ScaleTable({
                             messageWhats={messageWhats(item.id)}
                           />
                         </Button>
+                        <DownloadButton playlistId={item.playlist} />
                       </div>
                     )}
                   </TableCell>
@@ -341,6 +346,7 @@ export function ScaleTable({
                             messageWhats={messageWhats(item.id)}
                           />
                         </Button>
+                        <DownloadButton playlistId={item.playlist} />
                       </div>
                     )}
                   </TableCell>
