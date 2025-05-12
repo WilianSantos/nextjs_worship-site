@@ -5,7 +5,6 @@ import dynamic from 'next/dynamic'
 import { Music } from 'lucide-react'
 
 import { useGetMusicListPage } from '@/services/hooks/music/useGetMusicListPage'
-import { useGetMusicsList } from '@/services/hooks/music/useGetMusicsList'
 import { useGetMusic } from '@/services/hooks/music/useGetMusic'
 
 import { Button } from '@/components/ui/button'

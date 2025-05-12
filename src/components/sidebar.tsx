@@ -29,8 +29,7 @@ const menuItems = [
   { name: 'Membros', href: '/members', icon: Users },
   { name: 'Funções', href: '/functions', icon: Briefcase },
   { name: 'Playlists', href: '/playlists', icon: ListMusic },
-  { name: 'Escalas', href: '/scales', icon: Calendar },
-  { name: 'Relatórios', href: '/relatorios', icon: BarChart2 }
+  { name: 'Escalas', href: '/scales', icon: Calendar }
 ]
 
 export function Sidebar() {
