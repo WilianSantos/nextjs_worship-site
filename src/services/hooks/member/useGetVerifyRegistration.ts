@@ -12,6 +12,7 @@ export const useGetVerifyRegistration = ({
       if (token) {
         return praiseVerifyRegistrationTokenList({ token: token })
       }
-    }
+    },
+    enabled: token !== null && token !== undefined
   })
 }

@@ -61,8 +61,6 @@ import type {
   PraisePraiseLineupListParams,
   PraiseScaleHistoryList200,
   PraiseSlidesGeneratorCreateBody,
-  PraiseSlidesMusicCreate200Item,
-  PraiseSlidesMusicCreateBody,
   PraiseUserList200,
   PraiseUserListParams,
   PraiseVerifyRegistrationTokenListParams,
@@ -80,9 +78,9 @@ import { customFetcher } from '../../services/customFetcher';
 /**
  * Rota para mudar senha com token.
  */
-export type praiseChangePasswordCreateResponse204 = {
+export type praiseChangePasswordCreateResponse201 = {
   data: void
-  status: 204
+  status: 201
 }
 
 export type praiseChangePasswordCreateResponse400 = {
@@ -90,7 +88,7 @@ export type praiseChangePasswordCreateResponse400 = {
   status: 400
 }
     
-export type praiseChangePasswordCreateResponseComposite = praiseChangePasswordCreateResponse204 | praiseChangePasswordCreateResponse400;
+export type praiseChangePasswordCreateResponseComposite = praiseChangePasswordCreateResponse201 | praiseChangePasswordCreateResponse400;
     
 export type praiseChangePasswordCreateResponse = praiseChangePasswordCreateResponseComposite & {
   headers: Headers;
@@ -2561,46 +2559,6 @@ export const praiseSlidesGeneratorCreate = async (praiseSlidesGeneratorCreateBod
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(
       praiseSlidesGeneratorCreateBody,)
-  }
-);}
-
-
-/**
- * Retorna os dados das músicas de uma playlist formatadas para slides (letras sem acordes).
- */
-export type praiseSlidesMusicCreateResponse200 = {
-  data: PraiseSlidesMusicCreate200Item[]
-  status: 200
-}
-
-export type praiseSlidesMusicCreateResponse400 = {
-  data: void
-  status: 400
-}
-    
-export type praiseSlidesMusicCreateResponseComposite = praiseSlidesMusicCreateResponse200 | praiseSlidesMusicCreateResponse400;
-    
-export type praiseSlidesMusicCreateResponse = praiseSlidesMusicCreateResponseComposite & {
-  headers: Headers;
-}
-
-export const getPraiseSlidesMusicCreateUrl = () => {
-
-
-  
-
-  return `/praise/slides-music/`
-}
-
-export const praiseSlidesMusicCreate = async (praiseSlidesMusicCreateBody: PraiseSlidesMusicCreateBody, options?: RequestInit): Promise<praiseSlidesMusicCreateResponse> => {
-  
-  return customFetcher<praiseSlidesMusicCreateResponse>(getPraiseSlidesMusicCreateUrl(),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      praiseSlidesMusicCreateBody,)
   }
 );}
 
