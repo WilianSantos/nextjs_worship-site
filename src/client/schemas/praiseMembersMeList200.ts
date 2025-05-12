@@ -5,13 +5,13 @@
  * Organizador das musicas e gerenciamento de escalações do louvor da igreja
  * OpenAPI spec version: v1
  */
-import type { MemberMe } from './memberMe';
+import type { MemberMe } from './memberMe'
 
 export type PraiseMembersMeList200 = {
-  count: number;
+  count: number
   /** @nullable */
-  next?: string | null;
+  next?: string | null
   /** @nullable */
-  previous?: string | null;
-  results: MemberMe[];
-};
+  previous?: string | null
+  results: MemberMe[]
+}

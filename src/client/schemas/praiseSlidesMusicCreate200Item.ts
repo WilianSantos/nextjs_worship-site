@@ -7,6 +7,6 @@
  */
 
 export type PraiseSlidesMusicCreate200Item = {
-  title?: string;
-  lyrics?: string;
-};
+  title?: string
+  lyrics?: string
+}

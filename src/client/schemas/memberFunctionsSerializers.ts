@@ -7,11 +7,11 @@
  */
 
 export interface MemberFunctionsSerializers {
-  readonly id?: number;
+  readonly id?: number
   /**
    * @minLength 1
    * @maxLength 50
    */
-  function_name: string;
-  description?: string;
+  function_name: string
+  description?: string
 }

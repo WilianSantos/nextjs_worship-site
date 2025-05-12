@@ -5,8 +5,8 @@
  * Organizador das musicas e gerenciamento de escalações do louvor da igreja
  * OpenAPI spec version: v1
  */
-import type { PraisePraiseLineupGetScales200ScalesItem } from './praisePraiseLineupGetScales200ScalesItem';
+import type { PraisePraiseLineupGetScales200ScalesItem } from './praisePraiseLineupGetScales200ScalesItem'
 
 export type PraisePraiseLineupGetScales200 = {
-  scales?: PraisePraiseLineupGetScales200ScalesItem[];
-};
+  scales?: PraisePraiseLineupGetScales200ScalesItem[]
+}

@@ -7,5 +7,5 @@
  */
 
 export type PraisePlaylistGetMusicsLink200 = {
-  links?: string[];
-};
+  links?: string[]
+}

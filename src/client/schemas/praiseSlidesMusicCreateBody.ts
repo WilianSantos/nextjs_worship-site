@@ -7,5 +7,5 @@
  */
 
 export type PraiseSlidesMusicCreateBody = {
-  playlist_id: number;
-};
+  playlist_id: number
+}

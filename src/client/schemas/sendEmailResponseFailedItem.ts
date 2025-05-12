@@ -6,4 +6,4 @@
  * OpenAPI spec version: v1
  */
 
-export type SendEmailResponseFailedItem = {[key: string]: string};
+export type SendEmailResponseFailedItem = { [key: string]: string }

@@ -7,5 +7,5 @@
  */
 
 export type PraisePraiseLineupGetTotalScales200 = {
-  total?: number;
-};
+  total?: number
+}

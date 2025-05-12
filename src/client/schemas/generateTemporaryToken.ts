@@ -8,5 +8,5 @@
 
 export interface GenerateTemporaryToken {
   /** @minLength 1 */
-  email: string;
+  email: string
 }

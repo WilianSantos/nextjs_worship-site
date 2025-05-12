@@ -7,20 +7,20 @@
  */
 
 export type PraisePlaylistGetMusicsLinkParams = {
-/**
- * Which field to use when ordering the results.
- */
-ordering?: string;
-/**
- * A search term.
- */
-search?: string;
-/**
- * A page number within the paginated result set.
- */
-page?: number;
-/**
- * ID da playlist
- */
-id: number;
-};
+  /**
+   * Which field to use when ordering the results.
+   */
+  ordering?: string
+  /**
+   * A search term.
+   */
+  search?: string
+  /**
+   * A page number within the paginated result set.
+   */
+  page?: number
+  /**
+   * ID da playlist
+   */
+  id: number
+}

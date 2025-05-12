@@ -8,7 +8,7 @@
 
 export interface TokenObtainPair {
   /** @minLength 1 */
-  username: string;
+  username: string
   /** @minLength 1 */
-  password: string;
+  password: string
 }

@@ -8,7 +8,7 @@
 
 export interface ChangePassword {
   /** @minLength 1 */
-  old_password: string;
+  old_password: string
   /** @minLength 1 */
-  new_password: string;
+  new_password: string
 }

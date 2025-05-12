@@ -7,16 +7,16 @@
  */
 
 export type PraiseMusicMusicsParams = {
-/**
- * category
- */
-category?: string;
-/**
- * A search term.
- */
-search?: string;
-/**
- * A page number within the paginated result set.
- */
-page?: number;
-};
+  /**
+   * category
+   */
+  category?: string
+  /**
+   * A search term.
+   */
+  search?: string
+  /**
+   * A page number within the paginated result set.
+   */
+  page?: number
+}

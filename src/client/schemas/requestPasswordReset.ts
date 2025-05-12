@@ -8,5 +8,5 @@
 
 export interface RequestPasswordReset {
   /** @minLength 1 */
-  username: string;
+  username: string
 }

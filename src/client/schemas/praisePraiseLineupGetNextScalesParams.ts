@@ -7,16 +7,16 @@
  */
 
 export type PraisePraiseLineupGetNextScalesParams = {
-/**
- * Which field to use when ordering the results.
- */
-ordering?: string;
-/**
- * A search term.
- */
-search?: string;
-/**
- * A page number within the paginated result set.
- */
-page?: number;
-};
+  /**
+   * Which field to use when ordering the results.
+   */
+  ordering?: string
+  /**
+   * A search term.
+   */
+  search?: string
+  /**
+   * A page number within the paginated result set.
+   */
+  page?: number
+}

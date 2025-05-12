@@ -7,23 +7,23 @@
  */
 
 export interface UserSerializers {
-  readonly id?: number;
+  readonly id?: number
   /**
    * @minLength 1
    * @maxLength 128
    */
-  password: string;
+  password: string
   /**
    * Obrigatório. 150 caracteres ou menos. Letras, números e @/./+/-/_ apenas.
    * @minLength 1
    * @maxLength 150
    * @pattern ^[\w.@+-]+$
    */
-  username: string;
+  username: string
   /** @maxLength 150 */
-  first_name?: string;
+  first_name?: string
   /** @maxLength 150 */
-  last_name?: string;
+  last_name?: string
   /** @maxLength 254 */
-  email?: string;
+  email?: string
 }
