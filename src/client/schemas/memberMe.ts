@@ -5,22 +5,22 @@
  * Organizador das musicas e gerenciamento de escalações do louvor da igreja
  * OpenAPI spec version: v1
  */
-import type { UserSerializers } from './userSerializers'
-import type { MemberFunctionsSerializers } from './memberFunctionsSerializers'
+import type { UserSerializers } from './userSerializers';
+import type { MemberFunctionsSerializers } from './memberFunctionsSerializers';
 
 export interface MemberMe {
-  readonly id?: number
-  user?: UserSerializers
-  readonly function?: readonly MemberFunctionsSerializers[]
-  readonly profile_picture?: string
-  readonly created_at?: string
-  readonly updated_at?: string
+  readonly id?: number;
+  user?: UserSerializers;
+  readonly function?: readonly MemberFunctionsSerializers[];
+  readonly profile_picture?: string;
+  readonly created_at?: string;
+  readonly updated_at?: string;
   /**
    * @minLength 1
    * @maxLength 150
    */
-  name: string
-  availability?: boolean
+  name: string;
+  availability?: boolean;
   /** @maxLength 14 */
-  cell_phone?: string
+  cell_phone?: string;
 }

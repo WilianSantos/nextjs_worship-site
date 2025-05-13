@@ -5,18 +5,18 @@
  * Organizador das musicas e gerenciamento de escalações do louvor da igreja
  * OpenAPI spec version: v1
  */
-import type { PraiseMusicMusics200MusicsItemCategoryItem } from './praiseMusicMusics200MusicsItemCategoryItem'
-import type { PraiseMusicMusics200MusicsItemMusicChordItem } from './praiseMusicMusics200MusicsItemMusicChordItem'
+import type { PraiseMusicMusics200MusicsItemCategoryItem } from './praiseMusicMusics200MusicsItemCategoryItem';
+import type { PraiseMusicMusics200MusicsItemMusicChordItem } from './praiseMusicMusics200MusicsItemMusicChordItem';
 
 export type PraiseMusicMusics200MusicsItem = {
-  id?: number
-  category?: PraiseMusicMusics200MusicsItemCategoryItem[]
-  music_chord?: PraiseMusicMusics200MusicsItemMusicChordItem[]
-  created_at?: string
-  updated_at?: string
-  music_title?: string
-  author?: string
-  music_tone?: string
-  music_text?: string
-  music_link?: string
-}
+  id?: number;
+  category?: PraiseMusicMusics200MusicsItemCategoryItem[];
+  music_chord?: PraiseMusicMusics200MusicsItemMusicChordItem[];
+  created_at?: string;
+  updated_at?: string;
+  music_title?: string;
+  author?: string;
+  music_tone?: string;
+  music_text?: string;
+  music_link?: string;
+};

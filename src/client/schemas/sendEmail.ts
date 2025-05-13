@@ -8,5 +8,5 @@
 
 export interface SendEmail {
   /** Lista de e-mails para os quais o convite será enviado. */
-  emails: string[]
+  emails: string[];
 }

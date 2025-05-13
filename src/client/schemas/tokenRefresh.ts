@@ -8,7 +8,7 @@
 
 export interface TokenRefresh {
   /** @minLength 1 */
-  refresh: string
+  refresh: string;
   /** @minLength 1 */
-  readonly access?: string
+  readonly access?: string;
 }

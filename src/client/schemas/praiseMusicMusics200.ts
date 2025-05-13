@@ -5,9 +5,9 @@
  * Organizador das musicas e gerenciamento de escalações do louvor da igreja
  * OpenAPI spec version: v1
  */
-import type { PraiseMusicMusics200MusicsItem } from './praiseMusicMusics200MusicsItem'
+import type { PraiseMusicMusics200MusicsItem } from './praiseMusicMusics200MusicsItem';
 
 export type PraiseMusicMusics200 = {
-  counts?: number
-  musics?: PraiseMusicMusics200MusicsItem[]
-}
+  counts?: number;
+  musics?: PraiseMusicMusics200MusicsItem[];
+};

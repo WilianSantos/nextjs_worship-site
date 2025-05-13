@@ -7,10 +7,10 @@
  */
 
 export interface MusicCategorySerializers {
-  readonly id?: number
+  readonly id?: number;
   /**
    * @minLength 1
    * @maxLength 50
    */
-  category_name: string
+  category_name: string;
 }

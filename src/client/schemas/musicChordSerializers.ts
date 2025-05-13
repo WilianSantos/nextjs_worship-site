@@ -7,10 +7,10 @@
  */
 
 export interface MusicChordSerializers {
-  readonly id?: number
+  readonly id?: number;
   /**
    * @minLength 1
    * @maxLength 10
    */
-  chord_name: string
+  chord_name: string;
 }

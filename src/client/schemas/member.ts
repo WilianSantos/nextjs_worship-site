@@ -7,19 +7,19 @@
  */
 
 export interface Member {
-  readonly id?: number
-  readonly created_at?: string
-  readonly updated_at?: string
+  readonly id?: number;
+  readonly created_at?: string;
+  readonly updated_at?: string;
   /**
    * @minLength 1
    * @maxLength 150
    */
-  name: string
-  availability?: boolean
+  name: string;
+  availability?: boolean;
   /** @maxLength 14 */
-  cell_phone?: string
+  cell_phone?: string;
   /** @nullable */
-  readonly profile_picture?: string | null
-  user: number
-  function?: number[]
+  readonly profile_picture?: string | null;
+  user: number;
+  function?: number[];
 }

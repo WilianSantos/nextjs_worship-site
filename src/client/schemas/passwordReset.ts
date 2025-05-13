@@ -11,7 +11,7 @@ export interface PasswordReset {
    * @minLength 1
    * @maxLength 500
    */
-  token: string
+  token: string;
   /** @minLength 1 */
-  new_password: string
+  new_password: string;
 }

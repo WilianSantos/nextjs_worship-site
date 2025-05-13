@@ -7,12 +7,12 @@
  */
 
 export interface PlaylistSerializers {
-  readonly id?: number
-  readonly playlist_link_display?: string
-  readonly created_at?: string
-  readonly updated_at?: string
+  readonly id?: number;
+  readonly playlist_link_display?: string;
+  readonly created_at?: string;
+  readonly updated_at?: string;
   /** @maxLength 100 */
-  playlist_name: string
-  playlist_date?: string
-  music?: number[]
+  playlist_name: string;
+  playlist_date?: string;
+  music?: number[];
 }

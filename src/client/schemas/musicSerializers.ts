@@ -5,34 +5,34 @@
  * Organizador das musicas e gerenciamento de escalações do louvor da igreja
  * OpenAPI spec version: v1
  */
-import type { MusicCategorySerializers } from './musicCategorySerializers'
-import type { MusicChordSerializers } from './musicChordSerializers'
+import type { MusicCategorySerializers } from './musicCategorySerializers';
+import type { MusicChordSerializers } from './musicChordSerializers';
 
 export interface MusicSerializers {
-  readonly id?: number
+  readonly id?: number;
   /**
    * @minLength 1
    * @maxLength 100
    */
-  music_title: string
+  music_title: string;
   /**
    * @minLength 1
    * @maxLength 100
    */
-  author: string
+  author: string;
   /**
    * @minLength 1
    * @maxLength 10
    */
-  music_tone: string
+  music_tone: string;
   /** @minLength 1 */
-  music_text: string
+  music_text: string;
   /** @maxLength 255 */
-  music_link?: string
-  readonly category?: readonly MusicCategorySerializers[]
-  readonly music_chord?: readonly MusicChordSerializers[]
-  readonly created_at?: string
-  readonly updated_at?: string
-  category_ids?: number[]
-  music_chord_ids?: number[]
+  music_link?: string;
+  readonly category?: readonly MusicCategorySerializers[];
+  readonly music_chord?: readonly MusicChordSerializers[];
+  readonly created_at?: string;
+  readonly updated_at?: string;
+  category_ids?: number[];
+  music_chord_ids?: number[];
 }

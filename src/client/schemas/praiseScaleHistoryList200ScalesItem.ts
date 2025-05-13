@@ -7,8 +7,8 @@
  */
 
 export type PraiseScaleHistoryList200ScalesItem = {
-  id?: number
-  lineup_date?: string
-  lineup_event?: string
-  function_name?: string
-}
+  id?: number;
+  lineup_date?: string;
+  lineup_event?: string;
+  function_name?: string;
+};
