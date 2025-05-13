@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "x-origin": [
     {
-      "url": "https://522f-143-255-126-18.ngrok-free.app/swagger/?format=openapi",
+      "url": "https://84e6-143-255-126-18.ngrok-free.app/swagger/?format=openapi",
       "format": "swagger",
       "version": "2.0",
       "converter": {
@@ -2602,7 +2602,7 @@
   },
   "servers": [
     {
-      "url": "http://522f-143-255-126-18.ngrok-free.app/api"
+      "url": "http://84e6-143-255-126-18.ngrok-free.app/api"
     }
   ],
   "components": {
@@ -3145,7 +3145,7 @@
             "title": "Playlist date",
             "type": "string",
             "format": "date",
-            "default": "2025-05-12"
+            "default": "2025-05-13"
           },
           "music": {
             "type": "array",
