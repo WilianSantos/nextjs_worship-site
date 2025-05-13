@@ -1,4 +1,4 @@
-import AnimatedMulti from '@/components/ui/multiple-selector'
+import AnimatedMulti, { OptionType } from '@/components/ui/multiple-selector'
 
 export function SelectCategory({
   options,
@@ -8,7 +8,7 @@ export function SelectCategory({
 }: {
   options: { label: string; value: string }[]
   defaultValue: { label: string; value: string }[]
-  onChange: (selected: { label: string; value: string }[]) => void
+  onChange: (selected: OptionType[]) => void
   error?: string | string[] | undefined
 }) {
   return (
@@ -23,7 +23,7 @@ export function SelectCategory({
       <AnimatedMulti
         options={options}
         defaultValue={defaultValue}
-        onChange={() => onChange}
+        onChange={onChange}
       />
       {error && <p className="text-red-500 text-sm">{error}</p>}
     </div>

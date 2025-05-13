@@ -1,6 +1,6 @@
 const baseUrl =
   process.env.NEXT_PUBLIC_API_URL ||
-  'https://4707-143-255-126-18.ngrok-free.app/api'
+  'https://84e6-143-255-126-18.ngrok-free.app/api'
 
 export const customFetcher = async <T>(
   url: string,

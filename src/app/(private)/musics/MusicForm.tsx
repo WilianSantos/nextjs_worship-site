@@ -238,10 +238,12 @@ export function MusicForm({
       <SelectCategory
         options={selectCategoryOptions}
         defaultValue={
-          music?.category?.map((cat) => ({
-            value: String(cat.id),
-            label: String(cat.category_name)
-          })) || []
+          music?.category && music.category.length > 0
+            ? music?.category?.map((cat) => ({
+                value: String(cat.id),
+                label: String(cat.category_name)
+              }))
+            : []
         }
         onChange={(selected) =>
           formik.setFieldValue(

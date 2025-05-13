@@ -41,11 +41,9 @@ export default function MusicsPage() {
   const { data: getMusicData, isLoading } = useGetMusic(getMusicWithId || 0)
   const getMusicId = getMusicData?.data
 
-  const handleMusicFormEdit = (id?: number) => {
-    if (id) {
-      setGetMusicWithId(id)
-      setMusicFormEdit(true)
-    }
+  const handleMusicFormEdit = (id: number) => {
+    setGetMusicWithId(id)
+    setMusicFormEdit(true)
   }
 
   const handleCloseForm = () => {

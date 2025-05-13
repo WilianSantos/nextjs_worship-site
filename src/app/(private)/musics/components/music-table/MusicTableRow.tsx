@@ -16,8 +16,8 @@ export function MusicTableRow({
   onSee
 }: {
   song: MusicSerializers | PraiseMusicMusics200MusicsItem
-  onEdit: (id: number | undefined) => void
-  onDelete: (id: number | undefined) => void
+  onEdit: (id: number) => void
+  onDelete: (id: number) => void
   onSee: (music: MusicSerializers | PraiseMusicMusics200MusicsItem) => void
 }) {
   return (
@@ -49,7 +49,9 @@ export function MusicTableRow({
         <div className="flex items-center gap-2">
           <Button
             className="cursor-pointer"
-            onClick={() => onEdit(song.id)}
+            onClick={() => {
+              if (song.id) onEdit(song.id)
+            }}
             variant="outline"
             size="sm"
           >
@@ -57,7 +59,9 @@ export function MusicTableRow({
           </Button>
           <Button
             className="cursor-pointer"
-            onClick={() => onDelete(song.id)}
+            onClick={() => {
+              if (song.id) onDelete(song.id)
+            }}
             variant="outline"
             size="sm"
           >

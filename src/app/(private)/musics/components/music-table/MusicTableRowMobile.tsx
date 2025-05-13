@@ -16,8 +16,8 @@ export function MusicTableRowMobile({
   onSee
 }: {
   song: MusicSerializers | PraiseMusicMusics200MusicsItem
-  onEdit: (id: number | undefined) => void
-  onDelete: (id: number | undefined) => void
+  onEdit: (id: number) => void
+  onDelete: (id: number) => void
   onSee: (music: MusicSerializers | PraiseMusicMusics200MusicsItem) => void
 }) {
   const [mobileTableMenuIsActive, setMobileTableMenuIsActive] = useState(false)
@@ -41,14 +41,18 @@ export function MusicTableRowMobile({
           <div className="flex flex-col absolute top-10 right-0 z-10 bg-white p-2 rounded shadow-md">
             <Button
               className="mb-1 cursor-pointer"
-              onClick={() => onEdit(song.id)}
+              onClick={() => {
+                if (song.id) onEdit(song.id)
+              }}
               variant="outline"
               size="icon"
             >
               <SquarePen className="mr-1" /> Editar
             </Button>
             <Button
-              onClick={() => onDelete(song.id)}
+              onClick={() => {
+                if (song.id) onDelete(song.id)
+              }}
               variant="outline"
               size="icon"
               className="mb-1 cursor-pointer"

@@ -23,7 +23,7 @@ export function MusicTable({
   setMessageSuccess
 }: {
   musics: MusicSerializers[] | PraiseMusicMusics200MusicsItem[]
-  setMusicFormEdit: (id?: number) => void
+  setMusicFormEdit: (id: number) => void
   setMessageSuccess: (message: string) => void
 }) {
   const [seeMusic, setSeeMusic] = useState(false)
@@ -34,7 +34,7 @@ export function MusicTable({
   const queryClient = useQueryClient()
   const { mutate, isPending } = useDeleteMusic()
 
-  const handleDelete = (id: number | undefined) => {
+  const handleDelete = (id: number) => {
     if (id)
       mutate(
         { id },

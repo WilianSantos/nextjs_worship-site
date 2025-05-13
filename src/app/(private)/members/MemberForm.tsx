@@ -45,9 +45,11 @@ export const MemberForm = ({
             `Os e-mails ${responseData?.sent.map((item) => `${item}, `)}foram enviados com sucesso.`
           )
 
-          setErrorPage(
-            `Os e-mails ${responseData?.failed.map((item) => `${item.email}, ocorreu o seguinte erro: ${item.detail}, `)}tente novamente.`
-          )
+          if (responseData?.failed && responseData?.failed.length > 0) {
+            setErrorPage(
+              `Os e-mails ${responseData?.failed.map((item) => `${item.email}, ocorreu o seguinte erro: ${item.detail}, `)}tente novamente.`
+            )
+          }
 
           setEmailList([])
           formik.resetForm()
