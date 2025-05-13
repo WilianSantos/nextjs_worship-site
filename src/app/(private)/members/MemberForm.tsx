@@ -28,7 +28,7 @@ export const MemberForm = ({
   const [emailList, setEmailList] = useState<string[]>([])
   const [messageError, setMessageError] = useState<string>('')
 
-  const { mutate, isPending, data } = useCreateEmail()
+  const { mutate, isPending } = useCreateEmail()
 
   const formik = useFormik({
     initialValues: { email: '' },
