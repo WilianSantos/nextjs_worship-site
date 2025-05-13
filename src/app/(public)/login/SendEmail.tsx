@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input'
 import { useCreateEmailPassword } from '@/services/hooks/member/useCreateEmailPassword'
 import { Loader } from '@/components/Loader'
 
-export default function SendEmailForm({
+export function SendEmailForm({
   setSendEmailForm,
   setMessageSuccess
 }: {

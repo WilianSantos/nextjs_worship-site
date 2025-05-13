@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input'
 
 import { useCreateToken } from '@/services/hooks/token/useCreateToken'
 
-export default function LoginForm() {
+export function LoginForm() {
   const [messageError, setMessageError] = useState<string | null>(null)
   const { mutate, isPending } = useCreateToken()
   const router = useRouter()
