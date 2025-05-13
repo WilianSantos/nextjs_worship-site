@@ -37,8 +37,8 @@ export default function AnimatedMulti({
           className="w-full"
           onChange={(
             newValue: MultiValue<OptionType>,
-            // @ts-expect-error // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            _actionMeta: ActionMeta<OptionType>
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            _: ActionMeta<OptionType>
           ) => {
             onChange([...newValue])
           }}
@@ -93,14 +93,15 @@ export default function AnimatedMulti({
         />
       ) : (
         <Select
+          isMulti={false}
           components={animatedComponents}
           options={[{ value: '', label: 'Selecione...' }, ...options]}
           defaultValue={defaultValue[0] || null}
           className="w-full"
           onChange={(
             newValue: SingleValue<OptionType>,
-            // @ts-expect-error // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            _actionMeta: ActionMeta<OptionType>
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            _: ActionMeta<OptionType>
           ) => {
             if (newValue) {
               onChange([newValue])
