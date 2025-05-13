@@ -13,7 +13,7 @@ import type {
   MemberFunctionsSerializers,
   MemberFunctionsSerializersBody,
   MemberMe,
-  MessageSuccess,
+  Message,
   MusicCategorySerializers,
   MusicCategorySerializersBody,
   MusicChordSerializers,
@@ -80,12 +80,12 @@ import { customFetcher } from '../../services/customFetcher'
  * Rota para mudar senha com token.
  */
 export type praiseChangePasswordCreateResponse201 = {
-  data: MessageSuccess
+  data: Message
   status: 201
 }
 
 export type praiseChangePasswordCreateResponse400 = {
-  data: void
+  data: Message
   status: 400
 }
 
@@ -319,12 +319,15 @@ export const praiseLineupMemberDelete = async (
   )
 }
 
-export type praiseLogoutCreateResponse201 = {
-  data: void
-  status: 201
+/**
+ * Rota para realizar logout do usuário removendo os cookies de autenticação.
+ */
+export type praiseLogoutCreateResponse205 = {
+  data: Message
+  status: 205
 }
 
-export type praiseLogoutCreateResponseComposite = praiseLogoutCreateResponse201
+export type praiseLogoutCreateResponseComposite = praiseLogoutCreateResponse205
 
 export type praiseLogoutCreateResponse = praiseLogoutCreateResponseComposite & {
   headers: Headers
@@ -352,7 +355,7 @@ export type praiseMeListResponse200 = {
 }
 
 export type praiseMeListResponse404 = {
-  data: void
+  data: Message
   status: 404
 }
 
@@ -1545,7 +1548,7 @@ export type praiseMusicUploadPdfResponse200 = {
 }
 
 export type praiseMusicUploadPdfResponse400 = {
-  data: void
+  data: Message
   status: 400
 }
 
@@ -1694,12 +1697,12 @@ export const praiseMusicDelete = async (
  * Rota para redefinir a senha
  */
 export type praisePasswordResetCreateResponse201 = {
-  data: MessageSuccess
+  data: Message
   status: 201
 }
 
 export type praisePasswordResetCreateResponse400 = {
-  data: void
+  data: Message
   status: 400
 }
 
@@ -2412,12 +2415,12 @@ export const praisePraiseLineupDelete = async (
  * Rota para registrar o usuário.
  */
 export type praiseRegisterUserCreateResponse201 = {
-  data: MessageSuccess
+  data: Message
   status: 201
 }
 
 export type praiseRegisterUserCreateResponse400 = {
-  data: void
+  data: Message
   status: 400
 }
 
@@ -2453,12 +2456,12 @@ export const praiseRegisterUserCreate = async (
  * Rota para gerar um token para redefinir a senha
  */
 export type praiseRequestPasswordResetCreateResponse201 = {
-  data: MessageSuccess
+  data: Message
   status: 201
 }
 
 export type praiseRequestPasswordResetCreateResponse400 = {
-  data: void
+  data: Message
   status: 400
 }
 
@@ -2532,7 +2535,7 @@ export type praiseSendRegistrationEmailCreateResponse200 = {
 }
 
 export type praiseSendRegistrationEmailCreateResponse400 = {
-  data: void
+  data: Message
   status: 400
 }
 
@@ -2573,7 +2576,7 @@ export type praiseSlidesGeneratorCreateResponse200 = {
 }
 
 export type praiseSlidesGeneratorCreateResponse400 = {
-  data: void
+  data: Message
   status: 400
 }
 
@@ -2790,7 +2793,7 @@ export type praiseVerifyRegistrationTokenListResponse200 = {
 }
 
 export type praiseVerifyRegistrationTokenListResponse400 = {
-  data: void
+  data: Message
   status: 400
 }
 

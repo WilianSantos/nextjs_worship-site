@@ -49,13 +49,20 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MessageSuccess"
+                  "$ref": "#/components/schemas/Message"
                 }
               }
             }
           },
           "400": {
-            "description": "detail"
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
           }
         },
         "tags": ["praise"]
@@ -208,10 +215,17 @@
     "/praise/logout/": {
       "post": {
         "operationId": "praise_logout_create",
-        "description": "",
+        "description": "Rota para realizar logout do usuário removendo os cookies de autenticação.",
         "responses": {
-          "201": {
-            "description": ""
+          "205": {
+            "description": "Logout realizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
           }
         },
         "tags": ["praise"]
@@ -234,7 +248,14 @@
             }
           },
           "404": {
-            "description": "Usuário não é um membro."
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
           }
         },
         "tags": ["praise"]
@@ -1298,7 +1319,14 @@
             }
           },
           "400": {
-            "description": "Arquivo inválido ou erro ao processar PDF."
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
           }
         },
         "tags": ["praise"]
@@ -1405,13 +1433,20 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MessageSuccess"
+                  "$ref": "#/components/schemas/Message"
                 }
               }
             }
           },
           "400": {
-            "description": "detail"
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
           }
         },
         "tags": ["praise"]
@@ -2182,13 +2217,20 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MessageSuccess"
+                  "$ref": "#/components/schemas/Message"
                 }
               }
             }
           },
           "400": {
-            "description": "detail"
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
           }
         },
         "tags": ["praise"]
@@ -2215,13 +2257,20 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MessageSuccess"
+                  "$ref": "#/components/schemas/Message"
                 }
               }
             }
           },
           "400": {
-            "description": "detail"
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
           }
         },
         "tags": ["praise"]
@@ -2298,10 +2347,24 @@
             }
           },
           "400": {
-            "description": "Erro de validação nos dados de entrada"
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Erro interno ao enviar os convites"
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
           }
         },
         "tags": ["praise"]
@@ -2342,10 +2405,24 @@
             }
           },
           "400": {
-            "description": "ID da playlist não foi informado."
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Playlist não encontrada."
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
           }
         },
         "tags": ["praise"]
@@ -2560,7 +2637,14 @@
             }
           },
           "400": {
-            "description": "Token inválido ou expirado"
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
           }
         },
         "tags": ["praise"]
@@ -2779,13 +2863,13 @@
           }
         }
       },
-      "MessageSuccess": {
+      "Message": {
         "required": ["detail"],
         "type": "object",
         "properties": {
           "detail": {
             "title": "Detail",
-            "description": "Mensagem de socesso",
+            "description": "Mensagem de informação",
             "type": "string",
             "minLength": 1
           }
