@@ -23,6 +23,19 @@ import { useEffect, useState } from 'react'
 import { Card } from '@/components/ui/card'
 import { formatDate } from '@/utils/formatDate'
 
+type MemberType = {
+  id: number | undefined
+  member: number
+  function: number
+}
+
+interface FormValues {
+  lineupEvent: string
+  lineupDate: string
+  playlist: number | null
+  members: MemberType[]
+}
+
 // Componente para mostrar mensagens de erro de forma consistente
 const ErrorMessage = ({ message }) => {
   if (!message) return null
@@ -175,6 +188,7 @@ export const ScaleForm = ({
         playlist: values.playlist
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const onErrorMember = (error: any) => {
         // Tratar erros da API de forma mais robusta
         console.error('Erro na operação de escala:', error)
@@ -217,6 +231,7 @@ export const ScaleForm = ({
         }
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const onSuccess = (data: any) => {
         const scaleId = initialValue?.id || data?.data?.id
 
@@ -354,7 +369,7 @@ export const ScaleForm = ({
   }, [formik.values.members.map((m) => m.member).join(',')])
 
   // Função para verificar se um campo específico tem erro
-  const hasError = (fieldName: string) => {
+  const hasError = (fieldName: keyof FormValues) => {
     return (
       (formik.touched[fieldName] && formik.errors[fieldName]) ||
       apiErrors[fieldName]
@@ -362,7 +377,7 @@ export const ScaleForm = ({
   }
 
   // Função para obter a mensagem de erro para um campo
-  const getErrorMessage = (fieldName: string) => {
+  const getErrorMessage = (fieldName: keyof FormValues) => {
     return (
       (formik.touched[fieldName] && formik.errors[fieldName]) ||
       apiErrors[fieldName] ||
@@ -371,22 +386,27 @@ export const ScaleForm = ({
   }
 
   // Verificar se um membro específico tem erro
-  const hasMemberError = (index: number, field: 'member' | 'function') => {
-    return (
-      formik.touched.members?.[index]?.[field] &&
-      formik.errors.members?.[index]?.[field]
-    )
+  const hasMemberError = (index: number, field: keyof MemberType) => {
+    const touched = formik.touched.members?.[index] as
+      | Partial<MemberType>
+      | undefined
+    const errors = formik.errors.members?.[index] as
+      | Partial<Record<keyof MemberType, string>>
+      | undefined
+
+    return touched?.[field] && errors?.[field]
   }
 
   // Obter mensagem de erro para um membro específico
-  const getMemberErrorMessage = (
-    index: number,
-    field: 'member' | 'function'
-  ) => {
-    return (
-      formik.touched.members?.[index]?.[field] &&
-      (formik.errors.members?.[index]?.[field] as string)
-    )
+  const getMemberErrorMessage = (index: number, field: keyof MemberType) => {
+    const touched = formik.touched.members?.[index] as
+      | Partial<MemberType>
+      | undefined
+    const errors = formik.errors.members?.[index] as
+      | Partial<Record<keyof MemberType, string>>
+      | undefined
+
+    return touched?.[field] && errors?.[field]
   }
 
   if (isPendingCreate || isPendingUpdate) {

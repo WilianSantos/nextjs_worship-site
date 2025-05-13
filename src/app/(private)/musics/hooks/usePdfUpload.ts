@@ -11,7 +11,8 @@ export function usePdfUpload(formik: any) {
       { file },
       {
         onError: (error) => {
-          formik.setErrors({ pdfUpload: error.file || error.detail })
+          const err = error as { file?: string; detail?: string }
+          formik.setErrors({ pdfUpload: err.file || err.detail })
         },
         onSuccess: (data) => {
           formik.setFieldValue('musicText', data?.html?.trim() || '')

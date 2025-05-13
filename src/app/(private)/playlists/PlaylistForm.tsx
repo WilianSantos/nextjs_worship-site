@@ -51,7 +51,7 @@ export const PlaylistForm = ({
     .map((item) => ({
       value: String(item.id),
       label: `${item.music_title} - ${item.author}`
-    }))
+    })) || [{ value: '', label: '' }]
 
   const defaultMusicOptions = musics
     ?.filter(

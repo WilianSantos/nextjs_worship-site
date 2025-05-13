@@ -19,10 +19,11 @@ export function SelectCategory({
       >
         Categorias
       </label>
+      {/* TODO: correção de onChange */}
       <AnimatedMulti
         options={options}
         defaultValue={defaultValue}
-        onChange={onChange}
+        onChange={() => onChange}
       />
       {error && <p className="text-red-500 text-sm">{error}</p>}
     </div>

@@ -116,8 +116,10 @@ export function ScaleTable({
                   <TableCell>
                     <input
                       type="checkbox"
-                      checked={selectedIds.includes(item.id)}
-                      onChange={() => toggleSelect(item.id)}
+                      checked={item.id ? selectedIds.includes(item.id) : false}
+                      onChange={() => {
+                        if (item.id) toggleSelect(item.id)
+                      }}
                     />
                   </TableCell>
                   <TableCell>{item.lineup_event}</TableCell>
@@ -161,7 +163,11 @@ export function ScaleTable({
                           messageWhats={messageWhats(item.id)}
                         />
                       </Button>
-                      <DownloadButton playlistId={item.playlist} />
+                      {item.playlist ? (
+                        <DownloadButton playlistId={item.playlist} />
+                      ) : (
+                        <></>
+                      )}
                     </div>
                   </TableCell>
                 </TableRow>
@@ -202,8 +208,10 @@ export function ScaleTable({
                   <TableCell>
                     <input
                       type="checkbox"
-                      checked={selectedIds.includes(item.id)}
-                      onChange={() => toggleSelect(item.id)}
+                      checked={item.id ? selectedIds.includes(item.id) : false}
+                      onChange={() => {
+                        if (item.id) toggleSelect(item.id)
+                      }}
                     />
                   </TableCell>
                   <TableCell>{formatDate(String(item.lineup_date))}</TableCell>
@@ -259,7 +267,11 @@ export function ScaleTable({
                             messageWhats={messageWhats(item.id)}
                           />
                         </Button>
-                        <DownloadButton playlistId={item.playlist} />
+                        {item.playlist ? (
+                          <DownloadButton playlistId={item.playlist} />
+                        ) : (
+                          <></>
+                        )}
                       </div>
                     )}
                   </TableCell>
@@ -300,8 +312,10 @@ export function ScaleTable({
                   <TableCell>
                     <input
                       type="checkbox"
-                      checked={selectedIds.includes(item.id)}
-                      onChange={() => toggleSelect(item.id)}
+                      checked={item.id ? selectedIds.includes(item.id) : false}
+                      onChange={() => {
+                        if (item.id) toggleSelect(item.id)
+                      }}
                     />
                   </TableCell>
                   <TableCell>{formatDate(String(item.lineup_date))}</TableCell>
@@ -346,7 +360,11 @@ export function ScaleTable({
                             messageWhats={messageWhats(item.id)}
                           />
                         </Button>
-                        <DownloadButton playlistId={item.playlist} />
+                        {item.playlist ? (
+                          <DownloadButton playlistId={item.playlist} />
+                        ) : (
+                          <></>
+                        )}
                       </div>
                     )}
                   </TableCell>

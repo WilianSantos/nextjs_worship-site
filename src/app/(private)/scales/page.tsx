@@ -106,7 +106,13 @@ export default function ScalesPage() {
     if (isAllSelected) {
       setSelectedIds([])
     } else {
-      setSelectedIds(scaleListPage.map((item) => item.id))
+      setSelectedIds(
+        scaleListPage
+          ? scaleListPage
+              .map((item) => item.id)
+              .filter((id): id is number => typeof id === 'number')
+          : []
+      )
     }
   }
 
@@ -242,7 +248,7 @@ export default function ScalesPage() {
             scaleListPage={scaleListPage}
             scaleMemberList={scaleMemberList}
             selectedIds={selectedIds}
-            setPage={setPage}
+            setPage={() => setPage}
             toggleSelect={(id: number) => toggleSelect(id)}
             toggleSelectAll={toggleSelectAll}
           />
