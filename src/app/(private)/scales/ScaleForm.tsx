@@ -37,7 +37,7 @@ interface FormValues {
 }
 
 // Componente para mostrar mensagens de erro de forma consistente
-const ErrorMessage = ({ message }) => {
+const ErrorMessage = ({ message }: { message: string | string[] }) => {
   if (!message) return null
   return <div className="text-red-500 text-sm mt-1">{message}</div>
 }
@@ -377,12 +377,18 @@ export const ScaleForm = ({
   }
 
   // Função para obter a mensagem de erro para um campo
-  const getErrorMessage = (fieldName: keyof FormValues) => {
-    return (
-      (formik.touched[fieldName] && formik.errors[fieldName]) ||
-      apiErrors[fieldName] ||
-      ''
-    )
+  const getErrorMessage = (
+    fieldName: keyof Omit<FormValues, 'members'>
+  ): string | string[] => {
+    if (formik.touched[fieldName] && formik.errors[fieldName]) {
+      return formik.errors[fieldName] as string
+    }
+
+    if (apiErrors[fieldName]) {
+      return apiErrors[fieldName]
+    }
+
+    return ''
   }
 
   // Verificar se um membro específico tem erro
