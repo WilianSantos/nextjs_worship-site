@@ -66,7 +66,8 @@ export default function FunctionsPage() {
           queryClient.invalidateQueries({ queryKey: ['member'] })
         },
         onError: (error) => {
-          setMessageError(String(error.detail))
+          const err = error as { detail?: string }
+          setMessageError(String(err.detail))
         }
       }
     )
