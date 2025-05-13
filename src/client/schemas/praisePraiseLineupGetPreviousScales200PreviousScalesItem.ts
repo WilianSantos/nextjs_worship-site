@@ -7,6 +7,6 @@
  */
 
 export type PraisePraiseLineupGetPreviousScales200PreviousScalesItem = {
-  event?: string;
-  date?: string;
-};
+  event?: string
+  date?: string
+}

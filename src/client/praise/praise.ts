@@ -13,6 +13,7 @@ import type {
   MemberFunctionsSerializers,
   MemberFunctionsSerializersBody,
   MemberMe,
+  MessageSuccess,
   MusicCategorySerializers,
   MusicCategorySerializersBody,
   MusicChordSerializers,
@@ -71,278 +72,276 @@ import type {
   TokenVerification,
   UserSerializers,
   UserSerializersBody
-} from '.././schemas';
+} from '.././schemas'
 
-import { customFetcher } from '../../services/customFetcher';
+import { customFetcher } from '../../services/customFetcher'
 
 /**
  * Rota para mudar senha com token.
  */
-export type praiseChangePasswordCreateResponse204 = {
-  data: void
-  status: 204
+export type praiseChangePasswordCreateResponse201 = {
+  data: MessageSuccess
+  status: 201
 }
 
 export type praiseChangePasswordCreateResponse400 = {
   data: void
   status: 400
 }
-    
-export type praiseChangePasswordCreateResponseComposite = praiseChangePasswordCreateResponse204 | praiseChangePasswordCreateResponse400;
-    
-export type praiseChangePasswordCreateResponse = praiseChangePasswordCreateResponseComposite & {
-  headers: Headers;
-}
+
+export type praiseChangePasswordCreateResponseComposite =
+  | praiseChangePasswordCreateResponse201
+  | praiseChangePasswordCreateResponse400
+
+export type praiseChangePasswordCreateResponse =
+  praiseChangePasswordCreateResponseComposite & {
+    headers: Headers
+  }
 
 export const getPraiseChangePasswordCreateUrl = () => {
-
-
-  
-
   return `/praise/change-password/`
 }
 
-export const praiseChangePasswordCreate = async (changePassword: ChangePassword, options?: RequestInit): Promise<praiseChangePasswordCreateResponse> => {
-  
-  return customFetcher<praiseChangePasswordCreateResponse>(getPraiseChangePasswordCreateUrl(),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      changePassword,)
-  }
-);}
-
+export const praiseChangePasswordCreate = async (
+  changePassword: ChangePassword,
+  options?: RequestInit
+): Promise<praiseChangePasswordCreateResponse> => {
+  return customFetcher<praiseChangePasswordCreateResponse>(
+    getPraiseChangePasswordCreateUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(changePassword)
+    }
+  )
+}
 
 export type praiseLineupMemberListResponse200 = {
   data: LineupMemberSerializers[]
   status: 200
 }
-    
-export type praiseLineupMemberListResponseComposite = praiseLineupMemberListResponse200;
-    
-export type praiseLineupMemberListResponse = praiseLineupMemberListResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseLineupMemberListUrl = (params?: PraiseLineupMemberListParams,) => {
-  const normalizedParams = new URLSearchParams();
+export type praiseLineupMemberListResponseComposite =
+  praiseLineupMemberListResponse200
+
+export type praiseLineupMemberListResponse =
+  praiseLineupMemberListResponseComposite & {
+    headers: Headers
+  }
+
+export const getPraiseLineupMemberListUrl = (
+  params?: PraiseLineupMemberListParams
+) => {
+  const normalizedParams = new URLSearchParams()
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
       normalizedParams.append(key, value === null ? 'null' : value.toString())
     }
-  });
+  })
 
-  const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString()
 
-  return stringifiedParams.length > 0 ? `/praise/lineup-member/?${stringifiedParams}` : `/praise/lineup-member/`
+  return stringifiedParams.length > 0
+    ? `/praise/lineup-member/?${stringifiedParams}`
+    : `/praise/lineup-member/`
 }
 
-export const praiseLineupMemberList = async (params?: PraiseLineupMemberListParams, options?: RequestInit): Promise<praiseLineupMemberListResponse> => {
-  
-  return customFetcher<praiseLineupMemberListResponse>(getPraiseLineupMemberListUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praiseLineupMemberList = async (
+  params?: PraiseLineupMemberListParams,
+  options?: RequestInit
+): Promise<praiseLineupMemberListResponse> => {
+  return customFetcher<praiseLineupMemberListResponse>(
+    getPraiseLineupMemberListUrl(params),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 export type praiseLineupMemberCreateResponse201 = {
   data: LineupMemberSerializers
   status: 201
 }
-    
-export type praiseLineupMemberCreateResponseComposite = praiseLineupMemberCreateResponse201;
-    
-export type praiseLineupMemberCreateResponse = praiseLineupMemberCreateResponseComposite & {
-  headers: Headers;
-}
+
+export type praiseLineupMemberCreateResponseComposite =
+  praiseLineupMemberCreateResponse201
+
+export type praiseLineupMemberCreateResponse =
+  praiseLineupMemberCreateResponseComposite & {
+    headers: Headers
+  }
 
 export const getPraiseLineupMemberCreateUrl = () => {
-
-
-  
-
   return `/praise/lineup-member/`
 }
 
-export const praiseLineupMemberCreate = async (lineupMemberSerializersBody: LineupMemberSerializersBody, options?: RequestInit): Promise<praiseLineupMemberCreateResponse> => {
-  
-  return customFetcher<praiseLineupMemberCreateResponse>(getPraiseLineupMemberCreateUrl(),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      lineupMemberSerializersBody,)
-  }
-);}
-
+export const praiseLineupMemberCreate = async (
+  lineupMemberSerializersBody: LineupMemberSerializersBody,
+  options?: RequestInit
+): Promise<praiseLineupMemberCreateResponse> => {
+  return customFetcher<praiseLineupMemberCreateResponse>(
+    getPraiseLineupMemberCreateUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(lineupMemberSerializersBody)
+    }
+  )
+}
 
 export type praiseLineupMemberReadResponse200 = {
   data: LineupMemberSerializers
   status: 200
 }
-    
-export type praiseLineupMemberReadResponseComposite = praiseLineupMemberReadResponse200;
-    
-export type praiseLineupMemberReadResponse = praiseLineupMemberReadResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseLineupMemberReadUrl = (id: number,) => {
+export type praiseLineupMemberReadResponseComposite =
+  praiseLineupMemberReadResponse200
 
+export type praiseLineupMemberReadResponse =
+  praiseLineupMemberReadResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraiseLineupMemberReadUrl = (id: number) => {
   return `/praise/lineup-member/${id}/`
 }
 
-export const praiseLineupMemberRead = async (id: number, options?: RequestInit): Promise<praiseLineupMemberReadResponse> => {
-  
-  return customFetcher<praiseLineupMemberReadResponse>(getPraiseLineupMemberReadUrl(id),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praiseLineupMemberRead = async (
+  id: number,
+  options?: RequestInit
+): Promise<praiseLineupMemberReadResponse> => {
+  return customFetcher<praiseLineupMemberReadResponse>(
+    getPraiseLineupMemberReadUrl(id),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 export type praiseLineupMemberUpdateResponse200 = {
   data: LineupMemberSerializers
   status: 200
 }
-    
-export type praiseLineupMemberUpdateResponseComposite = praiseLineupMemberUpdateResponse200;
-    
-export type praiseLineupMemberUpdateResponse = praiseLineupMemberUpdateResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseLineupMemberUpdateUrl = (id: number,) => {
+export type praiseLineupMemberUpdateResponseComposite =
+  praiseLineupMemberUpdateResponse200
 
+export type praiseLineupMemberUpdateResponse =
+  praiseLineupMemberUpdateResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraiseLineupMemberUpdateUrl = (id: number) => {
   return `/praise/lineup-member/${id}/`
 }
 
-export const praiseLineupMemberUpdate = async (id: number,
-    lineupMemberSerializersBody: LineupMemberSerializersBody, options?: RequestInit): Promise<praiseLineupMemberUpdateResponse> => {
-  
-  return customFetcher<praiseLineupMemberUpdateResponse>(getPraiseLineupMemberUpdateUrl(id),
-  {      
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      lineupMemberSerializersBody,)
-  }
-);}
-
+export const praiseLineupMemberUpdate = async (
+  id: number,
+  lineupMemberSerializersBody: LineupMemberSerializersBody,
+  options?: RequestInit
+): Promise<praiseLineupMemberUpdateResponse> => {
+  return customFetcher<praiseLineupMemberUpdateResponse>(
+    getPraiseLineupMemberUpdateUrl(id),
+    {
+      ...options,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(lineupMemberSerializersBody)
+    }
+  )
+}
 
 export type praiseLineupMemberPartialUpdateResponse200 = {
   data: LineupMemberSerializers
   status: 200
 }
-    
-export type praiseLineupMemberPartialUpdateResponseComposite = praiseLineupMemberPartialUpdateResponse200;
-    
-export type praiseLineupMemberPartialUpdateResponse = praiseLineupMemberPartialUpdateResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseLineupMemberPartialUpdateUrl = (id: number,) => {
+export type praiseLineupMemberPartialUpdateResponseComposite =
+  praiseLineupMemberPartialUpdateResponse200
 
+export type praiseLineupMemberPartialUpdateResponse =
+  praiseLineupMemberPartialUpdateResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraiseLineupMemberPartialUpdateUrl = (id: number) => {
   return `/praise/lineup-member/${id}/`
 }
 
-export const praiseLineupMemberPartialUpdate = async (id: number,
-    lineupMemberSerializersBody: LineupMemberSerializersBody, options?: RequestInit): Promise<praiseLineupMemberPartialUpdateResponse> => {
-  
-  return customFetcher<praiseLineupMemberPartialUpdateResponse>(getPraiseLineupMemberPartialUpdateUrl(id),
-  {      
-    ...options,
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      lineupMemberSerializersBody,)
-  }
-);}
-
+export const praiseLineupMemberPartialUpdate = async (
+  id: number,
+  lineupMemberSerializersBody: LineupMemberSerializersBody,
+  options?: RequestInit
+): Promise<praiseLineupMemberPartialUpdateResponse> => {
+  return customFetcher<praiseLineupMemberPartialUpdateResponse>(
+    getPraiseLineupMemberPartialUpdateUrl(id),
+    {
+      ...options,
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(lineupMemberSerializersBody)
+    }
+  )
+}
 
 export type praiseLineupMemberDeleteResponse204 = {
   data: void
   status: 204
 }
-    
-export type praiseLineupMemberDeleteResponseComposite = praiseLineupMemberDeleteResponse204;
-    
-export type praiseLineupMemberDeleteResponse = praiseLineupMemberDeleteResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseLineupMemberDeleteUrl = (id: number,) => {
+export type praiseLineupMemberDeleteResponseComposite =
+  praiseLineupMemberDeleteResponse204
 
+export type praiseLineupMemberDeleteResponse =
+  praiseLineupMemberDeleteResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraiseLineupMemberDeleteUrl = (id: number) => {
   return `/praise/lineup-member/${id}/`
 }
 
-export const praiseLineupMemberDelete = async (id: number, options?: RequestInit): Promise<praiseLineupMemberDeleteResponse> => {
-  
-  return customFetcher<praiseLineupMemberDeleteResponse>(getPraiseLineupMemberDeleteUrl(id),
-  {      
-    ...options,
-    method: 'DELETE'
-    
-    
-  }
-);}
-
+export const praiseLineupMemberDelete = async (
+  id: number,
+  options?: RequestInit
+): Promise<praiseLineupMemberDeleteResponse> => {
+  return customFetcher<praiseLineupMemberDeleteResponse>(
+    getPraiseLineupMemberDeleteUrl(id),
+    {
+      ...options,
+      method: 'DELETE'
+    }
+  )
+}
 
 export type praiseLogoutCreateResponse201 = {
   data: void
   status: 201
 }
-    
-export type praiseLogoutCreateResponseComposite = praiseLogoutCreateResponse201;
-    
+
+export type praiseLogoutCreateResponseComposite = praiseLogoutCreateResponse201
+
 export type praiseLogoutCreateResponse = praiseLogoutCreateResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
 export const getPraiseLogoutCreateUrl = () => {
-
-
-  
-
   return `/praise/logout/`
 }
 
-export const praiseLogoutCreate = async ( options?: RequestInit): Promise<praiseLogoutCreateResponse> => {
-  
-  return customFetcher<praiseLogoutCreateResponse>(getPraiseLogoutCreateUrl(),
-  {      
+export const praiseLogoutCreate = async (
+  options?: RequestInit
+): Promise<praiseLogoutCreateResponse> => {
+  return customFetcher<praiseLogoutCreateResponse>(getPraiseLogoutCreateUrl(), {
     ...options,
     method: 'POST'
-    
-    
-  }
-);}
-
+  })
+}
 
 /**
  * Rota para buscar membro logado.
@@ -356,315 +355,316 @@ export type praiseMeListResponse404 = {
   data: void
   status: 404
 }
-    
-export type praiseMeListResponseComposite = praiseMeListResponse200 | praiseMeListResponse404;
-    
+
+export type praiseMeListResponseComposite =
+  | praiseMeListResponse200
+  | praiseMeListResponse404
+
 export type praiseMeListResponse = praiseMeListResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
 export const getPraiseMeListUrl = () => {
-
-
-  
-
   return `/praise/me/`
 }
 
-export const praiseMeList = async ( options?: RequestInit): Promise<praiseMeListResponse> => {
-  
-  return customFetcher<praiseMeListResponse>(getPraiseMeListUrl(),
-  {      
+export const praiseMeList = async (
+  options?: RequestInit
+): Promise<praiseMeListResponse> => {
+  return customFetcher<praiseMeListResponse>(getPraiseMeListUrl(), {
     ...options,
     method: 'GET'
-    
-    
-  }
-);}
-
+  })
+}
 
 export type praiseMemberFunctionsListResponse200 = {
   data: MemberFunctionsSerializers[]
   status: 200
 }
-    
-export type praiseMemberFunctionsListResponseComposite = praiseMemberFunctionsListResponse200;
-    
-export type praiseMemberFunctionsListResponse = praiseMemberFunctionsListResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseMemberFunctionsListUrl = (params?: PraiseMemberFunctionsListParams,) => {
-  const normalizedParams = new URLSearchParams();
+export type praiseMemberFunctionsListResponseComposite =
+  praiseMemberFunctionsListResponse200
+
+export type praiseMemberFunctionsListResponse =
+  praiseMemberFunctionsListResponseComposite & {
+    headers: Headers
+  }
+
+export const getPraiseMemberFunctionsListUrl = (
+  params?: PraiseMemberFunctionsListParams
+) => {
+  const normalizedParams = new URLSearchParams()
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
       normalizedParams.append(key, value === null ? 'null' : value.toString())
     }
-  });
+  })
 
-  const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString()
 
-  return stringifiedParams.length > 0 ? `/praise/member-functions/?${stringifiedParams}` : `/praise/member-functions/`
+  return stringifiedParams.length > 0
+    ? `/praise/member-functions/?${stringifiedParams}`
+    : `/praise/member-functions/`
 }
 
-export const praiseMemberFunctionsList = async (params?: PraiseMemberFunctionsListParams, options?: RequestInit): Promise<praiseMemberFunctionsListResponse> => {
-  
-  return customFetcher<praiseMemberFunctionsListResponse>(getPraiseMemberFunctionsListUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praiseMemberFunctionsList = async (
+  params?: PraiseMemberFunctionsListParams,
+  options?: RequestInit
+): Promise<praiseMemberFunctionsListResponse> => {
+  return customFetcher<praiseMemberFunctionsListResponse>(
+    getPraiseMemberFunctionsListUrl(params),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 export type praiseMemberFunctionsCreateResponse201 = {
   data: MemberFunctionsSerializers
   status: 201
 }
-    
-export type praiseMemberFunctionsCreateResponseComposite = praiseMemberFunctionsCreateResponse201;
-    
-export type praiseMemberFunctionsCreateResponse = praiseMemberFunctionsCreateResponseComposite & {
-  headers: Headers;
-}
+
+export type praiseMemberFunctionsCreateResponseComposite =
+  praiseMemberFunctionsCreateResponse201
+
+export type praiseMemberFunctionsCreateResponse =
+  praiseMemberFunctionsCreateResponseComposite & {
+    headers: Headers
+  }
 
 export const getPraiseMemberFunctionsCreateUrl = () => {
-
-
-  
-
   return `/praise/member-functions/`
 }
 
-export const praiseMemberFunctionsCreate = async (memberFunctionsSerializersBody: MemberFunctionsSerializersBody, options?: RequestInit): Promise<praiseMemberFunctionsCreateResponse> => {
-  
-  return customFetcher<praiseMemberFunctionsCreateResponse>(getPraiseMemberFunctionsCreateUrl(),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      memberFunctionsSerializersBody,)
-  }
-);}
-
+export const praiseMemberFunctionsCreate = async (
+  memberFunctionsSerializersBody: MemberFunctionsSerializersBody,
+  options?: RequestInit
+): Promise<praiseMemberFunctionsCreateResponse> => {
+  return customFetcher<praiseMemberFunctionsCreateResponse>(
+    getPraiseMemberFunctionsCreateUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(memberFunctionsSerializersBody)
+    }
+  )
+}
 
 export type praiseMemberFunctionsReadResponse200 = {
   data: MemberFunctionsSerializers
   status: 200
 }
-    
-export type praiseMemberFunctionsReadResponseComposite = praiseMemberFunctionsReadResponse200;
-    
-export type praiseMemberFunctionsReadResponse = praiseMemberFunctionsReadResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseMemberFunctionsReadUrl = (id: number,) => {
+export type praiseMemberFunctionsReadResponseComposite =
+  praiseMemberFunctionsReadResponse200
 
+export type praiseMemberFunctionsReadResponse =
+  praiseMemberFunctionsReadResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraiseMemberFunctionsReadUrl = (id: number) => {
   return `/praise/member-functions/${id}/`
 }
 
-export const praiseMemberFunctionsRead = async (id: number, options?: RequestInit): Promise<praiseMemberFunctionsReadResponse> => {
-  
-  return customFetcher<praiseMemberFunctionsReadResponse>(getPraiseMemberFunctionsReadUrl(id),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praiseMemberFunctionsRead = async (
+  id: number,
+  options?: RequestInit
+): Promise<praiseMemberFunctionsReadResponse> => {
+  return customFetcher<praiseMemberFunctionsReadResponse>(
+    getPraiseMemberFunctionsReadUrl(id),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 export type praiseMemberFunctionsUpdateResponse200 = {
   data: MemberFunctionsSerializers
   status: 200
 }
-    
-export type praiseMemberFunctionsUpdateResponseComposite = praiseMemberFunctionsUpdateResponse200;
-    
-export type praiseMemberFunctionsUpdateResponse = praiseMemberFunctionsUpdateResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseMemberFunctionsUpdateUrl = (id: number,) => {
+export type praiseMemberFunctionsUpdateResponseComposite =
+  praiseMemberFunctionsUpdateResponse200
 
+export type praiseMemberFunctionsUpdateResponse =
+  praiseMemberFunctionsUpdateResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraiseMemberFunctionsUpdateUrl = (id: number) => {
   return `/praise/member-functions/${id}/`
 }
 
-export const praiseMemberFunctionsUpdate = async (id: number,
-    memberFunctionsSerializersBody: MemberFunctionsSerializersBody, options?: RequestInit): Promise<praiseMemberFunctionsUpdateResponse> => {
-  
-  return customFetcher<praiseMemberFunctionsUpdateResponse>(getPraiseMemberFunctionsUpdateUrl(id),
-  {      
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      memberFunctionsSerializersBody,)
-  }
-);}
-
+export const praiseMemberFunctionsUpdate = async (
+  id: number,
+  memberFunctionsSerializersBody: MemberFunctionsSerializersBody,
+  options?: RequestInit
+): Promise<praiseMemberFunctionsUpdateResponse> => {
+  return customFetcher<praiseMemberFunctionsUpdateResponse>(
+    getPraiseMemberFunctionsUpdateUrl(id),
+    {
+      ...options,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(memberFunctionsSerializersBody)
+    }
+  )
+}
 
 export type praiseMemberFunctionsPartialUpdateResponse200 = {
   data: MemberFunctionsSerializers
   status: 200
 }
-    
-export type praiseMemberFunctionsPartialUpdateResponseComposite = praiseMemberFunctionsPartialUpdateResponse200;
-    
-export type praiseMemberFunctionsPartialUpdateResponse = praiseMemberFunctionsPartialUpdateResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseMemberFunctionsPartialUpdateUrl = (id: number,) => {
+export type praiseMemberFunctionsPartialUpdateResponseComposite =
+  praiseMemberFunctionsPartialUpdateResponse200
 
+export type praiseMemberFunctionsPartialUpdateResponse =
+  praiseMemberFunctionsPartialUpdateResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraiseMemberFunctionsPartialUpdateUrl = (id: number) => {
   return `/praise/member-functions/${id}/`
 }
 
-export const praiseMemberFunctionsPartialUpdate = async (id: number,
-    memberFunctionsSerializersBody: MemberFunctionsSerializersBody, options?: RequestInit): Promise<praiseMemberFunctionsPartialUpdateResponse> => {
-  
-  return customFetcher<praiseMemberFunctionsPartialUpdateResponse>(getPraiseMemberFunctionsPartialUpdateUrl(id),
-  {      
-    ...options,
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      memberFunctionsSerializersBody,)
-  }
-);}
-
+export const praiseMemberFunctionsPartialUpdate = async (
+  id: number,
+  memberFunctionsSerializersBody: MemberFunctionsSerializersBody,
+  options?: RequestInit
+): Promise<praiseMemberFunctionsPartialUpdateResponse> => {
+  return customFetcher<praiseMemberFunctionsPartialUpdateResponse>(
+    getPraiseMemberFunctionsPartialUpdateUrl(id),
+    {
+      ...options,
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(memberFunctionsSerializersBody)
+    }
+  )
+}
 
 export type praiseMemberFunctionsDeleteResponse204 = {
   data: void
   status: 204
 }
-    
-export type praiseMemberFunctionsDeleteResponseComposite = praiseMemberFunctionsDeleteResponse204;
-    
-export type praiseMemberFunctionsDeleteResponse = praiseMemberFunctionsDeleteResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseMemberFunctionsDeleteUrl = (id: number,) => {
+export type praiseMemberFunctionsDeleteResponseComposite =
+  praiseMemberFunctionsDeleteResponse204
 
+export type praiseMemberFunctionsDeleteResponse =
+  praiseMemberFunctionsDeleteResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraiseMemberFunctionsDeleteUrl = (id: number) => {
   return `/praise/member-functions/${id}/`
 }
 
-export const praiseMemberFunctionsDelete = async (id: number, options?: RequestInit): Promise<praiseMemberFunctionsDeleteResponse> => {
-  
-  return customFetcher<praiseMemberFunctionsDeleteResponse>(getPraiseMemberFunctionsDeleteUrl(id),
-  {      
-    ...options,
-    method: 'DELETE'
-    
-    
-  }
-);}
-
+export const praiseMemberFunctionsDelete = async (
+  id: number,
+  options?: RequestInit
+): Promise<praiseMemberFunctionsDeleteResponse> => {
+  return customFetcher<praiseMemberFunctionsDeleteResponse>(
+    getPraiseMemberFunctionsDeleteUrl(id),
+    {
+      ...options,
+      method: 'DELETE'
+    }
+  )
+}
 
 export type praiseMemberListResponse200 = {
   data: Member[]
   status: 200
 }
-    
-export type praiseMemberListResponseComposite = praiseMemberListResponse200;
-    
+
+export type praiseMemberListResponseComposite = praiseMemberListResponse200
+
 export type praiseMemberListResponse = praiseMemberListResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
-export const getPraiseMemberListUrl = (params?: PraiseMemberListParams,) => {
-  const normalizedParams = new URLSearchParams();
+export const getPraiseMemberListUrl = (params?: PraiseMemberListParams) => {
+  const normalizedParams = new URLSearchParams()
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
       normalizedParams.append(key, value === null ? 'null' : value.toString())
     }
-  });
+  })
 
-  const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString()
 
-  return stringifiedParams.length > 0 ? `/praise/member/?${stringifiedParams}` : `/praise/member/`
+  return stringifiedParams.length > 0
+    ? `/praise/member/?${stringifiedParams}`
+    : `/praise/member/`
 }
 
-export const praiseMemberList = async (params?: PraiseMemberListParams, options?: RequestInit): Promise<praiseMemberListResponse> => {
-  
-  return customFetcher<praiseMemberListResponse>(getPraiseMemberListUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praiseMemberList = async (
+  params?: PraiseMemberListParams,
+  options?: RequestInit
+): Promise<praiseMemberListResponse> => {
+  return customFetcher<praiseMemberListResponse>(
+    getPraiseMemberListUrl(params),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 export type praiseMemberCreateResponse201 = {
   data: Member
   status: 201
 }
-    
-export type praiseMemberCreateResponseComposite = praiseMemberCreateResponse201;
-    
+
+export type praiseMemberCreateResponseComposite = praiseMemberCreateResponse201
+
 export type praiseMemberCreateResponse = praiseMemberCreateResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
 export const getPraiseMemberCreateUrl = () => {
-
-
-  
-
   return `/praise/member/`
 }
 
-export const praiseMemberCreate = async (praiseMemberCreateBody: PraiseMemberCreateBody, options?: RequestInit): Promise<praiseMemberCreateResponse> => {
-    const formData = new FormData();
-formData.append(`name`, praiseMemberCreateBody.name)
-if(praiseMemberCreateBody.availability !== undefined) {
- formData.append(`availability`, praiseMemberCreateBody.availability.toString())
- }
-if(praiseMemberCreateBody.cell_phone !== undefined) {
- formData.append(`cell_phone`, praiseMemberCreateBody.cell_phone)
- }
-if(praiseMemberCreateBody.profile_picture !== undefined) {
- formData.append(`profile_picture`, praiseMemberCreateBody.profile_picture)
- }
-formData.append(`user`, praiseMemberCreateBody.user.toString())
-if(praiseMemberCreateBody.function !== undefined) {
- praiseMemberCreateBody.function.forEach(value => formData.append(`function`, value.toString()));
- }
-
-  return customFetcher<praiseMemberCreateResponse>(getPraiseMemberCreateUrl(),
-  {      
-    ...options,
-    method: 'POST'
-    ,
-    body: 
-      formData,
+export const praiseMemberCreate = async (
+  praiseMemberCreateBody: PraiseMemberCreateBody,
+  options?: RequestInit
+): Promise<praiseMemberCreateResponse> => {
+  const formData = new FormData()
+  formData.append(`name`, praiseMemberCreateBody.name)
+  if (praiseMemberCreateBody.availability !== undefined) {
+    formData.append(
+      `availability`,
+      praiseMemberCreateBody.availability.toString()
+    )
   }
-);}
+  if (praiseMemberCreateBody.cell_phone !== undefined) {
+    formData.append(`cell_phone`, praiseMemberCreateBody.cell_phone)
+  }
+  if (praiseMemberCreateBody.profile_picture !== undefined) {
+    formData.append(`profile_picture`, praiseMemberCreateBody.profile_picture)
+  }
+  formData.append(`user`, praiseMemberCreateBody.user.toString())
+  if (praiseMemberCreateBody.function !== undefined) {
+    praiseMemberCreateBody.function.forEach((value) =>
+      formData.append(`function`, value.toString())
+    )
+  }
 
+  return customFetcher<praiseMemberCreateResponse>(getPraiseMemberCreateUrl(), {
+    ...options,
+    method: 'POST',
+    body: formData
+  })
+}
 
 /**
  * Retorna os 10 membros mais escalados no último ano.
@@ -673,32 +673,30 @@ export type praiseMemberMostEscalatedListResponse200 = {
   data: PraiseMemberMostEscalatedList200
   status: 200
 }
-    
-export type praiseMemberMostEscalatedListResponseComposite = praiseMemberMostEscalatedListResponse200;
-    
-export type praiseMemberMostEscalatedListResponse = praiseMemberMostEscalatedListResponseComposite & {
-  headers: Headers;
-}
+
+export type praiseMemberMostEscalatedListResponseComposite =
+  praiseMemberMostEscalatedListResponse200
+
+export type praiseMemberMostEscalatedListResponse =
+  praiseMemberMostEscalatedListResponseComposite & {
+    headers: Headers
+  }
 
 export const getPraiseMemberMostEscalatedListUrl = () => {
-
-
-  
-
   return `/praise/member/most-escalated`
 }
 
-export const praiseMemberMostEscalatedList = async ( options?: RequestInit): Promise<praiseMemberMostEscalatedListResponse> => {
-  
-  return customFetcher<praiseMemberMostEscalatedListResponse>(getPraiseMemberMostEscalatedListUrl(),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praiseMemberMostEscalatedList = async (
+  options?: RequestInit
+): Promise<praiseMemberMostEscalatedListResponse> => {
+  return customFetcher<praiseMemberMostEscalatedListResponse>(
+    getPraiseMemberMostEscalatedListUrl(),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 /**
  * Retorna o numero de membros
@@ -707,701 +705,714 @@ export type praiseMemberGetTotalMemberResponse200 = {
   data: PraiseMemberGetTotalMember200
   status: 200
 }
-    
-export type praiseMemberGetTotalMemberResponseComposite = praiseMemberGetTotalMemberResponse200;
-    
-export type praiseMemberGetTotalMemberResponse = praiseMemberGetTotalMemberResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseMemberGetTotalMemberUrl = (params?: PraiseMemberGetTotalMemberParams,) => {
-  const normalizedParams = new URLSearchParams();
+export type praiseMemberGetTotalMemberResponseComposite =
+  praiseMemberGetTotalMemberResponse200
+
+export type praiseMemberGetTotalMemberResponse =
+  praiseMemberGetTotalMemberResponseComposite & {
+    headers: Headers
+  }
+
+export const getPraiseMemberGetTotalMemberUrl = (
+  params?: PraiseMemberGetTotalMemberParams
+) => {
+  const normalizedParams = new URLSearchParams()
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
       normalizedParams.append(key, value === null ? 'null' : value.toString())
     }
-  });
+  })
 
-  const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString()
 
-  return stringifiedParams.length > 0 ? `/praise/member/total-member/?${stringifiedParams}` : `/praise/member/total-member/`
+  return stringifiedParams.length > 0
+    ? `/praise/member/total-member/?${stringifiedParams}`
+    : `/praise/member/total-member/`
 }
 
-export const praiseMemberGetTotalMember = async (params?: PraiseMemberGetTotalMemberParams, options?: RequestInit): Promise<praiseMemberGetTotalMemberResponse> => {
-  
-  return customFetcher<praiseMemberGetTotalMemberResponse>(getPraiseMemberGetTotalMemberUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praiseMemberGetTotalMember = async (
+  params?: PraiseMemberGetTotalMemberParams,
+  options?: RequestInit
+): Promise<praiseMemberGetTotalMemberResponse> => {
+  return customFetcher<praiseMemberGetTotalMemberResponse>(
+    getPraiseMemberGetTotalMemberUrl(params),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 export type praiseMemberReadResponse200 = {
   data: Member
   status: 200
 }
-    
-export type praiseMemberReadResponseComposite = praiseMemberReadResponse200;
-    
+
+export type praiseMemberReadResponseComposite = praiseMemberReadResponse200
+
 export type praiseMemberReadResponse = praiseMemberReadResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
-export const getPraiseMemberReadUrl = (id: number,) => {
-
-
-  
-
+export const getPraiseMemberReadUrl = (id: number) => {
   return `/praise/member/${id}/`
 }
 
-export const praiseMemberRead = async (id: number, options?: RequestInit): Promise<praiseMemberReadResponse> => {
-  
-  return customFetcher<praiseMemberReadResponse>(getPraiseMemberReadUrl(id),
-  {      
+export const praiseMemberRead = async (
+  id: number,
+  options?: RequestInit
+): Promise<praiseMemberReadResponse> => {
+  return customFetcher<praiseMemberReadResponse>(getPraiseMemberReadUrl(id), {
     ...options,
     method: 'GET'
-    
-    
-  }
-);}
-
+  })
+}
 
 export type praiseMemberUpdateResponse200 = {
   data: Member
   status: 200
 }
-    
-export type praiseMemberUpdateResponseComposite = praiseMemberUpdateResponse200;
-    
+
+export type praiseMemberUpdateResponseComposite = praiseMemberUpdateResponse200
+
 export type praiseMemberUpdateResponse = praiseMemberUpdateResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
-export const getPraiseMemberUpdateUrl = (id: number,) => {
-
-
-  
-
+export const getPraiseMemberUpdateUrl = (id: number) => {
   return `/praise/member/${id}/`
 }
 
-export const praiseMemberUpdate = async (id: number,
-    praiseMemberCreateBody: PraiseMemberCreateBody, options?: RequestInit): Promise<praiseMemberUpdateResponse> => {
-    const formData = new FormData();
-formData.append(`name`, praiseMemberCreateBody.name)
-if(praiseMemberCreateBody.availability !== undefined) {
- formData.append(`availability`, praiseMemberCreateBody.availability.toString())
- }
-if(praiseMemberCreateBody.cell_phone !== undefined) {
- formData.append(`cell_phone`, praiseMemberCreateBody.cell_phone)
- }
-if(praiseMemberCreateBody.profile_picture !== undefined) {
- formData.append(`profile_picture`, praiseMemberCreateBody.profile_picture)
- }
-formData.append(`user`, praiseMemberCreateBody.user.toString())
-if(praiseMemberCreateBody.function !== undefined) {
- praiseMemberCreateBody.function.forEach(value => formData.append(`function`, value.toString()));
- }
-
-  return customFetcher<praiseMemberUpdateResponse>(getPraiseMemberUpdateUrl(id),
-  {      
-    ...options,
-    method: 'PUT'
-    ,
-    body: 
-      formData,
+export const praiseMemberUpdate = async (
+  id: number,
+  praiseMemberCreateBody: PraiseMemberCreateBody,
+  options?: RequestInit
+): Promise<praiseMemberUpdateResponse> => {
+  const formData = new FormData()
+  formData.append(`name`, praiseMemberCreateBody.name)
+  if (praiseMemberCreateBody.availability !== undefined) {
+    formData.append(
+      `availability`,
+      praiseMemberCreateBody.availability.toString()
+    )
   }
-);}
+  if (praiseMemberCreateBody.cell_phone !== undefined) {
+    formData.append(`cell_phone`, praiseMemberCreateBody.cell_phone)
+  }
+  if (praiseMemberCreateBody.profile_picture !== undefined) {
+    formData.append(`profile_picture`, praiseMemberCreateBody.profile_picture)
+  }
+  formData.append(`user`, praiseMemberCreateBody.user.toString())
+  if (praiseMemberCreateBody.function !== undefined) {
+    praiseMemberCreateBody.function.forEach((value) =>
+      formData.append(`function`, value.toString())
+    )
+  }
 
+  return customFetcher<praiseMemberUpdateResponse>(
+    getPraiseMemberUpdateUrl(id),
+    {
+      ...options,
+      method: 'PUT',
+      body: formData
+    }
+  )
+}
 
 export type praiseMemberPartialUpdateResponse200 = {
   data: Member
   status: 200
 }
-    
-export type praiseMemberPartialUpdateResponseComposite = praiseMemberPartialUpdateResponse200;
-    
-export type praiseMemberPartialUpdateResponse = praiseMemberPartialUpdateResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseMemberPartialUpdateUrl = (id: number,) => {
+export type praiseMemberPartialUpdateResponseComposite =
+  praiseMemberPartialUpdateResponse200
 
+export type praiseMemberPartialUpdateResponse =
+  praiseMemberPartialUpdateResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraiseMemberPartialUpdateUrl = (id: number) => {
   return `/praise/member/${id}/`
 }
 
-export const praiseMemberPartialUpdate = async (id: number,
-    praiseMemberCreateBody: PraiseMemberCreateBody, options?: RequestInit): Promise<praiseMemberPartialUpdateResponse> => {
-    const formData = new FormData();
-formData.append(`name`, praiseMemberCreateBody.name)
-if(praiseMemberCreateBody.availability !== undefined) {
- formData.append(`availability`, praiseMemberCreateBody.availability.toString())
- }
-if(praiseMemberCreateBody.cell_phone !== undefined) {
- formData.append(`cell_phone`, praiseMemberCreateBody.cell_phone)
- }
-if(praiseMemberCreateBody.profile_picture !== undefined) {
- formData.append(`profile_picture`, praiseMemberCreateBody.profile_picture)
- }
-formData.append(`user`, praiseMemberCreateBody.user.toString())
-if(praiseMemberCreateBody.function !== undefined) {
- praiseMemberCreateBody.function.forEach(value => formData.append(`function`, value.toString()));
- }
-
-  return customFetcher<praiseMemberPartialUpdateResponse>(getPraiseMemberPartialUpdateUrl(id),
-  {      
-    ...options,
-    method: 'PATCH'
-    ,
-    body: 
-      formData,
+export const praiseMemberPartialUpdate = async (
+  id: number,
+  praiseMemberCreateBody: PraiseMemberCreateBody,
+  options?: RequestInit
+): Promise<praiseMemberPartialUpdateResponse> => {
+  const formData = new FormData()
+  formData.append(`name`, praiseMemberCreateBody.name)
+  if (praiseMemberCreateBody.availability !== undefined) {
+    formData.append(
+      `availability`,
+      praiseMemberCreateBody.availability.toString()
+    )
   }
-);}
+  if (praiseMemberCreateBody.cell_phone !== undefined) {
+    formData.append(`cell_phone`, praiseMemberCreateBody.cell_phone)
+  }
+  if (praiseMemberCreateBody.profile_picture !== undefined) {
+    formData.append(`profile_picture`, praiseMemberCreateBody.profile_picture)
+  }
+  formData.append(`user`, praiseMemberCreateBody.user.toString())
+  if (praiseMemberCreateBody.function !== undefined) {
+    praiseMemberCreateBody.function.forEach((value) =>
+      formData.append(`function`, value.toString())
+    )
+  }
 
+  return customFetcher<praiseMemberPartialUpdateResponse>(
+    getPraiseMemberPartialUpdateUrl(id),
+    {
+      ...options,
+      method: 'PATCH',
+      body: formData
+    }
+  )
+}
 
 export type praiseMemberDeleteResponse204 = {
   data: void
   status: 204
 }
-    
-export type praiseMemberDeleteResponseComposite = praiseMemberDeleteResponse204;
-    
+
+export type praiseMemberDeleteResponseComposite = praiseMemberDeleteResponse204
+
 export type praiseMemberDeleteResponse = praiseMemberDeleteResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
-export const getPraiseMemberDeleteUrl = (id: number,) => {
-
-
-  
-
+export const getPraiseMemberDeleteUrl = (id: number) => {
   return `/praise/member/${id}/`
 }
 
-export const praiseMemberDelete = async (id: number, options?: RequestInit): Promise<praiseMemberDeleteResponse> => {
-  
-  return customFetcher<praiseMemberDeleteResponse>(getPraiseMemberDeleteUrl(id),
-  {      
-    ...options,
-    method: 'DELETE'
-    
-    
-  }
-);}
-
+export const praiseMemberDelete = async (
+  id: number,
+  options?: RequestInit
+): Promise<praiseMemberDeleteResponse> => {
+  return customFetcher<praiseMemberDeleteResponse>(
+    getPraiseMemberDeleteUrl(id),
+    {
+      ...options,
+      method: 'DELETE'
+    }
+  )
+}
 
 export type praiseMembersMeListResponse200 = {
   data: MemberMe[]
   status: 200
 }
-    
-export type praiseMembersMeListResponseComposite = praiseMembersMeListResponse200;
-    
-export type praiseMembersMeListResponse = praiseMembersMeListResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseMembersMeListUrl = (params?: PraiseMembersMeListParams,) => {
-  const normalizedParams = new URLSearchParams();
+export type praiseMembersMeListResponseComposite =
+  praiseMembersMeListResponse200
+
+export type praiseMembersMeListResponse =
+  praiseMembersMeListResponseComposite & {
+    headers: Headers
+  }
+
+export const getPraiseMembersMeListUrl = (
+  params?: PraiseMembersMeListParams
+) => {
+  const normalizedParams = new URLSearchParams()
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
       normalizedParams.append(key, value === null ? 'null' : value.toString())
     }
-  });
+  })
 
-  const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString()
 
-  return stringifiedParams.length > 0 ? `/praise/members-me?${stringifiedParams}` : `/praise/members-me`
+  return stringifiedParams.length > 0
+    ? `/praise/members-me?${stringifiedParams}`
+    : `/praise/members-me`
 }
 
-export const praiseMembersMeList = async (params?: PraiseMembersMeListParams, options?: RequestInit): Promise<praiseMembersMeListResponse> => {
-  
-  return customFetcher<praiseMembersMeListResponse>(getPraiseMembersMeListUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praiseMembersMeList = async (
+  params?: PraiseMembersMeListParams,
+  options?: RequestInit
+): Promise<praiseMembersMeListResponse> => {
+  return customFetcher<praiseMembersMeListResponse>(
+    getPraiseMembersMeListUrl(params),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 export type praiseMusicCategoryListResponse200 = {
   data: MusicCategorySerializers[]
   status: 200
 }
-    
-export type praiseMusicCategoryListResponseComposite = praiseMusicCategoryListResponse200;
-    
-export type praiseMusicCategoryListResponse = praiseMusicCategoryListResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseMusicCategoryListUrl = (params?: PraiseMusicCategoryListParams,) => {
-  const normalizedParams = new URLSearchParams();
+export type praiseMusicCategoryListResponseComposite =
+  praiseMusicCategoryListResponse200
+
+export type praiseMusicCategoryListResponse =
+  praiseMusicCategoryListResponseComposite & {
+    headers: Headers
+  }
+
+export const getPraiseMusicCategoryListUrl = (
+  params?: PraiseMusicCategoryListParams
+) => {
+  const normalizedParams = new URLSearchParams()
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
       normalizedParams.append(key, value === null ? 'null' : value.toString())
     }
-  });
+  })
 
-  const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString()
 
-  return stringifiedParams.length > 0 ? `/praise/music-category/?${stringifiedParams}` : `/praise/music-category/`
+  return stringifiedParams.length > 0
+    ? `/praise/music-category/?${stringifiedParams}`
+    : `/praise/music-category/`
 }
 
-export const praiseMusicCategoryList = async (params?: PraiseMusicCategoryListParams, options?: RequestInit): Promise<praiseMusicCategoryListResponse> => {
-  
-  return customFetcher<praiseMusicCategoryListResponse>(getPraiseMusicCategoryListUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praiseMusicCategoryList = async (
+  params?: PraiseMusicCategoryListParams,
+  options?: RequestInit
+): Promise<praiseMusicCategoryListResponse> => {
+  return customFetcher<praiseMusicCategoryListResponse>(
+    getPraiseMusicCategoryListUrl(params),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 export type praiseMusicCategoryCreateResponse201 = {
   data: MusicCategorySerializers
   status: 201
 }
-    
-export type praiseMusicCategoryCreateResponseComposite = praiseMusicCategoryCreateResponse201;
-    
-export type praiseMusicCategoryCreateResponse = praiseMusicCategoryCreateResponseComposite & {
-  headers: Headers;
-}
+
+export type praiseMusicCategoryCreateResponseComposite =
+  praiseMusicCategoryCreateResponse201
+
+export type praiseMusicCategoryCreateResponse =
+  praiseMusicCategoryCreateResponseComposite & {
+    headers: Headers
+  }
 
 export const getPraiseMusicCategoryCreateUrl = () => {
-
-
-  
-
   return `/praise/music-category/`
 }
 
-export const praiseMusicCategoryCreate = async (musicCategorySerializersBody: MusicCategorySerializersBody, options?: RequestInit): Promise<praiseMusicCategoryCreateResponse> => {
-  
-  return customFetcher<praiseMusicCategoryCreateResponse>(getPraiseMusicCategoryCreateUrl(),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      musicCategorySerializersBody,)
-  }
-);}
-
+export const praiseMusicCategoryCreate = async (
+  musicCategorySerializersBody: MusicCategorySerializersBody,
+  options?: RequestInit
+): Promise<praiseMusicCategoryCreateResponse> => {
+  return customFetcher<praiseMusicCategoryCreateResponse>(
+    getPraiseMusicCategoryCreateUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(musicCategorySerializersBody)
+    }
+  )
+}
 
 export type praiseMusicCategoryReadResponse200 = {
   data: MusicCategorySerializers
   status: 200
 }
-    
-export type praiseMusicCategoryReadResponseComposite = praiseMusicCategoryReadResponse200;
-    
-export type praiseMusicCategoryReadResponse = praiseMusicCategoryReadResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseMusicCategoryReadUrl = (id: number,) => {
+export type praiseMusicCategoryReadResponseComposite =
+  praiseMusicCategoryReadResponse200
 
+export type praiseMusicCategoryReadResponse =
+  praiseMusicCategoryReadResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraiseMusicCategoryReadUrl = (id: number) => {
   return `/praise/music-category/${id}/`
 }
 
-export const praiseMusicCategoryRead = async (id: number, options?: RequestInit): Promise<praiseMusicCategoryReadResponse> => {
-  
-  return customFetcher<praiseMusicCategoryReadResponse>(getPraiseMusicCategoryReadUrl(id),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praiseMusicCategoryRead = async (
+  id: number,
+  options?: RequestInit
+): Promise<praiseMusicCategoryReadResponse> => {
+  return customFetcher<praiseMusicCategoryReadResponse>(
+    getPraiseMusicCategoryReadUrl(id),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 export type praiseMusicCategoryUpdateResponse200 = {
   data: MusicCategorySerializers
   status: 200
 }
-    
-export type praiseMusicCategoryUpdateResponseComposite = praiseMusicCategoryUpdateResponse200;
-    
-export type praiseMusicCategoryUpdateResponse = praiseMusicCategoryUpdateResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseMusicCategoryUpdateUrl = (id: number,) => {
+export type praiseMusicCategoryUpdateResponseComposite =
+  praiseMusicCategoryUpdateResponse200
 
+export type praiseMusicCategoryUpdateResponse =
+  praiseMusicCategoryUpdateResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraiseMusicCategoryUpdateUrl = (id: number) => {
   return `/praise/music-category/${id}/`
 }
 
-export const praiseMusicCategoryUpdate = async (id: number,
-    musicCategorySerializersBody: MusicCategorySerializersBody, options?: RequestInit): Promise<praiseMusicCategoryUpdateResponse> => {
-  
-  return customFetcher<praiseMusicCategoryUpdateResponse>(getPraiseMusicCategoryUpdateUrl(id),
-  {      
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      musicCategorySerializersBody,)
-  }
-);}
-
+export const praiseMusicCategoryUpdate = async (
+  id: number,
+  musicCategorySerializersBody: MusicCategorySerializersBody,
+  options?: RequestInit
+): Promise<praiseMusicCategoryUpdateResponse> => {
+  return customFetcher<praiseMusicCategoryUpdateResponse>(
+    getPraiseMusicCategoryUpdateUrl(id),
+    {
+      ...options,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(musicCategorySerializersBody)
+    }
+  )
+}
 
 export type praiseMusicCategoryPartialUpdateResponse200 = {
   data: MusicCategorySerializers
   status: 200
 }
-    
-export type praiseMusicCategoryPartialUpdateResponseComposite = praiseMusicCategoryPartialUpdateResponse200;
-    
-export type praiseMusicCategoryPartialUpdateResponse = praiseMusicCategoryPartialUpdateResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseMusicCategoryPartialUpdateUrl = (id: number,) => {
+export type praiseMusicCategoryPartialUpdateResponseComposite =
+  praiseMusicCategoryPartialUpdateResponse200
 
+export type praiseMusicCategoryPartialUpdateResponse =
+  praiseMusicCategoryPartialUpdateResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraiseMusicCategoryPartialUpdateUrl = (id: number) => {
   return `/praise/music-category/${id}/`
 }
 
-export const praiseMusicCategoryPartialUpdate = async (id: number,
-    musicCategorySerializersBody: MusicCategorySerializersBody, options?: RequestInit): Promise<praiseMusicCategoryPartialUpdateResponse> => {
-  
-  return customFetcher<praiseMusicCategoryPartialUpdateResponse>(getPraiseMusicCategoryPartialUpdateUrl(id),
-  {      
-    ...options,
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      musicCategorySerializersBody,)
-  }
-);}
-
+export const praiseMusicCategoryPartialUpdate = async (
+  id: number,
+  musicCategorySerializersBody: MusicCategorySerializersBody,
+  options?: RequestInit
+): Promise<praiseMusicCategoryPartialUpdateResponse> => {
+  return customFetcher<praiseMusicCategoryPartialUpdateResponse>(
+    getPraiseMusicCategoryPartialUpdateUrl(id),
+    {
+      ...options,
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(musicCategorySerializersBody)
+    }
+  )
+}
 
 export type praiseMusicCategoryDeleteResponse204 = {
   data: void
   status: 204
 }
-    
-export type praiseMusicCategoryDeleteResponseComposite = praiseMusicCategoryDeleteResponse204;
-    
-export type praiseMusicCategoryDeleteResponse = praiseMusicCategoryDeleteResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseMusicCategoryDeleteUrl = (id: number,) => {
+export type praiseMusicCategoryDeleteResponseComposite =
+  praiseMusicCategoryDeleteResponse204
 
+export type praiseMusicCategoryDeleteResponse =
+  praiseMusicCategoryDeleteResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraiseMusicCategoryDeleteUrl = (id: number) => {
   return `/praise/music-category/${id}/`
 }
 
-export const praiseMusicCategoryDelete = async (id: number, options?: RequestInit): Promise<praiseMusicCategoryDeleteResponse> => {
-  
-  return customFetcher<praiseMusicCategoryDeleteResponse>(getPraiseMusicCategoryDeleteUrl(id),
-  {      
-    ...options,
-    method: 'DELETE'
-    
-    
-  }
-);}
-
+export const praiseMusicCategoryDelete = async (
+  id: number,
+  options?: RequestInit
+): Promise<praiseMusicCategoryDeleteResponse> => {
+  return customFetcher<praiseMusicCategoryDeleteResponse>(
+    getPraiseMusicCategoryDeleteUrl(id),
+    {
+      ...options,
+      method: 'DELETE'
+    }
+  )
+}
 
 export type praiseMusicChordListResponse200 = {
   data: MusicChordSerializers[]
   status: 200
 }
-    
-export type praiseMusicChordListResponseComposite = praiseMusicChordListResponse200;
-    
-export type praiseMusicChordListResponse = praiseMusicChordListResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseMusicChordListUrl = (params?: PraiseMusicChordListParams,) => {
-  const normalizedParams = new URLSearchParams();
+export type praiseMusicChordListResponseComposite =
+  praiseMusicChordListResponse200
+
+export type praiseMusicChordListResponse =
+  praiseMusicChordListResponseComposite & {
+    headers: Headers
+  }
+
+export const getPraiseMusicChordListUrl = (
+  params?: PraiseMusicChordListParams
+) => {
+  const normalizedParams = new URLSearchParams()
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
       normalizedParams.append(key, value === null ? 'null' : value.toString())
     }
-  });
+  })
 
-  const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString()
 
-  return stringifiedParams.length > 0 ? `/praise/music-chord/?${stringifiedParams}` : `/praise/music-chord/`
+  return stringifiedParams.length > 0
+    ? `/praise/music-chord/?${stringifiedParams}`
+    : `/praise/music-chord/`
 }
 
-export const praiseMusicChordList = async (params?: PraiseMusicChordListParams, options?: RequestInit): Promise<praiseMusicChordListResponse> => {
-  
-  return customFetcher<praiseMusicChordListResponse>(getPraiseMusicChordListUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praiseMusicChordList = async (
+  params?: PraiseMusicChordListParams,
+  options?: RequestInit
+): Promise<praiseMusicChordListResponse> => {
+  return customFetcher<praiseMusicChordListResponse>(
+    getPraiseMusicChordListUrl(params),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 export type praiseMusicChordCreateResponse201 = {
   data: MusicChordSerializers
   status: 201
 }
-    
-export type praiseMusicChordCreateResponseComposite = praiseMusicChordCreateResponse201;
-    
-export type praiseMusicChordCreateResponse = praiseMusicChordCreateResponseComposite & {
-  headers: Headers;
-}
+
+export type praiseMusicChordCreateResponseComposite =
+  praiseMusicChordCreateResponse201
+
+export type praiseMusicChordCreateResponse =
+  praiseMusicChordCreateResponseComposite & {
+    headers: Headers
+  }
 
 export const getPraiseMusicChordCreateUrl = () => {
-
-
-  
-
   return `/praise/music-chord/`
 }
 
-export const praiseMusicChordCreate = async (musicChordSerializersBody: MusicChordSerializersBody, options?: RequestInit): Promise<praiseMusicChordCreateResponse> => {
-  
-  return customFetcher<praiseMusicChordCreateResponse>(getPraiseMusicChordCreateUrl(),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      musicChordSerializersBody,)
-  }
-);}
-
+export const praiseMusicChordCreate = async (
+  musicChordSerializersBody: MusicChordSerializersBody,
+  options?: RequestInit
+): Promise<praiseMusicChordCreateResponse> => {
+  return customFetcher<praiseMusicChordCreateResponse>(
+    getPraiseMusicChordCreateUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(musicChordSerializersBody)
+    }
+  )
+}
 
 export type praiseMusicChordReadResponse200 = {
   data: MusicChordSerializers
   status: 200
 }
-    
-export type praiseMusicChordReadResponseComposite = praiseMusicChordReadResponse200;
-    
-export type praiseMusicChordReadResponse = praiseMusicChordReadResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseMusicChordReadUrl = (id: number,) => {
+export type praiseMusicChordReadResponseComposite =
+  praiseMusicChordReadResponse200
 
+export type praiseMusicChordReadResponse =
+  praiseMusicChordReadResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraiseMusicChordReadUrl = (id: number) => {
   return `/praise/music-chord/${id}/`
 }
 
-export const praiseMusicChordRead = async (id: number, options?: RequestInit): Promise<praiseMusicChordReadResponse> => {
-  
-  return customFetcher<praiseMusicChordReadResponse>(getPraiseMusicChordReadUrl(id),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praiseMusicChordRead = async (
+  id: number,
+  options?: RequestInit
+): Promise<praiseMusicChordReadResponse> => {
+  return customFetcher<praiseMusicChordReadResponse>(
+    getPraiseMusicChordReadUrl(id),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 export type praiseMusicChordUpdateResponse200 = {
   data: MusicChordSerializers
   status: 200
 }
-    
-export type praiseMusicChordUpdateResponseComposite = praiseMusicChordUpdateResponse200;
-    
-export type praiseMusicChordUpdateResponse = praiseMusicChordUpdateResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseMusicChordUpdateUrl = (id: number,) => {
+export type praiseMusicChordUpdateResponseComposite =
+  praiseMusicChordUpdateResponse200
 
+export type praiseMusicChordUpdateResponse =
+  praiseMusicChordUpdateResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraiseMusicChordUpdateUrl = (id: number) => {
   return `/praise/music-chord/${id}/`
 }
 
-export const praiseMusicChordUpdate = async (id: number,
-    musicChordSerializersBody: MusicChordSerializersBody, options?: RequestInit): Promise<praiseMusicChordUpdateResponse> => {
-  
-  return customFetcher<praiseMusicChordUpdateResponse>(getPraiseMusicChordUpdateUrl(id),
-  {      
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      musicChordSerializersBody,)
-  }
-);}
-
+export const praiseMusicChordUpdate = async (
+  id: number,
+  musicChordSerializersBody: MusicChordSerializersBody,
+  options?: RequestInit
+): Promise<praiseMusicChordUpdateResponse> => {
+  return customFetcher<praiseMusicChordUpdateResponse>(
+    getPraiseMusicChordUpdateUrl(id),
+    {
+      ...options,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(musicChordSerializersBody)
+    }
+  )
+}
 
 export type praiseMusicChordPartialUpdateResponse200 = {
   data: MusicChordSerializers
   status: 200
 }
-    
-export type praiseMusicChordPartialUpdateResponseComposite = praiseMusicChordPartialUpdateResponse200;
-    
-export type praiseMusicChordPartialUpdateResponse = praiseMusicChordPartialUpdateResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseMusicChordPartialUpdateUrl = (id: number,) => {
+export type praiseMusicChordPartialUpdateResponseComposite =
+  praiseMusicChordPartialUpdateResponse200
 
+export type praiseMusicChordPartialUpdateResponse =
+  praiseMusicChordPartialUpdateResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraiseMusicChordPartialUpdateUrl = (id: number) => {
   return `/praise/music-chord/${id}/`
 }
 
-export const praiseMusicChordPartialUpdate = async (id: number,
-    musicChordSerializersBody: MusicChordSerializersBody, options?: RequestInit): Promise<praiseMusicChordPartialUpdateResponse> => {
-  
-  return customFetcher<praiseMusicChordPartialUpdateResponse>(getPraiseMusicChordPartialUpdateUrl(id),
-  {      
-    ...options,
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      musicChordSerializersBody,)
-  }
-);}
-
+export const praiseMusicChordPartialUpdate = async (
+  id: number,
+  musicChordSerializersBody: MusicChordSerializersBody,
+  options?: RequestInit
+): Promise<praiseMusicChordPartialUpdateResponse> => {
+  return customFetcher<praiseMusicChordPartialUpdateResponse>(
+    getPraiseMusicChordPartialUpdateUrl(id),
+    {
+      ...options,
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(musicChordSerializersBody)
+    }
+  )
+}
 
 export type praiseMusicChordDeleteResponse204 = {
   data: void
   status: 204
 }
-    
-export type praiseMusicChordDeleteResponseComposite = praiseMusicChordDeleteResponse204;
-    
-export type praiseMusicChordDeleteResponse = praiseMusicChordDeleteResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseMusicChordDeleteUrl = (id: number,) => {
+export type praiseMusicChordDeleteResponseComposite =
+  praiseMusicChordDeleteResponse204
 
+export type praiseMusicChordDeleteResponse =
+  praiseMusicChordDeleteResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraiseMusicChordDeleteUrl = (id: number) => {
   return `/praise/music-chord/${id}/`
 }
 
-export const praiseMusicChordDelete = async (id: number, options?: RequestInit): Promise<praiseMusicChordDeleteResponse> => {
-  
-  return customFetcher<praiseMusicChordDeleteResponse>(getPraiseMusicChordDeleteUrl(id),
-  {      
-    ...options,
-    method: 'DELETE'
-    
-    
-  }
-);}
-
+export const praiseMusicChordDelete = async (
+  id: number,
+  options?: RequestInit
+): Promise<praiseMusicChordDeleteResponse> => {
+  return customFetcher<praiseMusicChordDeleteResponse>(
+    getPraiseMusicChordDeleteUrl(id),
+    {
+      ...options,
+      method: 'DELETE'
+    }
+  )
+}
 
 export type praiseMusicListResponse200 = {
   data: PraiseMusicList200
   status: 200
 }
-    
-export type praiseMusicListResponseComposite = praiseMusicListResponse200;
-    
+
+export type praiseMusicListResponseComposite = praiseMusicListResponse200
+
 export type praiseMusicListResponse = praiseMusicListResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
-export const getPraiseMusicListUrl = (params?: PraiseMusicListParams,) => {
-  const normalizedParams = new URLSearchParams();
+export const getPraiseMusicListUrl = (params?: PraiseMusicListParams) => {
+  const normalizedParams = new URLSearchParams()
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
       normalizedParams.append(key, value === null ? 'null' : value.toString())
     }
-  });
+  })
 
-  const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString()
 
-  return stringifiedParams.length > 0 ? `/praise/music/?${stringifiedParams}` : `/praise/music/`
+  return stringifiedParams.length > 0
+    ? `/praise/music/?${stringifiedParams}`
+    : `/praise/music/`
 }
 
-export const praiseMusicList = async (params?: PraiseMusicListParams, options?: RequestInit): Promise<praiseMusicListResponse> => {
-  
-  return customFetcher<praiseMusicListResponse>(getPraiseMusicListUrl(params),
-  {      
+export const praiseMusicList = async (
+  params?: PraiseMusicListParams,
+  options?: RequestInit
+): Promise<praiseMusicListResponse> => {
+  return customFetcher<praiseMusicListResponse>(getPraiseMusicListUrl(params), {
     ...options,
     method: 'GET'
-    
-    
-  }
-);}
-
+  })
+}
 
 export type praiseMusicCreateResponse201 = {
   data: MusicSerializers
   status: 201
 }
-    
-export type praiseMusicCreateResponseComposite = praiseMusicCreateResponse201;
-    
+
+export type praiseMusicCreateResponseComposite = praiseMusicCreateResponse201
+
 export type praiseMusicCreateResponse = praiseMusicCreateResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
 export const getPraiseMusicCreateUrl = () => {
-
-
-  
-
   return `/praise/music/`
 }
 
-export const praiseMusicCreate = async (musicSerializersBody: MusicSerializersBody, options?: RequestInit): Promise<praiseMusicCreateResponse> => {
-  
-  return customFetcher<praiseMusicCreateResponse>(getPraiseMusicCreateUrl(),
-  {      
+export const praiseMusicCreate = async (
+  musicSerializersBody: MusicSerializersBody,
+  options?: RequestInit
+): Promise<praiseMusicCreateResponse> => {
+  return customFetcher<praiseMusicCreateResponse>(getPraiseMusicCreateUrl(), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      musicSerializersBody,)
-  }
-);}
-
+    body: JSON.stringify(musicSerializersBody)
+  })
+}
 
 /**
  * Retorna as 5 músicas mais tocadas nas playlists dos últimos 6 meses.
@@ -1410,32 +1421,30 @@ export type praiseMusicMostPlayedListResponse200 = {
   data: PraiseMusicMostPlayedList200
   status: 200
 }
-    
-export type praiseMusicMostPlayedListResponseComposite = praiseMusicMostPlayedListResponse200;
-    
-export type praiseMusicMostPlayedListResponse = praiseMusicMostPlayedListResponseComposite & {
-  headers: Headers;
-}
+
+export type praiseMusicMostPlayedListResponseComposite =
+  praiseMusicMostPlayedListResponse200
+
+export type praiseMusicMostPlayedListResponse =
+  praiseMusicMostPlayedListResponseComposite & {
+    headers: Headers
+  }
 
 export const getPraiseMusicMostPlayedListUrl = () => {
-
-
-  
-
   return `/praise/music/most-played`
 }
 
-export const praiseMusicMostPlayedList = async ( options?: RequestInit): Promise<praiseMusicMostPlayedListResponse> => {
-  
-  return customFetcher<praiseMusicMostPlayedListResponse>(getPraiseMusicMostPlayedListUrl(),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praiseMusicMostPlayedList = async (
+  options?: RequestInit
+): Promise<praiseMusicMostPlayedListResponse> => {
+  return customFetcher<praiseMusicMostPlayedListResponse>(
+    getPraiseMusicMostPlayedListUrl(),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 /**
  * Retorna todas as músicas cadastradas.
@@ -1444,39 +1453,41 @@ export type praiseMusicMusicsResponse200 = {
   data: PraiseMusicMusics200
   status: 200
 }
-    
-export type praiseMusicMusicsResponseComposite = praiseMusicMusicsResponse200;
-    
+
+export type praiseMusicMusicsResponseComposite = praiseMusicMusicsResponse200
+
 export type praiseMusicMusicsResponse = praiseMusicMusicsResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
-export const getPraiseMusicMusicsUrl = (params?: PraiseMusicMusicsParams,) => {
-  const normalizedParams = new URLSearchParams();
+export const getPraiseMusicMusicsUrl = (params?: PraiseMusicMusicsParams) => {
+  const normalizedParams = new URLSearchParams()
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
       normalizedParams.append(key, value === null ? 'null' : value.toString())
     }
-  });
+  })
 
-  const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString()
 
-  return stringifiedParams.length > 0 ? `/praise/music/musics/?${stringifiedParams}` : `/praise/music/musics/`
+  return stringifiedParams.length > 0
+    ? `/praise/music/musics/?${stringifiedParams}`
+    : `/praise/music/musics/`
 }
 
-export const praiseMusicMusics = async (params?: PraiseMusicMusicsParams, options?: RequestInit): Promise<praiseMusicMusicsResponse> => {
-  
-  return customFetcher<praiseMusicMusicsResponse>(getPraiseMusicMusicsUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praiseMusicMusics = async (
+  params?: PraiseMusicMusicsParams,
+  options?: RequestInit
+): Promise<praiseMusicMusicsResponse> => {
+  return customFetcher<praiseMusicMusicsResponse>(
+    getPraiseMusicMusicsUrl(params),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 /**
  * Retorna o numero de musicas
@@ -1485,39 +1496,45 @@ export type praiseMusicGetTotalMusicResponse200 = {
   data: PraiseMusicGetTotalMusic200
   status: 200
 }
-    
-export type praiseMusicGetTotalMusicResponseComposite = praiseMusicGetTotalMusicResponse200;
-    
-export type praiseMusicGetTotalMusicResponse = praiseMusicGetTotalMusicResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseMusicGetTotalMusicUrl = (params?: PraiseMusicGetTotalMusicParams,) => {
-  const normalizedParams = new URLSearchParams();
+export type praiseMusicGetTotalMusicResponseComposite =
+  praiseMusicGetTotalMusicResponse200
+
+export type praiseMusicGetTotalMusicResponse =
+  praiseMusicGetTotalMusicResponseComposite & {
+    headers: Headers
+  }
+
+export const getPraiseMusicGetTotalMusicUrl = (
+  params?: PraiseMusicGetTotalMusicParams
+) => {
+  const normalizedParams = new URLSearchParams()
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
       normalizedParams.append(key, value === null ? 'null' : value.toString())
     }
-  });
+  })
 
-  const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString()
 
-  return stringifiedParams.length > 0 ? `/praise/music/total-music/?${stringifiedParams}` : `/praise/music/total-music/`
+  return stringifiedParams.length > 0
+    ? `/praise/music/total-music/?${stringifiedParams}`
+    : `/praise/music/total-music/`
 }
 
-export const praiseMusicGetTotalMusic = async (params?: PraiseMusicGetTotalMusicParams, options?: RequestInit): Promise<praiseMusicGetTotalMusicResponse> => {
-  
-  return customFetcher<praiseMusicGetTotalMusicResponse>(getPraiseMusicGetTotalMusicUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praiseMusicGetTotalMusic = async (
+  params?: PraiseMusicGetTotalMusicParams,
+  options?: RequestInit
+): Promise<praiseMusicGetTotalMusicResponse> => {
+  return customFetcher<praiseMusicGetTotalMusicResponse>(
+    getPraiseMusicGetTotalMusicUrl(params),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 /**
  * Recebe um arquivo PDF contendo cifras de músicas e retorna o conteúdo formatado para ser exibido no TinyMCE.
@@ -1531,311 +1548,304 @@ export type praiseMusicUploadPdfResponse400 = {
   data: void
   status: 400
 }
-    
-export type praiseMusicUploadPdfResponseComposite = praiseMusicUploadPdfResponse200 | praiseMusicUploadPdfResponse400;
-    
-export type praiseMusicUploadPdfResponse = praiseMusicUploadPdfResponseComposite & {
-  headers: Headers;
-}
+
+export type praiseMusicUploadPdfResponseComposite =
+  | praiseMusicUploadPdfResponse200
+  | praiseMusicUploadPdfResponse400
+
+export type praiseMusicUploadPdfResponse =
+  praiseMusicUploadPdfResponseComposite & {
+    headers: Headers
+  }
 
 export const getPraiseMusicUploadPdfUrl = () => {
-
-
-  
-
   return `/praise/music/upload-pdf/`
 }
 
-export const praiseMusicUploadPdf = async (praiseMusicUploadPdfBody: PraiseMusicUploadPdfBody, options?: RequestInit): Promise<praiseMusicUploadPdfResponse> => {
-    const formData = new FormData();
-formData.append(`file`, praiseMusicUploadPdfBody.file)
+export const praiseMusicUploadPdf = async (
+  praiseMusicUploadPdfBody: PraiseMusicUploadPdfBody,
+  options?: RequestInit
+): Promise<praiseMusicUploadPdfResponse> => {
+  const formData = new FormData()
+  formData.append(`file`, praiseMusicUploadPdfBody.file)
 
-  return customFetcher<praiseMusicUploadPdfResponse>(getPraiseMusicUploadPdfUrl(),
-  {      
-    ...options,
-    method: 'POST'
-    ,
-    body: 
-      formData,
-  }
-);}
-
+  return customFetcher<praiseMusicUploadPdfResponse>(
+    getPraiseMusicUploadPdfUrl(),
+    {
+      ...options,
+      method: 'POST',
+      body: formData
+    }
+  )
+}
 
 export type praiseMusicReadResponse200 = {
   data: MusicSerializers
   status: 200
 }
-    
-export type praiseMusicReadResponseComposite = praiseMusicReadResponse200;
-    
+
+export type praiseMusicReadResponseComposite = praiseMusicReadResponse200
+
 export type praiseMusicReadResponse = praiseMusicReadResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
-export const getPraiseMusicReadUrl = (id: number,) => {
-
-
-  
-
+export const getPraiseMusicReadUrl = (id: number) => {
   return `/praise/music/${id}/`
 }
 
-export const praiseMusicRead = async (id: number, options?: RequestInit): Promise<praiseMusicReadResponse> => {
-  
-  return customFetcher<praiseMusicReadResponse>(getPraiseMusicReadUrl(id),
-  {      
+export const praiseMusicRead = async (
+  id: number,
+  options?: RequestInit
+): Promise<praiseMusicReadResponse> => {
+  return customFetcher<praiseMusicReadResponse>(getPraiseMusicReadUrl(id), {
     ...options,
     method: 'GET'
-    
-    
-  }
-);}
-
+  })
+}
 
 export type praiseMusicUpdateResponse200 = {
   data: MusicSerializers
   status: 200
 }
-    
-export type praiseMusicUpdateResponseComposite = praiseMusicUpdateResponse200;
-    
+
+export type praiseMusicUpdateResponseComposite = praiseMusicUpdateResponse200
+
 export type praiseMusicUpdateResponse = praiseMusicUpdateResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
-export const getPraiseMusicUpdateUrl = (id: number,) => {
-
-
-  
-
+export const getPraiseMusicUpdateUrl = (id: number) => {
   return `/praise/music/${id}/`
 }
 
-export const praiseMusicUpdate = async (id: number,
-    musicSerializersBody: MusicSerializersBody, options?: RequestInit): Promise<praiseMusicUpdateResponse> => {
-  
-  return customFetcher<praiseMusicUpdateResponse>(getPraiseMusicUpdateUrl(id),
-  {      
+export const praiseMusicUpdate = async (
+  id: number,
+  musicSerializersBody: MusicSerializersBody,
+  options?: RequestInit
+): Promise<praiseMusicUpdateResponse> => {
+  return customFetcher<praiseMusicUpdateResponse>(getPraiseMusicUpdateUrl(id), {
     ...options,
     method: 'PUT',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      musicSerializersBody,)
-  }
-);}
-
+    body: JSON.stringify(musicSerializersBody)
+  })
+}
 
 export type praiseMusicPartialUpdateResponse200 = {
   data: MusicSerializers
   status: 200
 }
-    
-export type praiseMusicPartialUpdateResponseComposite = praiseMusicPartialUpdateResponse200;
-    
-export type praiseMusicPartialUpdateResponse = praiseMusicPartialUpdateResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseMusicPartialUpdateUrl = (id: number,) => {
+export type praiseMusicPartialUpdateResponseComposite =
+  praiseMusicPartialUpdateResponse200
 
+export type praiseMusicPartialUpdateResponse =
+  praiseMusicPartialUpdateResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraiseMusicPartialUpdateUrl = (id: number) => {
   return `/praise/music/${id}/`
 }
 
-export const praiseMusicPartialUpdate = async (id: number,
-    musicSerializersBody: MusicSerializersBody, options?: RequestInit): Promise<praiseMusicPartialUpdateResponse> => {
-  
-  return customFetcher<praiseMusicPartialUpdateResponse>(getPraiseMusicPartialUpdateUrl(id),
-  {      
-    ...options,
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      musicSerializersBody,)
-  }
-);}
-
+export const praiseMusicPartialUpdate = async (
+  id: number,
+  musicSerializersBody: MusicSerializersBody,
+  options?: RequestInit
+): Promise<praiseMusicPartialUpdateResponse> => {
+  return customFetcher<praiseMusicPartialUpdateResponse>(
+    getPraiseMusicPartialUpdateUrl(id),
+    {
+      ...options,
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(musicSerializersBody)
+    }
+  )
+}
 
 export type praiseMusicDeleteResponse204 = {
   data: void
   status: 204
 }
-    
-export type praiseMusicDeleteResponseComposite = praiseMusicDeleteResponse204;
-    
+
+export type praiseMusicDeleteResponseComposite = praiseMusicDeleteResponse204
+
 export type praiseMusicDeleteResponse = praiseMusicDeleteResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
-export const getPraiseMusicDeleteUrl = (id: number,) => {
-
-
-  
-
+export const getPraiseMusicDeleteUrl = (id: number) => {
   return `/praise/music/${id}/`
 }
 
-export const praiseMusicDelete = async (id: number, options?: RequestInit): Promise<praiseMusicDeleteResponse> => {
-  
-  return customFetcher<praiseMusicDeleteResponse>(getPraiseMusicDeleteUrl(id),
-  {      
+export const praiseMusicDelete = async (
+  id: number,
+  options?: RequestInit
+): Promise<praiseMusicDeleteResponse> => {
+  return customFetcher<praiseMusicDeleteResponse>(getPraiseMusicDeleteUrl(id), {
     ...options,
     method: 'DELETE'
-    
-    
-  }
-);}
-
+  })
+}
 
 /**
  * Rota para redefinir a senha
  */
-export type praisePasswordResetCreateResponse204 = {
-  data: void
-  status: 204
+export type praisePasswordResetCreateResponse201 = {
+  data: MessageSuccess
+  status: 201
 }
 
 export type praisePasswordResetCreateResponse400 = {
   data: void
   status: 400
 }
-    
-export type praisePasswordResetCreateResponseComposite = praisePasswordResetCreateResponse204 | praisePasswordResetCreateResponse400;
-    
-export type praisePasswordResetCreateResponse = praisePasswordResetCreateResponseComposite & {
-  headers: Headers;
-}
+
+export type praisePasswordResetCreateResponseComposite =
+  | praisePasswordResetCreateResponse201
+  | praisePasswordResetCreateResponse400
+
+export type praisePasswordResetCreateResponse =
+  praisePasswordResetCreateResponseComposite & {
+    headers: Headers
+  }
 
 export const getPraisePasswordResetCreateUrl = () => {
-
-
-  
-
   return `/praise/password-reset/`
 }
 
-export const praisePasswordResetCreate = async (passwordReset: PasswordReset, options?: RequestInit): Promise<praisePasswordResetCreateResponse> => {
-  
-  return customFetcher<praisePasswordResetCreateResponse>(getPraisePasswordResetCreateUrl(),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      passwordReset,)
-  }
-);}
-
+export const praisePasswordResetCreate = async (
+  passwordReset: PasswordReset,
+  options?: RequestInit
+): Promise<praisePasswordResetCreateResponse> => {
+  return customFetcher<praisePasswordResetCreateResponse>(
+    getPraisePasswordResetCreateUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(passwordReset)
+    }
+  )
+}
 
 export type praisePlaylistListResponse200 = {
   data: PraisePlaylistList200
   status: 200
 }
-    
-export type praisePlaylistListResponseComposite = praisePlaylistListResponse200;
-    
+
+export type praisePlaylistListResponseComposite = praisePlaylistListResponse200
+
 export type praisePlaylistListResponse = praisePlaylistListResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
-export const getPraisePlaylistListUrl = (params?: PraisePlaylistListParams,) => {
-  const normalizedParams = new URLSearchParams();
+export const getPraisePlaylistListUrl = (params?: PraisePlaylistListParams) => {
+  const normalizedParams = new URLSearchParams()
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
       normalizedParams.append(key, value === null ? 'null' : value.toString())
     }
-  });
+  })
 
-  const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString()
 
-  return stringifiedParams.length > 0 ? `/praise/playlist/?${stringifiedParams}` : `/praise/playlist/`
+  return stringifiedParams.length > 0
+    ? `/praise/playlist/?${stringifiedParams}`
+    : `/praise/playlist/`
 }
 
-export const praisePlaylistList = async (params?: PraisePlaylistListParams, options?: RequestInit): Promise<praisePlaylistListResponse> => {
-  
-  return customFetcher<praisePlaylistListResponse>(getPraisePlaylistListUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praisePlaylistList = async (
+  params?: PraisePlaylistListParams,
+  options?: RequestInit
+): Promise<praisePlaylistListResponse> => {
+  return customFetcher<praisePlaylistListResponse>(
+    getPraisePlaylistListUrl(params),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 export type praisePlaylistCreateResponse201 = {
   data: PlaylistSerializers
   status: 201
 }
-    
-export type praisePlaylistCreateResponseComposite = praisePlaylistCreateResponse201;
-    
-export type praisePlaylistCreateResponse = praisePlaylistCreateResponseComposite & {
-  headers: Headers;
-}
+
+export type praisePlaylistCreateResponseComposite =
+  praisePlaylistCreateResponse201
+
+export type praisePlaylistCreateResponse =
+  praisePlaylistCreateResponseComposite & {
+    headers: Headers
+  }
 
 export const getPraisePlaylistCreateUrl = () => {
-
-
-  
-
   return `/praise/playlist/`
 }
 
-export const praisePlaylistCreate = async (playlistSerializersBody: PlaylistSerializersBody, options?: RequestInit): Promise<praisePlaylistCreateResponse> => {
-  
-  return customFetcher<praisePlaylistCreateResponse>(getPraisePlaylistCreateUrl(),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      playlistSerializersBody,)
-  }
-);}
-
+export const praisePlaylistCreate = async (
+  playlistSerializersBody: PlaylistSerializersBody,
+  options?: RequestInit
+): Promise<praisePlaylistCreateResponse> => {
+  return customFetcher<praisePlaylistCreateResponse>(
+    getPraisePlaylistCreateUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(playlistSerializersBody)
+    }
+  )
+}
 
 export type praisePlaylistGetPlaylistsResponse200 = {
   data: PraisePlaylistGetPlaylists200
   status: 200
 }
-    
-export type praisePlaylistGetPlaylistsResponseComposite = praisePlaylistGetPlaylistsResponse200;
-    
-export type praisePlaylistGetPlaylistsResponse = praisePlaylistGetPlaylistsResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraisePlaylistGetPlaylistsUrl = (params?: PraisePlaylistGetPlaylistsParams,) => {
-  const normalizedParams = new URLSearchParams();
+export type praisePlaylistGetPlaylistsResponseComposite =
+  praisePlaylistGetPlaylistsResponse200
+
+export type praisePlaylistGetPlaylistsResponse =
+  praisePlaylistGetPlaylistsResponseComposite & {
+    headers: Headers
+  }
+
+export const getPraisePlaylistGetPlaylistsUrl = (
+  params?: PraisePlaylistGetPlaylistsParams
+) => {
+  const normalizedParams = new URLSearchParams()
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
       normalizedParams.append(key, value === null ? 'null' : value.toString())
     }
-  });
+  })
 
-  const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString()
 
-  return stringifiedParams.length > 0 ? `/praise/playlist/playlists/?${stringifiedParams}` : `/praise/playlist/playlists/`
+  return stringifiedParams.length > 0
+    ? `/praise/playlist/playlists/?${stringifiedParams}`
+    : `/praise/playlist/playlists/`
 }
 
-export const praisePlaylistGetPlaylists = async (params?: PraisePlaylistGetPlaylistsParams, options?: RequestInit): Promise<praisePlaylistGetPlaylistsResponse> => {
-  
-  return customFetcher<praisePlaylistGetPlaylistsResponse>(getPraisePlaylistGetPlaylistsUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praisePlaylistGetPlaylists = async (
+  params?: PraisePlaylistGetPlaylistsParams,
+  options?: RequestInit
+): Promise<praisePlaylistGetPlaylistsResponse> => {
+  return customFetcher<praisePlaylistGetPlaylistsResponse>(
+    getPraisePlaylistGetPlaylistsUrl(params),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 /**
  * Retorna o numero de playlist
@@ -1844,237 +1854,245 @@ export type praisePlaylistGetTotalPlaylistResponse200 = {
   data: PraisePlaylistGetTotalPlaylist200
   status: 200
 }
-    
-export type praisePlaylistGetTotalPlaylistResponseComposite = praisePlaylistGetTotalPlaylistResponse200;
-    
-export type praisePlaylistGetTotalPlaylistResponse = praisePlaylistGetTotalPlaylistResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraisePlaylistGetTotalPlaylistUrl = (params?: PraisePlaylistGetTotalPlaylistParams,) => {
-  const normalizedParams = new URLSearchParams();
+export type praisePlaylistGetTotalPlaylistResponseComposite =
+  praisePlaylistGetTotalPlaylistResponse200
+
+export type praisePlaylistGetTotalPlaylistResponse =
+  praisePlaylistGetTotalPlaylistResponseComposite & {
+    headers: Headers
+  }
+
+export const getPraisePlaylistGetTotalPlaylistUrl = (
+  params?: PraisePlaylistGetTotalPlaylistParams
+) => {
+  const normalizedParams = new URLSearchParams()
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
       normalizedParams.append(key, value === null ? 'null' : value.toString())
     }
-  });
+  })
 
-  const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString()
 
-  return stringifiedParams.length > 0 ? `/praise/playlist/total-playlist/?${stringifiedParams}` : `/praise/playlist/total-playlist/`
+  return stringifiedParams.length > 0
+    ? `/praise/playlist/total-playlist/?${stringifiedParams}`
+    : `/praise/playlist/total-playlist/`
 }
 
-export const praisePlaylistGetTotalPlaylist = async (params?: PraisePlaylistGetTotalPlaylistParams, options?: RequestInit): Promise<praisePlaylistGetTotalPlaylistResponse> => {
-  
-  return customFetcher<praisePlaylistGetTotalPlaylistResponse>(getPraisePlaylistGetTotalPlaylistUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praisePlaylistGetTotalPlaylist = async (
+  params?: PraisePlaylistGetTotalPlaylistParams,
+  options?: RequestInit
+): Promise<praisePlaylistGetTotalPlaylistResponse> => {
+  return customFetcher<praisePlaylistGetTotalPlaylistResponse>(
+    getPraisePlaylistGetTotalPlaylistUrl(params),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 export type praisePlaylistReadResponse200 = {
   data: PlaylistSerializers
   status: 200
 }
-    
-export type praisePlaylistReadResponseComposite = praisePlaylistReadResponse200;
-    
+
+export type praisePlaylistReadResponseComposite = praisePlaylistReadResponse200
+
 export type praisePlaylistReadResponse = praisePlaylistReadResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
-export const getPraisePlaylistReadUrl = (id: number,) => {
-
-
-  
-
+export const getPraisePlaylistReadUrl = (id: number) => {
   return `/praise/playlist/${id}/`
 }
 
-export const praisePlaylistRead = async (id: number, options?: RequestInit): Promise<praisePlaylistReadResponse> => {
-  
-  return customFetcher<praisePlaylistReadResponse>(getPraisePlaylistReadUrl(id),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praisePlaylistRead = async (
+  id: number,
+  options?: RequestInit
+): Promise<praisePlaylistReadResponse> => {
+  return customFetcher<praisePlaylistReadResponse>(
+    getPraisePlaylistReadUrl(id),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 export type praisePlaylistUpdateResponse200 = {
   data: PlaylistSerializers
   status: 200
 }
-    
-export type praisePlaylistUpdateResponseComposite = praisePlaylistUpdateResponse200;
-    
-export type praisePlaylistUpdateResponse = praisePlaylistUpdateResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraisePlaylistUpdateUrl = (id: number,) => {
+export type praisePlaylistUpdateResponseComposite =
+  praisePlaylistUpdateResponse200
 
+export type praisePlaylistUpdateResponse =
+  praisePlaylistUpdateResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraisePlaylistUpdateUrl = (id: number) => {
   return `/praise/playlist/${id}/`
 }
 
-export const praisePlaylistUpdate = async (id: number,
-    playlistSerializersBody: PlaylistSerializersBody, options?: RequestInit): Promise<praisePlaylistUpdateResponse> => {
-  
-  return customFetcher<praisePlaylistUpdateResponse>(getPraisePlaylistUpdateUrl(id),
-  {      
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      playlistSerializersBody,)
-  }
-);}
-
+export const praisePlaylistUpdate = async (
+  id: number,
+  playlistSerializersBody: PlaylistSerializersBody,
+  options?: RequestInit
+): Promise<praisePlaylistUpdateResponse> => {
+  return customFetcher<praisePlaylistUpdateResponse>(
+    getPraisePlaylistUpdateUrl(id),
+    {
+      ...options,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(playlistSerializersBody)
+    }
+  )
+}
 
 export type praisePlaylistPartialUpdateResponse200 = {
   data: PlaylistSerializers
   status: 200
 }
-    
-export type praisePlaylistPartialUpdateResponseComposite = praisePlaylistPartialUpdateResponse200;
-    
-export type praisePlaylistPartialUpdateResponse = praisePlaylistPartialUpdateResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraisePlaylistPartialUpdateUrl = (id: number,) => {
+export type praisePlaylistPartialUpdateResponseComposite =
+  praisePlaylistPartialUpdateResponse200
 
+export type praisePlaylistPartialUpdateResponse =
+  praisePlaylistPartialUpdateResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraisePlaylistPartialUpdateUrl = (id: number) => {
   return `/praise/playlist/${id}/`
 }
 
-export const praisePlaylistPartialUpdate = async (id: number,
-    playlistSerializersBody: PlaylistSerializersBody, options?: RequestInit): Promise<praisePlaylistPartialUpdateResponse> => {
-  
-  return customFetcher<praisePlaylistPartialUpdateResponse>(getPraisePlaylistPartialUpdateUrl(id),
-  {      
-    ...options,
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      playlistSerializersBody,)
-  }
-);}
-
+export const praisePlaylistPartialUpdate = async (
+  id: number,
+  playlistSerializersBody: PlaylistSerializersBody,
+  options?: RequestInit
+): Promise<praisePlaylistPartialUpdateResponse> => {
+  return customFetcher<praisePlaylistPartialUpdateResponse>(
+    getPraisePlaylistPartialUpdateUrl(id),
+    {
+      ...options,
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(playlistSerializersBody)
+    }
+  )
+}
 
 export type praisePlaylistDeleteResponse204 = {
   data: void
   status: 204
 }
-    
-export type praisePlaylistDeleteResponseComposite = praisePlaylistDeleteResponse204;
-    
-export type praisePlaylistDeleteResponse = praisePlaylistDeleteResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraisePlaylistDeleteUrl = (id: number,) => {
+export type praisePlaylistDeleteResponseComposite =
+  praisePlaylistDeleteResponse204
 
+export type praisePlaylistDeleteResponse =
+  praisePlaylistDeleteResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraisePlaylistDeleteUrl = (id: number) => {
   return `/praise/playlist/${id}/`
 }
 
-export const praisePlaylistDelete = async (id: number, options?: RequestInit): Promise<praisePlaylistDeleteResponse> => {
-  
-  return customFetcher<praisePlaylistDeleteResponse>(getPraisePlaylistDeleteUrl(id),
-  {      
-    ...options,
-    method: 'DELETE'
-    
-    
-  }
-);}
-
+export const praisePlaylistDelete = async (
+  id: number,
+  options?: RequestInit
+): Promise<praisePlaylistDeleteResponse> => {
+  return customFetcher<praisePlaylistDeleteResponse>(
+    getPraisePlaylistDeleteUrl(id),
+    {
+      ...options,
+      method: 'DELETE'
+    }
+  )
+}
 
 export type praisePraiseLineupListResponse200 = {
   data: PraisePraiseLineupList200
   status: 200
 }
-    
-export type praisePraiseLineupListResponseComposite = praisePraiseLineupListResponse200;
-    
-export type praisePraiseLineupListResponse = praisePraiseLineupListResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraisePraiseLineupListUrl = (params?: PraisePraiseLineupListParams,) => {
-  const normalizedParams = new URLSearchParams();
+export type praisePraiseLineupListResponseComposite =
+  praisePraiseLineupListResponse200
+
+export type praisePraiseLineupListResponse =
+  praisePraiseLineupListResponseComposite & {
+    headers: Headers
+  }
+
+export const getPraisePraiseLineupListUrl = (
+  params?: PraisePraiseLineupListParams
+) => {
+  const normalizedParams = new URLSearchParams()
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
       normalizedParams.append(key, value === null ? 'null' : value.toString())
     }
-  });
+  })
 
-  const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString()
 
-  return stringifiedParams.length > 0 ? `/praise/praise-lineup/?${stringifiedParams}` : `/praise/praise-lineup/`
+  return stringifiedParams.length > 0
+    ? `/praise/praise-lineup/?${stringifiedParams}`
+    : `/praise/praise-lineup/`
 }
 
-export const praisePraiseLineupList = async (params?: PraisePraiseLineupListParams, options?: RequestInit): Promise<praisePraiseLineupListResponse> => {
-  
-  return customFetcher<praisePraiseLineupListResponse>(getPraisePraiseLineupListUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praisePraiseLineupList = async (
+  params?: PraisePraiseLineupListParams,
+  options?: RequestInit
+): Promise<praisePraiseLineupListResponse> => {
+  return customFetcher<praisePraiseLineupListResponse>(
+    getPraisePraiseLineupListUrl(params),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 export type praisePraiseLineupCreateResponse201 = {
   data: PraiseLineupSerializers
   status: 201
 }
-    
-export type praisePraiseLineupCreateResponseComposite = praisePraiseLineupCreateResponse201;
-    
-export type praisePraiseLineupCreateResponse = praisePraiseLineupCreateResponseComposite & {
-  headers: Headers;
-}
+
+export type praisePraiseLineupCreateResponseComposite =
+  praisePraiseLineupCreateResponse201
+
+export type praisePraiseLineupCreateResponse =
+  praisePraiseLineupCreateResponseComposite & {
+    headers: Headers
+  }
 
 export const getPraisePraiseLineupCreateUrl = () => {
-
-
-  
-
   return `/praise/praise-lineup/`
 }
 
-export const praisePraiseLineupCreate = async (praiseLineupSerializersBody: PraiseLineupSerializersBody, options?: RequestInit): Promise<praisePraiseLineupCreateResponse> => {
-  
-  return customFetcher<praisePraiseLineupCreateResponse>(getPraisePraiseLineupCreateUrl(),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      praiseLineupSerializersBody,)
-  }
-);}
-
+export const praisePraiseLineupCreate = async (
+  praiseLineupSerializersBody: PraiseLineupSerializersBody,
+  options?: RequestInit
+): Promise<praisePraiseLineupCreateResponse> => {
+  return customFetcher<praisePraiseLineupCreateResponse>(
+    getPraisePraiseLineupCreateUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(praiseLineupSerializersBody)
+    }
+  )
+}
 
 /**
  * Retorna as próximas 5 escalas dentro de 6 meses a partir da data atual.
@@ -2083,39 +2101,45 @@ export type praisePraiseLineupGetNextScalesResponse200 = {
   data: PraisePraiseLineupGetNextScales200
   status: 200
 }
-    
-export type praisePraiseLineupGetNextScalesResponseComposite = praisePraiseLineupGetNextScalesResponse200;
-    
-export type praisePraiseLineupGetNextScalesResponse = praisePraiseLineupGetNextScalesResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraisePraiseLineupGetNextScalesUrl = (params?: PraisePraiseLineupGetNextScalesParams,) => {
-  const normalizedParams = new URLSearchParams();
+export type praisePraiseLineupGetNextScalesResponseComposite =
+  praisePraiseLineupGetNextScalesResponse200
+
+export type praisePraiseLineupGetNextScalesResponse =
+  praisePraiseLineupGetNextScalesResponseComposite & {
+    headers: Headers
+  }
+
+export const getPraisePraiseLineupGetNextScalesUrl = (
+  params?: PraisePraiseLineupGetNextScalesParams
+) => {
+  const normalizedParams = new URLSearchParams()
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
       normalizedParams.append(key, value === null ? 'null' : value.toString())
     }
-  });
+  })
 
-  const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString()
 
-  return stringifiedParams.length > 0 ? `/praise/praise-lineup/next-scales/?${stringifiedParams}` : `/praise/praise-lineup/next-scales/`
+  return stringifiedParams.length > 0
+    ? `/praise/praise-lineup/next-scales/?${stringifiedParams}`
+    : `/praise/praise-lineup/next-scales/`
 }
 
-export const praisePraiseLineupGetNextScales = async (params?: PraisePraiseLineupGetNextScalesParams, options?: RequestInit): Promise<praisePraiseLineupGetNextScalesResponse> => {
-  
-  return customFetcher<praisePraiseLineupGetNextScalesResponse>(getPraisePraiseLineupGetNextScalesUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praisePraiseLineupGetNextScales = async (
+  params?: PraisePraiseLineupGetNextScalesParams,
+  options?: RequestInit
+): Promise<praisePraiseLineupGetNextScalesResponse> => {
+  return customFetcher<praisePraiseLineupGetNextScalesResponse>(
+    getPraisePraiseLineupGetNextScalesUrl(params),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 /**
  * Retorna as últimas 5 escalas dos 6 meses anteriores à data atual.
@@ -2124,39 +2148,45 @@ export type praisePraiseLineupGetPreviousScalesResponse200 = {
   data: PraisePraiseLineupGetPreviousScales200
   status: 200
 }
-    
-export type praisePraiseLineupGetPreviousScalesResponseComposite = praisePraiseLineupGetPreviousScalesResponse200;
-    
-export type praisePraiseLineupGetPreviousScalesResponse = praisePraiseLineupGetPreviousScalesResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraisePraiseLineupGetPreviousScalesUrl = (params?: PraisePraiseLineupGetPreviousScalesParams,) => {
-  const normalizedParams = new URLSearchParams();
+export type praisePraiseLineupGetPreviousScalesResponseComposite =
+  praisePraiseLineupGetPreviousScalesResponse200
+
+export type praisePraiseLineupGetPreviousScalesResponse =
+  praisePraiseLineupGetPreviousScalesResponseComposite & {
+    headers: Headers
+  }
+
+export const getPraisePraiseLineupGetPreviousScalesUrl = (
+  params?: PraisePraiseLineupGetPreviousScalesParams
+) => {
+  const normalizedParams = new URLSearchParams()
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
       normalizedParams.append(key, value === null ? 'null' : value.toString())
     }
-  });
+  })
 
-  const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString()
 
-  return stringifiedParams.length > 0 ? `/praise/praise-lineup/previous-scales/?${stringifiedParams}` : `/praise/praise-lineup/previous-scales/`
+  return stringifiedParams.length > 0
+    ? `/praise/praise-lineup/previous-scales/?${stringifiedParams}`
+    : `/praise/praise-lineup/previous-scales/`
 }
 
-export const praisePraiseLineupGetPreviousScales = async (params?: PraisePraiseLineupGetPreviousScalesParams, options?: RequestInit): Promise<praisePraiseLineupGetPreviousScalesResponse> => {
-  
-  return customFetcher<praisePraiseLineupGetPreviousScalesResponse>(getPraisePraiseLineupGetPreviousScalesUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praisePraiseLineupGetPreviousScales = async (
+  params?: PraisePraiseLineupGetPreviousScalesParams,
+  options?: RequestInit
+): Promise<praisePraiseLineupGetPreviousScalesResponse> => {
+  return customFetcher<praisePraiseLineupGetPreviousScalesResponse>(
+    getPraisePraiseLineupGetPreviousScalesUrl(params),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 /**
  * Lista de escalas com links da playlist
@@ -2165,39 +2195,45 @@ export type praisePraiseLineupGetScalesResponse200 = {
   data: PraisePraiseLineupGetScales200
   status: 200
 }
-    
-export type praisePraiseLineupGetScalesResponseComposite = praisePraiseLineupGetScalesResponse200;
-    
-export type praisePraiseLineupGetScalesResponse = praisePraiseLineupGetScalesResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraisePraiseLineupGetScalesUrl = (params?: PraisePraiseLineupGetScalesParams,) => {
-  const normalizedParams = new URLSearchParams();
+export type praisePraiseLineupGetScalesResponseComposite =
+  praisePraiseLineupGetScalesResponse200
+
+export type praisePraiseLineupGetScalesResponse =
+  praisePraiseLineupGetScalesResponseComposite & {
+    headers: Headers
+  }
+
+export const getPraisePraiseLineupGetScalesUrl = (
+  params?: PraisePraiseLineupGetScalesParams
+) => {
+  const normalizedParams = new URLSearchParams()
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
       normalizedParams.append(key, value === null ? 'null' : value.toString())
     }
-  });
+  })
 
-  const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString()
 
-  return stringifiedParams.length > 0 ? `/praise/praise-lineup/scales/?${stringifiedParams}` : `/praise/praise-lineup/scales/`
+  return stringifiedParams.length > 0
+    ? `/praise/praise-lineup/scales/?${stringifiedParams}`
+    : `/praise/praise-lineup/scales/`
 }
 
-export const praisePraiseLineupGetScales = async (params?: PraisePraiseLineupGetScalesParams, options?: RequestInit): Promise<praisePraiseLineupGetScalesResponse> => {
-  
-  return customFetcher<praisePraiseLineupGetScalesResponse>(getPraisePraiseLineupGetScalesUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praisePraiseLineupGetScales = async (
+  params?: PraisePraiseLineupGetScalesParams,
+  options?: RequestInit
+): Promise<praisePraiseLineupGetScalesResponse> => {
+  return customFetcher<praisePraiseLineupGetScalesResponse>(
+    getPraisePraiseLineupGetScalesUrl(params),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 /**
  * Retorna total de escalas
@@ -2206,173 +2242,177 @@ export type praisePraiseLineupGetTotalScalesResponse200 = {
   data: PraisePraiseLineupGetTotalScales200
   status: 200
 }
-    
-export type praisePraiseLineupGetTotalScalesResponseComposite = praisePraiseLineupGetTotalScalesResponse200;
-    
-export type praisePraiseLineupGetTotalScalesResponse = praisePraiseLineupGetTotalScalesResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraisePraiseLineupGetTotalScalesUrl = (params?: PraisePraiseLineupGetTotalScalesParams,) => {
-  const normalizedParams = new URLSearchParams();
+export type praisePraiseLineupGetTotalScalesResponseComposite =
+  praisePraiseLineupGetTotalScalesResponse200
+
+export type praisePraiseLineupGetTotalScalesResponse =
+  praisePraiseLineupGetTotalScalesResponseComposite & {
+    headers: Headers
+  }
+
+export const getPraisePraiseLineupGetTotalScalesUrl = (
+  params?: PraisePraiseLineupGetTotalScalesParams
+) => {
+  const normalizedParams = new URLSearchParams()
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
       normalizedParams.append(key, value === null ? 'null' : value.toString())
     }
-  });
+  })
 
-  const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString()
 
-  return stringifiedParams.length > 0 ? `/praise/praise-lineup/total-scales/?${stringifiedParams}` : `/praise/praise-lineup/total-scales/`
+  return stringifiedParams.length > 0
+    ? `/praise/praise-lineup/total-scales/?${stringifiedParams}`
+    : `/praise/praise-lineup/total-scales/`
 }
 
-export const praisePraiseLineupGetTotalScales = async (params?: PraisePraiseLineupGetTotalScalesParams, options?: RequestInit): Promise<praisePraiseLineupGetTotalScalesResponse> => {
-  
-  return customFetcher<praisePraiseLineupGetTotalScalesResponse>(getPraisePraiseLineupGetTotalScalesUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praisePraiseLineupGetTotalScales = async (
+  params?: PraisePraiseLineupGetTotalScalesParams,
+  options?: RequestInit
+): Promise<praisePraiseLineupGetTotalScalesResponse> => {
+  return customFetcher<praisePraiseLineupGetTotalScalesResponse>(
+    getPraisePraiseLineupGetTotalScalesUrl(params),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 export type praisePraiseLineupReadResponse200 = {
   data: PraiseLineupSerializers
   status: 200
 }
-    
-export type praisePraiseLineupReadResponseComposite = praisePraiseLineupReadResponse200;
-    
-export type praisePraiseLineupReadResponse = praisePraiseLineupReadResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraisePraiseLineupReadUrl = (id: number,) => {
+export type praisePraiseLineupReadResponseComposite =
+  praisePraiseLineupReadResponse200
 
+export type praisePraiseLineupReadResponse =
+  praisePraiseLineupReadResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraisePraiseLineupReadUrl = (id: number) => {
   return `/praise/praise-lineup/${id}/`
 }
 
-export const praisePraiseLineupRead = async (id: number, options?: RequestInit): Promise<praisePraiseLineupReadResponse> => {
-  
-  return customFetcher<praisePraiseLineupReadResponse>(getPraisePraiseLineupReadUrl(id),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praisePraiseLineupRead = async (
+  id: number,
+  options?: RequestInit
+): Promise<praisePraiseLineupReadResponse> => {
+  return customFetcher<praisePraiseLineupReadResponse>(
+    getPraisePraiseLineupReadUrl(id),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 export type praisePraiseLineupUpdateResponse200 = {
   data: PraiseLineupSerializers
   status: 200
 }
-    
-export type praisePraiseLineupUpdateResponseComposite = praisePraiseLineupUpdateResponse200;
-    
-export type praisePraiseLineupUpdateResponse = praisePraiseLineupUpdateResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraisePraiseLineupUpdateUrl = (id: number,) => {
+export type praisePraiseLineupUpdateResponseComposite =
+  praisePraiseLineupUpdateResponse200
 
+export type praisePraiseLineupUpdateResponse =
+  praisePraiseLineupUpdateResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraisePraiseLineupUpdateUrl = (id: number) => {
   return `/praise/praise-lineup/${id}/`
 }
 
-export const praisePraiseLineupUpdate = async (id: number,
-    praiseLineupSerializersBody: PraiseLineupSerializersBody, options?: RequestInit): Promise<praisePraiseLineupUpdateResponse> => {
-  
-  return customFetcher<praisePraiseLineupUpdateResponse>(getPraisePraiseLineupUpdateUrl(id),
-  {      
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      praiseLineupSerializersBody,)
-  }
-);}
-
+export const praisePraiseLineupUpdate = async (
+  id: number,
+  praiseLineupSerializersBody: PraiseLineupSerializersBody,
+  options?: RequestInit
+): Promise<praisePraiseLineupUpdateResponse> => {
+  return customFetcher<praisePraiseLineupUpdateResponse>(
+    getPraisePraiseLineupUpdateUrl(id),
+    {
+      ...options,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(praiseLineupSerializersBody)
+    }
+  )
+}
 
 export type praisePraiseLineupPartialUpdateResponse200 = {
   data: PraiseLineupSerializers
   status: 200
 }
-    
-export type praisePraiseLineupPartialUpdateResponseComposite = praisePraiseLineupPartialUpdateResponse200;
-    
-export type praisePraiseLineupPartialUpdateResponse = praisePraiseLineupPartialUpdateResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraisePraiseLineupPartialUpdateUrl = (id: number,) => {
+export type praisePraiseLineupPartialUpdateResponseComposite =
+  praisePraiseLineupPartialUpdateResponse200
 
+export type praisePraiseLineupPartialUpdateResponse =
+  praisePraiseLineupPartialUpdateResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraisePraiseLineupPartialUpdateUrl = (id: number) => {
   return `/praise/praise-lineup/${id}/`
 }
 
-export const praisePraiseLineupPartialUpdate = async (id: number,
-    praiseLineupSerializersBody: PraiseLineupSerializersBody, options?: RequestInit): Promise<praisePraiseLineupPartialUpdateResponse> => {
-  
-  return customFetcher<praisePraiseLineupPartialUpdateResponse>(getPraisePraiseLineupPartialUpdateUrl(id),
-  {      
-    ...options,
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      praiseLineupSerializersBody,)
-  }
-);}
-
+export const praisePraiseLineupPartialUpdate = async (
+  id: number,
+  praiseLineupSerializersBody: PraiseLineupSerializersBody,
+  options?: RequestInit
+): Promise<praisePraiseLineupPartialUpdateResponse> => {
+  return customFetcher<praisePraiseLineupPartialUpdateResponse>(
+    getPraisePraiseLineupPartialUpdateUrl(id),
+    {
+      ...options,
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(praiseLineupSerializersBody)
+    }
+  )
+}
 
 export type praisePraiseLineupDeleteResponse204 = {
   data: void
   status: 204
 }
-    
-export type praisePraiseLineupDeleteResponseComposite = praisePraiseLineupDeleteResponse204;
-    
-export type praisePraiseLineupDeleteResponse = praisePraiseLineupDeleteResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraisePraiseLineupDeleteUrl = (id: number,) => {
+export type praisePraiseLineupDeleteResponseComposite =
+  praisePraiseLineupDeleteResponse204
 
+export type praisePraiseLineupDeleteResponse =
+  praisePraiseLineupDeleteResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraisePraiseLineupDeleteUrl = (id: number) => {
   return `/praise/praise-lineup/${id}/`
 }
 
-export const praisePraiseLineupDelete = async (id: number, options?: RequestInit): Promise<praisePraiseLineupDeleteResponse> => {
-  
-  return customFetcher<praisePraiseLineupDeleteResponse>(getPraisePraiseLineupDeleteUrl(id),
-  {      
-    ...options,
-    method: 'DELETE'
-    
-    
-  }
-);}
-
+export const praisePraiseLineupDelete = async (
+  id: number,
+  options?: RequestInit
+): Promise<praisePraiseLineupDeleteResponse> => {
+  return customFetcher<praisePraiseLineupDeleteResponse>(
+    getPraisePraiseLineupDeleteUrl(id),
+    {
+      ...options,
+      method: 'DELETE'
+    }
+  )
+}
 
 /**
  * Rota para registrar o usuário.
  */
 export type praiseRegisterUserCreateResponse201 = {
-  data: void
+  data: MessageSuccess
   status: 201
 }
 
@@ -2380,39 +2420,40 @@ export type praiseRegisterUserCreateResponse400 = {
   data: void
   status: 400
 }
-    
-export type praiseRegisterUserCreateResponseComposite = praiseRegisterUserCreateResponse201 | praiseRegisterUserCreateResponse400;
-    
-export type praiseRegisterUserCreateResponse = praiseRegisterUserCreateResponseComposite & {
-  headers: Headers;
-}
+
+export type praiseRegisterUserCreateResponseComposite =
+  | praiseRegisterUserCreateResponse201
+  | praiseRegisterUserCreateResponse400
+
+export type praiseRegisterUserCreateResponse =
+  praiseRegisterUserCreateResponseComposite & {
+    headers: Headers
+  }
 
 export const getPraiseRegisterUserCreateUrl = () => {
-
-
-  
-
   return `/praise/register-user/`
 }
 
-export const praiseRegisterUserCreate = async (registerUser: RegisterUser, options?: RequestInit): Promise<praiseRegisterUserCreateResponse> => {
-  
-  return customFetcher<praiseRegisterUserCreateResponse>(getPraiseRegisterUserCreateUrl(),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      registerUser,)
-  }
-);}
-
+export const praiseRegisterUserCreate = async (
+  registerUser: RegisterUser,
+  options?: RequestInit
+): Promise<praiseRegisterUserCreateResponse> => {
+  return customFetcher<praiseRegisterUserCreateResponse>(
+    getPraiseRegisterUserCreateUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(registerUser)
+    }
+  )
+}
 
 /**
  * Rota para gerar um token para redefinir a senha
  */
 export type praiseRequestPasswordResetCreateResponse201 = {
-  data: void
+  data: MessageSuccess
   status: 201
 }
 
@@ -2420,33 +2461,34 @@ export type praiseRequestPasswordResetCreateResponse400 = {
   data: void
   status: 400
 }
-    
-export type praiseRequestPasswordResetCreateResponseComposite = praiseRequestPasswordResetCreateResponse201 | praiseRequestPasswordResetCreateResponse400;
-    
-export type praiseRequestPasswordResetCreateResponse = praiseRequestPasswordResetCreateResponseComposite & {
-  headers: Headers;
-}
+
+export type praiseRequestPasswordResetCreateResponseComposite =
+  | praiseRequestPasswordResetCreateResponse201
+  | praiseRequestPasswordResetCreateResponse400
+
+export type praiseRequestPasswordResetCreateResponse =
+  praiseRequestPasswordResetCreateResponseComposite & {
+    headers: Headers
+  }
 
 export const getPraiseRequestPasswordResetCreateUrl = () => {
-
-
-  
-
   return `/praise/request-password-reset/`
 }
 
-export const praiseRequestPasswordResetCreate = async (requestPasswordReset: RequestPasswordReset, options?: RequestInit): Promise<praiseRequestPasswordResetCreateResponse> => {
-  
-  return customFetcher<praiseRequestPasswordResetCreateResponse>(getPraiseRequestPasswordResetCreateUrl(),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      requestPasswordReset,)
-  }
-);}
-
+export const praiseRequestPasswordResetCreate = async (
+  requestPasswordReset: RequestPasswordReset,
+  options?: RequestInit
+): Promise<praiseRequestPasswordResetCreateResponse> => {
+  return customFetcher<praiseRequestPasswordResetCreateResponse>(
+    getPraiseRequestPasswordResetCreateUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(requestPasswordReset)
+    }
+  )
+}
 
 /**
  * Rota para retornar o histórico de escalas do membro logado.
@@ -2455,32 +2497,30 @@ export type praiseScaleHistoryListResponse200 = {
   data: PraiseScaleHistoryList200
   status: 200
 }
-    
-export type praiseScaleHistoryListResponseComposite = praiseScaleHistoryListResponse200;
-    
-export type praiseScaleHistoryListResponse = praiseScaleHistoryListResponseComposite & {
-  headers: Headers;
-}
+
+export type praiseScaleHistoryListResponseComposite =
+  praiseScaleHistoryListResponse200
+
+export type praiseScaleHistoryListResponse =
+  praiseScaleHistoryListResponseComposite & {
+    headers: Headers
+  }
 
 export const getPraiseScaleHistoryListUrl = () => {
-
-
-  
-
   return `/praise/scale-history/`
 }
 
-export const praiseScaleHistoryList = async ( options?: RequestInit): Promise<praiseScaleHistoryListResponse> => {
-  
-  return customFetcher<praiseScaleHistoryListResponse>(getPraiseScaleHistoryListUrl(),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
+export const praiseScaleHistoryList = async (
+  options?: RequestInit
+): Promise<praiseScaleHistoryListResponse> => {
+  return customFetcher<praiseScaleHistoryListResponse>(
+    getPraiseScaleHistoryListUrl(),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}
 
 /**
  * Recebe uma lista de e-mails e envia convites personalizados com um link de registro.
@@ -2495,33 +2535,34 @@ export type praiseSendRegistrationEmailCreateResponse400 = {
   data: void
   status: 400
 }
-    
-export type praiseSendRegistrationEmailCreateResponseComposite = praiseSendRegistrationEmailCreateResponse200 | praiseSendRegistrationEmailCreateResponse400;
-    
-export type praiseSendRegistrationEmailCreateResponse = praiseSendRegistrationEmailCreateResponseComposite & {
-  headers: Headers;
-}
+
+export type praiseSendRegistrationEmailCreateResponseComposite =
+  | praiseSendRegistrationEmailCreateResponse200
+  | praiseSendRegistrationEmailCreateResponse400
+
+export type praiseSendRegistrationEmailCreateResponse =
+  praiseSendRegistrationEmailCreateResponseComposite & {
+    headers: Headers
+  }
 
 export const getPraiseSendRegistrationEmailCreateUrl = () => {
-
-
-  
-
   return `/praise/send-registration-email/`
 }
 
-export const praiseSendRegistrationEmailCreate = async (sendEmail: SendEmail, options?: RequestInit): Promise<praiseSendRegistrationEmailCreateResponse> => {
-  
-  return customFetcher<praiseSendRegistrationEmailCreateResponse>(getPraiseSendRegistrationEmailCreateUrl(),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      sendEmail,)
-  }
-);}
-
+export const praiseSendRegistrationEmailCreate = async (
+  sendEmail: SendEmail,
+  options?: RequestInit
+): Promise<praiseSendRegistrationEmailCreateResponse> => {
+  return customFetcher<praiseSendRegistrationEmailCreateResponse>(
+    getPraiseSendRegistrationEmailCreateUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(sendEmail)
+    }
+  )
+}
 
 /**
  * Gera e retorna um arquivo .pptx com as músicas da playlist (sem acordes).
@@ -2535,231 +2576,209 @@ export type praiseSlidesGeneratorCreateResponse400 = {
   data: void
   status: 400
 }
-    
-export type praiseSlidesGeneratorCreateResponseComposite = praiseSlidesGeneratorCreateResponse200 | praiseSlidesGeneratorCreateResponse400;
-    
-export type praiseSlidesGeneratorCreateResponse = praiseSlidesGeneratorCreateResponseComposite & {
-  headers: Headers;
-}
+
+export type praiseSlidesGeneratorCreateResponseComposite =
+  | praiseSlidesGeneratorCreateResponse200
+  | praiseSlidesGeneratorCreateResponse400
+
+export type praiseSlidesGeneratorCreateResponse =
+  praiseSlidesGeneratorCreateResponseComposite & {
+    headers: Headers
+  }
 
 export const getPraiseSlidesGeneratorCreateUrl = () => {
-
-
-  
-
   return `/praise/slides-generator/`
 }
 
-export const praiseSlidesGeneratorCreate = async (praiseSlidesGeneratorCreateBody: PraiseSlidesGeneratorCreateBody, options?: RequestInit): Promise<praiseSlidesGeneratorCreateResponse> => {
-  
-  return customFetcher<praiseSlidesGeneratorCreateResponse>(getPraiseSlidesGeneratorCreateUrl(),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      praiseSlidesGeneratorCreateBody,)
-  }
-);}
-
+export const praiseSlidesGeneratorCreate = async (
+  praiseSlidesGeneratorCreateBody: PraiseSlidesGeneratorCreateBody,
+  options?: RequestInit
+): Promise<praiseSlidesGeneratorCreateResponse> => {
+  return customFetcher<praiseSlidesGeneratorCreateResponse>(
+    getPraiseSlidesGeneratorCreateUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(praiseSlidesGeneratorCreateBody)
+    }
+  )
+}
 
 export type praiseUserListResponse200 = {
   data: PraiseUserList200
   status: 200
 }
-    
-export type praiseUserListResponseComposite = praiseUserListResponse200;
-    
+
+export type praiseUserListResponseComposite = praiseUserListResponse200
+
 export type praiseUserListResponse = praiseUserListResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
-export const getPraiseUserListUrl = (params?: PraiseUserListParams,) => {
-  const normalizedParams = new URLSearchParams();
+export const getPraiseUserListUrl = (params?: PraiseUserListParams) => {
+  const normalizedParams = new URLSearchParams()
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
       normalizedParams.append(key, value === null ? 'null' : value.toString())
     }
-  });
+  })
 
-  const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString()
 
-  return stringifiedParams.length > 0 ? `/praise/user/?${stringifiedParams}` : `/praise/user/`
+  return stringifiedParams.length > 0
+    ? `/praise/user/?${stringifiedParams}`
+    : `/praise/user/`
 }
 
-export const praiseUserList = async (params?: PraiseUserListParams, options?: RequestInit): Promise<praiseUserListResponse> => {
-  
-  return customFetcher<praiseUserListResponse>(getPraiseUserListUrl(params),
-  {      
+export const praiseUserList = async (
+  params?: PraiseUserListParams,
+  options?: RequestInit
+): Promise<praiseUserListResponse> => {
+  return customFetcher<praiseUserListResponse>(getPraiseUserListUrl(params), {
     ...options,
     method: 'GET'
-    
-    
-  }
-);}
-
+  })
+}
 
 export type praiseUserCreateResponse201 = {
   data: UserSerializers
   status: 201
 }
-    
-export type praiseUserCreateResponseComposite = praiseUserCreateResponse201;
-    
+
+export type praiseUserCreateResponseComposite = praiseUserCreateResponse201
+
 export type praiseUserCreateResponse = praiseUserCreateResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
 export const getPraiseUserCreateUrl = () => {
-
-
-  
-
   return `/praise/user/`
 }
 
-export const praiseUserCreate = async (userSerializersBody: UserSerializersBody, options?: RequestInit): Promise<praiseUserCreateResponse> => {
-  
-  return customFetcher<praiseUserCreateResponse>(getPraiseUserCreateUrl(),
-  {      
+export const praiseUserCreate = async (
+  userSerializersBody: UserSerializersBody,
+  options?: RequestInit
+): Promise<praiseUserCreateResponse> => {
+  return customFetcher<praiseUserCreateResponse>(getPraiseUserCreateUrl(), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      userSerializersBody,)
-  }
-);}
-
+    body: JSON.stringify(userSerializersBody)
+  })
+}
 
 export type praiseUserReadResponse200 = {
   data: UserSerializers
   status: 200
 }
-    
-export type praiseUserReadResponseComposite = praiseUserReadResponse200;
-    
+
+export type praiseUserReadResponseComposite = praiseUserReadResponse200
+
 export type praiseUserReadResponse = praiseUserReadResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
-export const getPraiseUserReadUrl = (id: number,) => {
-
-
-  
-
+export const getPraiseUserReadUrl = (id: number) => {
   return `/praise/user/${id}/`
 }
 
-export const praiseUserRead = async (id: number, options?: RequestInit): Promise<praiseUserReadResponse> => {
-  
-  return customFetcher<praiseUserReadResponse>(getPraiseUserReadUrl(id),
-  {      
+export const praiseUserRead = async (
+  id: number,
+  options?: RequestInit
+): Promise<praiseUserReadResponse> => {
+  return customFetcher<praiseUserReadResponse>(getPraiseUserReadUrl(id), {
     ...options,
     method: 'GET'
-    
-    
-  }
-);}
-
+  })
+}
 
 export type praiseUserUpdateResponse200 = {
   data: UserSerializers
   status: 200
 }
-    
-export type praiseUserUpdateResponseComposite = praiseUserUpdateResponse200;
-    
+
+export type praiseUserUpdateResponseComposite = praiseUserUpdateResponse200
+
 export type praiseUserUpdateResponse = praiseUserUpdateResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
-export const getPraiseUserUpdateUrl = (id: number,) => {
-
-
-  
-
+export const getPraiseUserUpdateUrl = (id: number) => {
   return `/praise/user/${id}/`
 }
 
-export const praiseUserUpdate = async (id: number,
-    userSerializersBody: UserSerializersBody, options?: RequestInit): Promise<praiseUserUpdateResponse> => {
-  
-  return customFetcher<praiseUserUpdateResponse>(getPraiseUserUpdateUrl(id),
-  {      
+export const praiseUserUpdate = async (
+  id: number,
+  userSerializersBody: UserSerializersBody,
+  options?: RequestInit
+): Promise<praiseUserUpdateResponse> => {
+  return customFetcher<praiseUserUpdateResponse>(getPraiseUserUpdateUrl(id), {
     ...options,
     method: 'PUT',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      userSerializersBody,)
-  }
-);}
-
+    body: JSON.stringify(userSerializersBody)
+  })
+}
 
 export type praiseUserPartialUpdateResponse200 = {
   data: UserSerializers
   status: 200
 }
-    
-export type praiseUserPartialUpdateResponseComposite = praiseUserPartialUpdateResponse200;
-    
-export type praiseUserPartialUpdateResponse = praiseUserPartialUpdateResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseUserPartialUpdateUrl = (id: number,) => {
+export type praiseUserPartialUpdateResponseComposite =
+  praiseUserPartialUpdateResponse200
 
+export type praiseUserPartialUpdateResponse =
+  praiseUserPartialUpdateResponseComposite & {
+    headers: Headers
+  }
 
-  
-
+export const getPraiseUserPartialUpdateUrl = (id: number) => {
   return `/praise/user/${id}/`
 }
 
-export const praiseUserPartialUpdate = async (id: number,
-    userSerializersBody: UserSerializersBody, options?: RequestInit): Promise<praiseUserPartialUpdateResponse> => {
-  
-  return customFetcher<praiseUserPartialUpdateResponse>(getPraiseUserPartialUpdateUrl(id),
-  {      
-    ...options,
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      userSerializersBody,)
-  }
-);}
-
+export const praiseUserPartialUpdate = async (
+  id: number,
+  userSerializersBody: UserSerializersBody,
+  options?: RequestInit
+): Promise<praiseUserPartialUpdateResponse> => {
+  return customFetcher<praiseUserPartialUpdateResponse>(
+    getPraiseUserPartialUpdateUrl(id),
+    {
+      ...options,
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(userSerializersBody)
+    }
+  )
+}
 
 export type praiseUserDeleteResponse204 = {
   data: void
   status: 204
 }
-    
-export type praiseUserDeleteResponseComposite = praiseUserDeleteResponse204;
-    
+
+export type praiseUserDeleteResponseComposite = praiseUserDeleteResponse204
+
 export type praiseUserDeleteResponse = praiseUserDeleteResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
-export const getPraiseUserDeleteUrl = (id: number,) => {
-
-
-  
-
+export const getPraiseUserDeleteUrl = (id: number) => {
   return `/praise/user/${id}/`
 }
 
-export const praiseUserDelete = async (id: number, options?: RequestInit): Promise<praiseUserDeleteResponse> => {
-  
-  return customFetcher<praiseUserDeleteResponse>(getPraiseUserDeleteUrl(id),
-  {      
+export const praiseUserDelete = async (
+  id: number,
+  options?: RequestInit
+): Promise<praiseUserDeleteResponse> => {
+  return customFetcher<praiseUserDeleteResponse>(getPraiseUserDeleteUrl(id), {
     ...options,
     method: 'DELETE'
-    
-    
-  }
-);}
-
+  })
+}
 
 /**
  * Verifica se o token recebido por e-mail ainda é válido. Retorna o e-mail original se válido.
@@ -2774,37 +2793,43 @@ export type praiseVerifyRegistrationTokenListResponse400 = {
   data: void
   status: 400
 }
-    
-export type praiseVerifyRegistrationTokenListResponseComposite = praiseVerifyRegistrationTokenListResponse200 | praiseVerifyRegistrationTokenListResponse400;
-    
-export type praiseVerifyRegistrationTokenListResponse = praiseVerifyRegistrationTokenListResponseComposite & {
-  headers: Headers;
-}
 
-export const getPraiseVerifyRegistrationTokenListUrl = (params: PraiseVerifyRegistrationTokenListParams,) => {
-  const normalizedParams = new URLSearchParams();
+export type praiseVerifyRegistrationTokenListResponseComposite =
+  | praiseVerifyRegistrationTokenListResponse200
+  | praiseVerifyRegistrationTokenListResponse400
+
+export type praiseVerifyRegistrationTokenListResponse =
+  praiseVerifyRegistrationTokenListResponseComposite & {
+    headers: Headers
+  }
+
+export const getPraiseVerifyRegistrationTokenListUrl = (
+  params: PraiseVerifyRegistrationTokenListParams
+) => {
+  const normalizedParams = new URLSearchParams()
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
       normalizedParams.append(key, value === null ? 'null' : value.toString())
     }
-  });
+  })
 
-  const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString()
 
-  return stringifiedParams.length > 0 ? `/praise/verify-registration-token/?${stringifiedParams}` : `/praise/verify-registration-token/`
+  return stringifiedParams.length > 0
+    ? `/praise/verify-registration-token/?${stringifiedParams}`
+    : `/praise/verify-registration-token/`
 }
 
-export const praiseVerifyRegistrationTokenList = async (params: PraiseVerifyRegistrationTokenListParams, options?: RequestInit): Promise<praiseVerifyRegistrationTokenListResponse> => {
-  
-  return customFetcher<praiseVerifyRegistrationTokenListResponse>(getPraiseVerifyRegistrationTokenListUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
-
+export const praiseVerifyRegistrationTokenList = async (
+  params: PraiseVerifyRegistrationTokenListParams,
+  options?: RequestInit
+): Promise<praiseVerifyRegistrationTokenListResponse> => {
+  return customFetcher<praiseVerifyRegistrationTokenListResponse>(
+    getPraiseVerifyRegistrationTokenListUrl(params),
+    {
+      ...options,
+      method: 'GET'
+    }
+  )
+}

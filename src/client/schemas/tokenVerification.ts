@@ -8,15 +8,15 @@
 
 export interface TokenVerification {
   /** Indica se o token é válido. */
-  valid: boolean;
+  valid: boolean
   /**
    * Email associado ao token válido.
    * @minLength 1
    */
-  email?: string;
+  email?: string
   /**
    * Mensagem de erro, caso o token seja inválido.
    * @minLength 1
    */
-  detail?: string;
+  detail?: string
 }

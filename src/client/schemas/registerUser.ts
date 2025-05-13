@@ -8,22 +8,22 @@
 
 export interface RegisterUser {
   /** @minLength 1 */
-  first_name: string;
+  first_name: string
   /** @minLength 1 */
-  last_name: string;
+  last_name: string
   /** @minLength 1 */
-  name: string;
+  name: string
   /** @minLength 1 */
-  username: string;
+  username: string
   /** @minLength 1 */
-  password: string;
+  password: string
   /** @minLength 1 */
-  email: string;
+  email: string
   /** @minLength 1 */
-  cell_phone: string;
+  cell_phone: string
   /**
    * @minLength 1
    * @maxLength 500
    */
-  token: string;
+  token: string
 }

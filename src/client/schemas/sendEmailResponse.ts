@@ -5,11 +5,11 @@
  * Organizador das musicas e gerenciamento de escalações do louvor da igreja
  * OpenAPI spec version: v1
  */
-import type { SendEmailResponseFailedItem } from './sendEmailResponseFailedItem';
+import type { SendEmailResponseFailedItem } from './sendEmailResponseFailedItem'
 
 export interface SendEmailResponse {
   /** E-mails enviados com sucesso. */
-  sent: string[];
+  sent: string[]
   /** Lista de e-mails que falharam com detalhes do erro. */
-  failed: SendEmailResponseFailedItem[];
+  failed: SendEmailResponseFailedItem[]
 }

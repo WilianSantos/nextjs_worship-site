@@ -8,5 +8,5 @@
 
 export type PraiseSlidesGeneratorCreateBody = {
   /** ID da playlist cujas músicas serão usadas para gerar os slides */
-  playlist_id: number;
-};
+  playlist_id: number
+}

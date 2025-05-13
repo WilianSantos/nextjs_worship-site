@@ -7,14 +7,14 @@
  */
 
 export interface PraiseLineupSerializers {
-  readonly id?: number;
-  readonly playlist_display?: string;
-  readonly playlist_link_display?: string;
-  readonly created_at?: string;
-  readonly updated_at?: string;
-  lineup_date?: string;
+  readonly id?: number
+  readonly playlist_display?: string
+  readonly playlist_link_display?: string
+  readonly created_at?: string
+  readonly updated_at?: string
+  lineup_date?: string
   /** @maxLength 100 */
-  lineup_event?: string;
+  lineup_event?: string
   /** @nullable */
-  playlist?: number | null;
+  playlist?: number | null
 }

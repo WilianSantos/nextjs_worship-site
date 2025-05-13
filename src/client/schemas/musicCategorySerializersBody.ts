@@ -5,6 +5,6 @@
  * Organizador das musicas e gerenciamento de escalações do louvor da igreja
  * OpenAPI spec version: v1
  */
-import type { MusicCategorySerializers } from './musicCategorySerializers';
+import type { MusicCategorySerializers } from './musicCategorySerializers'
 
-export type MusicCategorySerializersBody = MusicCategorySerializers;
+export type MusicCategorySerializersBody = MusicCategorySerializers

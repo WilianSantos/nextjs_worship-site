@@ -5,13 +5,13 @@
  * Organizador das musicas e gerenciamento de escalações do louvor da igreja
  * OpenAPI spec version: v1
  */
-import type { PraiseLineupSerializers } from './praiseLineupSerializers';
+import type { PraiseLineupSerializers } from './praiseLineupSerializers'
 
 export type PraisePraiseLineupList200 = {
-  count: number;
+  count: number
   /** @nullable */
-  next?: string | null;
+  next?: string | null
   /** @nullable */
-  previous?: string | null;
-  results: PraiseLineupSerializers[];
-};
+  previous?: string | null
+  results: PraiseLineupSerializers[]
+}

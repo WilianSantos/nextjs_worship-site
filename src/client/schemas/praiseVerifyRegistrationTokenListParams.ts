@@ -7,8 +7,8 @@
  */
 
 export type PraiseVerifyRegistrationTokenListParams = {
-/**
- * Token de verificação recebido por e-mail
- */
-token: string;
-};
+  /**
+   * Token de verificação recebido por e-mail
+   */
+  token: string
+}

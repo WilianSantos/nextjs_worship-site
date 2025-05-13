@@ -5,8 +5,8 @@
  * Organizador das musicas e gerenciamento de escalações do louvor da igreja
  * OpenAPI spec version: v1
  */
-import type { PraiseMemberMostEscalatedList200TopMembersItem } from './praiseMemberMostEscalatedList200TopMembersItem';
+import type { PraiseMemberMostEscalatedList200TopMembersItem } from './praiseMemberMostEscalatedList200TopMembersItem'
 
 export type PraiseMemberMostEscalatedList200 = {
-  top_members?: PraiseMemberMostEscalatedList200TopMembersItem[];
-};
+  top_members?: PraiseMemberMostEscalatedList200TopMembersItem[]
+}
