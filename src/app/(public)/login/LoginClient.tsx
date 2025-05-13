@@ -49,7 +49,7 @@ export default function LoginClient() {
 
         {shouldShowLoginForm && <LoginForm />}
 
-        {shouldShowChangePassword && (
+        {shouldShowChangePassword && reset_token && (
           <ChangePasswordTokenForm
             setIsValid={() => setIsValid(false)}
             setMessageSuccess={setMessageSuccess}
