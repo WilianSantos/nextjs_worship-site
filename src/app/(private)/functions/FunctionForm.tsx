@@ -60,8 +60,9 @@ export const FunctionForm = ({
               setMessageSuccess('Função atualizada com sucesso.')
             },
             onError: (error) => {
+              const err = error as { function_name?: string }
               formik.setErrors({
-                functionName: error?.function_name
+                functionName: err?.function_name
               })
             }
           }

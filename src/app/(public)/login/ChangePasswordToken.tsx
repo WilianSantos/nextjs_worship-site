@@ -63,6 +63,15 @@ export function ChangePasswordTokenForm({
           onSuccess: () => {
             setMessageSuccess('Senha alterada com sucesso')
             setIsValid()
+          },
+          onError(error) {
+            const err = error as { new_password?: string; token?: string }
+            formik.setErrors({
+              newPassword: err.new_password || ''
+            })
+            if (err.token) {
+              alert(`${err.token}`)
+            }
           }
         }
       )
