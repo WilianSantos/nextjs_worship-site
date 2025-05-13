@@ -31,16 +31,17 @@ export const customFetcher = async <T>(
   }
 
   const contentType = res.headers.get('content-type')
-  if (contentType?.includes('application/json')) {
-    const json = await res.json()
+
+  if (res.status === 204 || !contentType?.includes('application/json')) {
     return {
-      data: json as T,
+      data: undefined as T,
       status: res.status
     }
   }
 
+  const json = await res.json()
   return {
-    data: res as unknown as T,
+    data: json as T,
     status: res.status
   }
 }
