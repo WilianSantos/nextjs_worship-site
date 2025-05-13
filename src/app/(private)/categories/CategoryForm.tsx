@@ -74,8 +74,10 @@ export const CategoryForm = ({
               setMessageSuccess('Categoria criada com sucesso.')
             },
             onError: (error) => {
+              // corrigindo erro
+              const err = error as { category_name?: string }
               formik.setErrors({
-                categoryName: error?.category_name
+                categoryName: err.category_name || ''
               })
             }
           }
