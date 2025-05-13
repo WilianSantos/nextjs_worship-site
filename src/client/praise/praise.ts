@@ -2390,7 +2390,7 @@ export const praisePraiseLineupDelete = async (
  * Rota para registrar o usuário.
  */
 export type praiseRegisterUserCreateResponse201 = {
-  data: Message
+  data: SendEmailResponse
   status: 201
 }
 

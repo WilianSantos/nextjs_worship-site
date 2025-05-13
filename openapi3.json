@@ -45,7 +45,7 @@
         },
         "responses": {
           "201": {
-            "description": "",
+            "description": "Senha alterada",
             "content": {
               "application/json": {
                 "schema": {
@@ -208,7 +208,7 @@
         "description": "Rota para realizar logout do usuário removendo os cookies de autenticação.",
         "responses": {
           "205": {
-            "description": "Logout realizado com sucesso",
+            "description": "Remoção dos cookies concluida",
             "content": {
               "application/json": {
                 "schema": {
@@ -228,7 +228,7 @@
         "description": "Rota para buscar membro logado.",
         "responses": {
           "200": {
-            "description": "",
+            "description": "Retorna os dados do membro",
             "content": {
               "application/json": {
                 "schema": {
@@ -1399,7 +1399,7 @@
         },
         "responses": {
           "201": {
-            "description": "",
+            "description": "Senha alterada",
             "content": {
               "application/json": {
                 "schema": {
@@ -2173,11 +2173,11 @@
         },
         "responses": {
           "201": {
-            "description": "",
+            "description": "Usuario criado",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Message"
+                  "$ref": "#/components/schemas/SendEmailResponse"
                 }
               }
             }
@@ -2203,7 +2203,7 @@
         },
         "responses": {
           "201": {
-            "description": "",
+            "description": "E-mail enviado",
             "content": {
               "application/json": {
                 "schema": {
@@ -2285,7 +2285,7 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "E-mails enviado",
             "content": {
               "application/json": {
                 "schema": {
@@ -3282,17 +3282,6 @@
           }
         }
       },
-      "RequestPasswordReset": {
-        "required": ["username"],
-        "type": "object",
-        "properties": {
-          "username": {
-            "title": "Username",
-            "type": "string",
-            "minLength": 1
-          }
-        }
-      },
       "SendEmailResponse": {
         "required": ["sent", "failed"],
         "type": "object",
@@ -3316,6 +3305,17 @@
                 "minLength": 1
               }
             }
+          }
+        }
+      },
+      "RequestPasswordReset": {
+        "required": ["username"],
+        "type": "object",
+        "properties": {
+          "username": {
+            "title": "Username",
+            "type": "string",
+            "minLength": 1
           }
         }
       },
