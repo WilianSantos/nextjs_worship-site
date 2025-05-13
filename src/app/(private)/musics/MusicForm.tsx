@@ -109,15 +109,27 @@ export function MusicForm({
               setMusicForm()
               setMessageSuccess('Musica atualizada com sucesso.')
             },
-            onError: (error: any) => {
+            onError: (error) => {
+              const err = error as {
+                author?: string
+                category?: string
+                music_chord?: string
+                music_link?: string
+                music_text?: string
+                music_title?: string
+                music_tone?: string
+              }
+
               const formikErrors: Record<string, string> = {}
-              if (error.author) formikErrors.author = error.author
-              if (error.category) formikErrors.category = error.category
-              if (error.music_chord) formikErrors.musicChord = error.music_chord
-              if (error.music_link) formikErrors.musicLink = error.music_link
-              if (error.music_text) formikErrors.musicText = error.music_text
-              if (error.music_title) formikErrors.musicTitle = error.music_title
-              if (error.music_tone) formikErrors.musicTone = error.music_tone
+
+              if (err.author) formikErrors.author = err.author
+              if (err.category) formikErrors.category = err.category
+              if (err.music_chord) formikErrors.musicChord = err.music_chord
+              if (err.music_link) formikErrors.musicLink = err.music_link
+              if (err.music_text) formikErrors.musicText = err.music_text
+              if (err.music_title) formikErrors.musicTitle = err.music_title
+              if (err.music_tone) formikErrors.musicTone = err.music_tone
+
               formik.setErrors(formikErrors)
             }
           }
@@ -130,15 +142,27 @@ export function MusicForm({
             setMusicForm()
             setMessageSuccess('Musica criada com sucesso.')
           },
-          onError: (error: any) => {
+          onError: (error) => {
+            const err = error as {
+              author?: string
+              category?: string
+              music_chord?: string
+              music_link?: string
+              music_text?: string
+              music_title?: string
+              music_tone?: string
+            }
+
             const formikErrors: Record<string, string> = {}
-            if (error.author) formikErrors.author = error.author
-            if (error.category) formikErrors.category = error.category
-            if (error.music_chord) formikErrors.musicChord = error.music_chord
-            if (error.music_link) formikErrors.musicLink = error.music_link
-            if (error.music_text) formikErrors.musicText = error.music_text
-            if (error.music_title) formikErrors.musicTitle = error.music_title
-            if (error.music_tone) formikErrors.musicTone = error.music_tone
+
+            if (err.author) formikErrors.author = err.author
+            if (err.category) formikErrors.category = err.category
+            if (err.music_chord) formikErrors.musicChord = err.music_chord
+            if (err.music_link) formikErrors.musicLink = err.music_link
+            if (err.music_text) formikErrors.musicText = err.music_text
+            if (err.music_title) formikErrors.musicTitle = err.music_title
+            if (err.music_tone) formikErrors.musicTone = err.music_tone
+
             formik.setErrors(formikErrors)
           }
         })
@@ -159,6 +183,7 @@ export function MusicForm({
         musicChord: music.music_chord?.map((chord) => chord.chord_name) || []
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [music])
 
   const handlePdfUpload = usePdfUpload(formik)

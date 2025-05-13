@@ -53,9 +53,10 @@ export const CategoryForm = ({
               queryClient.invalidateQueries({ queryKey: ['musicCategory'] })
               setMessageSuccess('Categoria atualizada com sucesso.')
             },
-            onError: (error: any) => {
+            onError: (error) => {
+              const err = error as { category_name?: string }
               formik.setErrors({
-                categoryName: error?.category_name || ''
+                categoryName: err.category_name || ''
               })
             }
           }

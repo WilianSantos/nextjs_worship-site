@@ -11,7 +11,6 @@ import {
   Briefcase,
   ListMusic,
   Calendar,
-  BarChart2,
   User,
   LogOut,
   Menu

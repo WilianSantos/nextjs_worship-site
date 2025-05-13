@@ -62,22 +62,28 @@ export function RegisterForm({ email, token }: RegisterFormProps) {
               alert('Úsuario Cadastrado, faça o login.')
               router.push('/login')
             },
-            onError: (error: any) => {
-              const data = error
-              if (data) {
-                formik.setErrors({
-                  firstName: data?.first_name,
-                  lastName: data?.last_name,
-                  username: data?.username,
-                  email: data?.email,
-                  password: data?.password,
-                  cellPhone: data?.cell_phone,
-                  name: data?.name
-                })
-                if (data.detail) setMessageError(`${data.detail}`)
-
-                if (data.message) setMessageError(`${data.message}`)
+            onError: (error) => {
+              const err = error as {
+                detail?: string
+                first_name?: string
+                last_name?: string
+                username?: string
+                email?: string
+                password?: string
+                cell_phone?: string
+                name?: string
               }
+
+              formik.setErrors({
+                firstName: err?.first_name,
+                lastName: err?.last_name,
+                username: err?.username,
+                email: err?.email,
+                password: err?.password,
+                cellPhone: err?.cell_phone,
+                name: err?.name
+              })
+              if (err.detail) setMessageError(`${err.detail}`)
             }
           }
         )

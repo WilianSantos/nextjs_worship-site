@@ -3,8 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Music, Users, ListMusic, Calendar } from 'lucide-react'
 import { BarChart } from '@/components/charts/bar-chart'
 import { PieChart } from '@/components/charts/pie-chart'
-import { RecentEvents } from '@/components/recent-events'
-import { UpcomingSchedules } from '@/components/upcoming-schedules'
+
 import { useGetTotalScale } from '@/services/hooks/scale/useGetTotalScale'
 import { useGetMemberMostEscalatedList } from '@/services/hooks/member/useGetMostEscalatedMembers'
 import { useGetTotalMember } from '@/services/hooks/member/useGetTotalMember'
@@ -109,12 +108,16 @@ export default function Dashboard() {
             <CardTitle>Músicas Mais Tocadas</CardTitle>
           </CardHeader>
           <CardContent>
-            <BarChart
-              data={mostPlayed?.map((item) => ({
-                name: `${item.music} - ${item.author}`,
-                value: item.total
-              }))}
-            />
+            {mostPlayed && mostPlayed.length > 0 ? (
+              <BarChart
+                data={mostPlayed.map((item) => ({
+                  name: `${item.music} - ${item.author}`,
+                  value: item.total
+                }))}
+              />
+            ) : (
+              <p className="text-sm ">Sem registros</p>
+            )}
           </CardContent>
         </Card>
 
@@ -123,12 +126,16 @@ export default function Dashboard() {
             <CardTitle>Membros Mais Escalados</CardTitle>
           </CardHeader>
           <CardContent>
-            <PieChart
-              data={mostEscalatedMember?.map((item) => ({
-                name: item.name,
-                value: item['total-member']
-              }))}
-            />
+            {mostEscalatedMember && mostEscalatedMember.length > 0 ? (
+              <PieChart
+                data={mostEscalatedMember?.map((item) => ({
+                  name: item.name,
+                  value: item['total-member']
+                }))}
+              />
+            ) : (
+              <p className="text-sm ">Sem registros</p>
+            )}
           </CardContent>
         </Card>
       </div>

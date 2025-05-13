@@ -40,16 +40,13 @@ export default function SendEmailForm({
 
             setSendEmailForm()
           },
-          onError: (error: any) => {
-            const data = error
-            if (data) {
-              formik.setErrors({
-                username: data?.username
-              })
-              if (data.detail) setMessageError(`${data.detail}`)
+          onError: (error) => {
+            const err = error as { detail?: string; username?: string }
 
-              if (data.message) setMessageError(`${data.message}`)
-            }
+            formik.setErrors({
+              username: err?.username
+            })
+            if (err.detail) setMessageError(`${err.detail}`)
           }
         }
       )

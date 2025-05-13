@@ -78,9 +78,10 @@ export const FunctionForm = ({
               queryClient.invalidateQueries({ queryKey: ['memberFunction'] })
               setMessageSuccess('Função criada com sucesso.')
             },
-            onError: (error: any) => {
+            onError: (error) => {
+              const err = error as { function_name?: string }
               formik.setErrors({
-                functionName: error?.function_name || ''
+                functionName: err.function_name || ''
               })
             }
           }

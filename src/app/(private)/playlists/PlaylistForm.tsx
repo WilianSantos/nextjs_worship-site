@@ -85,15 +85,21 @@ export const PlaylistForm = ({
         setMessageSuccess('Playlist salva com sucesso.')
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const onError = (error: any) => {
-        if (error?.playlist_name) {
-          formik.setErrors({ playlistName: error.playlist_name })
+        const err = error as {
+          playlist_name?: string
+          playlist_date?: string
+          music?: string
         }
-        if (error?.playlist_date) {
-          formik.setErrors({ playlistDate: error.playlist_date })
+        if (err?.playlist_name) {
+          formik.setErrors({ playlistName: err.playlist_name })
         }
-        if (error?.music) {
-          formik.setErrors({ music: error.music })
+        if (err?.playlist_date) {
+          formik.setErrors({ playlistDate: err.playlist_date })
+        }
+        if (err?.music) {
+          formik.setErrors({ music: err.music })
         }
       }
 

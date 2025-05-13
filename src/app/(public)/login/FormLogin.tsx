@@ -35,17 +35,18 @@ export default function LoginForm() {
           onSuccess: () => {
             router.push('/')
           },
-          onError: (error: any) => {
-            const data = error
-            if (data) {
-              formik.setErrors({
-                username: data?.username,
-                password: data?.password
-              })
-              if (data.detail) setMessageError(`${data.detail}`)
-
-              if (data.message) setMessageError(`${data.message}`)
+          onError: (error) => {
+            const err = error as {
+              username?: string
+              password?: string
+              detail?: string
             }
+
+            formik.setErrors({
+              username: err?.username,
+              password: err?.password
+            })
+            if (err.detail) setMessageError(`${err.detail}`)
           }
         }
       )

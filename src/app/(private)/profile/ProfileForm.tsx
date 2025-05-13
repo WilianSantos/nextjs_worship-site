@@ -79,20 +79,28 @@ export function ProfileForm({
     onSubmit: async (values) => {
       try {
         await onSubmit(values, functions)
-      } catch (error: any) {
-        const data = error
-        if (data) {
-          formik.setErrors({
-            firstName: data?.first_name,
-            lastName: data?.last_name,
-            username: data?.username,
-            email: data?.email,
-            function: data?.function,
-            cellPhone: data?.cell_phone,
-            profilePicture: data?.profile_picture,
-            name: data?.name
-          })
+      } catch (error) {
+        const err = error as {
+          first_name?: string
+          last_name?: string
+          username?: string
+          email?: string
+          function?: string
+          cell_phone?: string
+          profile_picture?: string
+          name?: string
         }
+
+        formik.setErrors({
+          firstName: err.first_name || '',
+          lastName: err.last_name || '',
+          username: err.username || '',
+          email: err.email || '',
+          function: err.function || '',
+          cellPhone: err.cell_phone || '',
+          profilePicture: err.profile_picture || '',
+          name: err.name || ''
+        })
       }
     }
   })

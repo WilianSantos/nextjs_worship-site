@@ -14,6 +14,6 @@ export function extractYouTubeId(url: string): string | null {
 
     return ''
   } catch (e) {
-    return ''
+    return `${e}`
   }
 }

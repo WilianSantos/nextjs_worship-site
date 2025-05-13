@@ -63,6 +63,16 @@ export function ChangePasswordForm({
           onSuccess: () => {
             setMessageSuccess('Senha alterada com sucesso')
             setChangePasswordForm()
+          },
+          onError(error) {
+            const err = error as {
+              new_password?: string
+              old_password?: string
+            }
+            formik.setErrors({
+              oldPassword: err.old_password || '',
+              newPassword: err.new_password || ''
+            })
           }
         }
       )

@@ -53,6 +53,7 @@ export const MemberForm = ({
           formik.resetForm()
           setMemberForm()
         },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onError: (error: any) => {
           setMessageError(`${error.message}` || `${error.detail}`)
         }
