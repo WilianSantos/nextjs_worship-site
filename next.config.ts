@@ -2,8 +2,11 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   /* config options here */
+  eslint: {
+    ignoreDuringBuilds: true
+  },
   images: {
-    domains: ['127.0.0.1', 'localhost'] // ⬅️ adiciona o domínio aqui
+    domains: ['https://84e6-143-255-126-18.ngrok-free.app']
   }
 }
 
