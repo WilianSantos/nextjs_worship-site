@@ -112,7 +112,7 @@ export default function Dashboard() {
               <BarChart
                 data={mostPlayed.map((item) => ({
                   name: `${item.music} - ${item.author}`,
-                  value: item.total
+                  value: item.total ?? 0 // se for undefined, usa 0
                 }))}
               />
             ) : (
@@ -129,8 +129,8 @@ export default function Dashboard() {
             {mostEscalatedMember && mostEscalatedMember.length > 0 ? (
               <PieChart
                 data={mostEscalatedMember?.map((item) => ({
-                  name: item.name,
-                  value: item['total-member']
+                  name: item.name ?? '',
+                  value: item['total-member'] ?? 0
                 }))}
               />
             ) : (
