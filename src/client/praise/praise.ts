@@ -61,13 +61,13 @@ import type {
   PraisePraiseLineupList200,
   PraisePraiseLineupListParams,
   PraiseScaleHistoryList200,
+  PraiseSendRegistrationEmailCreateParams,
   PraiseSlidesGeneratorCreateBody,
   PraiseUserList200,
   PraiseUserListParams,
   PraiseVerifyRegistrationTokenListParams,
   RegisterUser,
   RequestPasswordReset,
-  SendEmail,
   SendEmailResponse,
   TokenVerification,
   UserSerializers,
@@ -84,14 +84,8 @@ export type praiseChangePasswordCreateResponse201 = {
   status: 201
 }
 
-export type praiseChangePasswordCreateResponse400 = {
-  data: Message
-  status: 400
-}
-
 export type praiseChangePasswordCreateResponseComposite =
-  | praiseChangePasswordCreateResponse201
-  | praiseChangePasswordCreateResponse400
+  praiseChangePasswordCreateResponse201
 
 export type praiseChangePasswordCreateResponse =
   praiseChangePasswordCreateResponseComposite & {
@@ -354,14 +348,7 @@ export type praiseMeListResponse200 = {
   status: 200
 }
 
-export type praiseMeListResponse404 = {
-  data: Message
-  status: 404
-}
-
-export type praiseMeListResponseComposite =
-  | praiseMeListResponse200
-  | praiseMeListResponse404
+export type praiseMeListResponseComposite = praiseMeListResponse200
 
 export type praiseMeListResponse = praiseMeListResponseComposite & {
   headers: Headers
@@ -1547,14 +1534,8 @@ export type praiseMusicUploadPdfResponse200 = {
   status: 200
 }
 
-export type praiseMusicUploadPdfResponse400 = {
-  data: Message
-  status: 400
-}
-
 export type praiseMusicUploadPdfResponseComposite =
-  | praiseMusicUploadPdfResponse200
-  | praiseMusicUploadPdfResponse400
+  praiseMusicUploadPdfResponse200
 
 export type praiseMusicUploadPdfResponse =
   praiseMusicUploadPdfResponseComposite & {
@@ -1701,14 +1682,8 @@ export type praisePasswordResetCreateResponse201 = {
   status: 201
 }
 
-export type praisePasswordResetCreateResponse400 = {
-  data: Message
-  status: 400
-}
-
 export type praisePasswordResetCreateResponseComposite =
-  | praisePasswordResetCreateResponse201
-  | praisePasswordResetCreateResponse400
+  praisePasswordResetCreateResponse201
 
 export type praisePasswordResetCreateResponse =
   praisePasswordResetCreateResponseComposite & {
@@ -2419,14 +2394,8 @@ export type praiseRegisterUserCreateResponse201 = {
   status: 201
 }
 
-export type praiseRegisterUserCreateResponse400 = {
-  data: Message
-  status: 400
-}
-
 export type praiseRegisterUserCreateResponseComposite =
-  | praiseRegisterUserCreateResponse201
-  | praiseRegisterUserCreateResponse400
+  praiseRegisterUserCreateResponse201
 
 export type praiseRegisterUserCreateResponse =
   praiseRegisterUserCreateResponseComposite & {
@@ -2460,14 +2429,8 @@ export type praiseRequestPasswordResetCreateResponse201 = {
   status: 201
 }
 
-export type praiseRequestPasswordResetCreateResponse400 = {
-  data: Message
-  status: 400
-}
-
 export type praiseRequestPasswordResetCreateResponseComposite =
-  | praiseRequestPasswordResetCreateResponse201
-  | praiseRequestPasswordResetCreateResponse400
+  praiseRequestPasswordResetCreateResponse201
 
 export type praiseRequestPasswordResetCreateResponse =
   praiseRequestPasswordResetCreateResponseComposite & {
@@ -2534,35 +2497,41 @@ export type praiseSendRegistrationEmailCreateResponse200 = {
   status: 200
 }
 
-export type praiseSendRegistrationEmailCreateResponse400 = {
-  data: Message
-  status: 400
-}
-
 export type praiseSendRegistrationEmailCreateResponseComposite =
-  | praiseSendRegistrationEmailCreateResponse200
-  | praiseSendRegistrationEmailCreateResponse400
+  praiseSendRegistrationEmailCreateResponse200
 
 export type praiseSendRegistrationEmailCreateResponse =
   praiseSendRegistrationEmailCreateResponseComposite & {
     headers: Headers
   }
 
-export const getPraiseSendRegistrationEmailCreateUrl = () => {
-  return `/praise/send-registration-email/`
+export const getPraiseSendRegistrationEmailCreateUrl = (
+  params: PraiseSendRegistrationEmailCreateParams
+) => {
+  const normalizedParams = new URLSearchParams()
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  })
+
+  const stringifiedParams = normalizedParams.toString()
+
+  return stringifiedParams.length > 0
+    ? `/praise/send-registration-email/?${stringifiedParams}`
+    : `/praise/send-registration-email/`
 }
 
 export const praiseSendRegistrationEmailCreate = async (
-  sendEmail: SendEmail,
+  params: PraiseSendRegistrationEmailCreateParams,
   options?: RequestInit
 ): Promise<praiseSendRegistrationEmailCreateResponse> => {
   return customFetcher<praiseSendRegistrationEmailCreateResponse>(
-    getPraiseSendRegistrationEmailCreateUrl(),
+    getPraiseSendRegistrationEmailCreateUrl(params),
     {
       ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(sendEmail)
+      method: 'POST'
     }
   )
 }
@@ -2575,14 +2544,8 @@ export type praiseSlidesGeneratorCreateResponse200 = {
   status: 200
 }
 
-export type praiseSlidesGeneratorCreateResponse400 = {
-  data: Message
-  status: 400
-}
-
 export type praiseSlidesGeneratorCreateResponseComposite =
-  | praiseSlidesGeneratorCreateResponse200
-  | praiseSlidesGeneratorCreateResponse400
+  praiseSlidesGeneratorCreateResponse200
 
 export type praiseSlidesGeneratorCreateResponse =
   praiseSlidesGeneratorCreateResponseComposite & {
@@ -2792,14 +2755,8 @@ export type praiseVerifyRegistrationTokenListResponse200 = {
   status: 200
 }
 
-export type praiseVerifyRegistrationTokenListResponse400 = {
-  data: Message
-  status: 400
-}
-
 export type praiseVerifyRegistrationTokenListResponseComposite =
-  | praiseVerifyRegistrationTokenListResponse200
-  | praiseVerifyRegistrationTokenListResponse400
+  praiseVerifyRegistrationTokenListResponse200
 
 export type praiseVerifyRegistrationTokenListResponse =
   praiseVerifyRegistrationTokenListResponseComposite & {

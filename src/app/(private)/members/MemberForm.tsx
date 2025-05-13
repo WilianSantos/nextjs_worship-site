@@ -28,7 +28,7 @@ export const MemberForm = ({
   const [emailList, setEmailList] = useState<string[]>([])
   const [messageError, setMessageError] = useState<string>('')
 
-  const { mutate, isPending } = useCreateEmail()
+  const { mutate, isPending, data } = useCreateEmail()
 
   const formik = useFormik({
     initialValues: { email: '' },
@@ -42,12 +42,15 @@ export const MemberForm = ({
       {
         onSuccess: (responseData) => {
           setMessageSuccess(
-            `Os e-mails ${responseData?.sent.map((item) => `${item}, `)}foram enviados com sucesso.`
+            `Os e-mails ${responseData.data.sent.map((item) => `${item}, `)}foram enviados com sucesso.`
           )
 
-          if (responseData?.failed && responseData?.failed.length > 0) {
+          if (
+            responseData?.data.failed &&
+            responseData?.data.failed.length > 0
+          ) {
             setErrorPage(
-              `Os e-mails ${responseData?.failed.map((item) => `${item.email}, ocorreu o seguinte erro: ${item.detail}, `)}tente novamente.`
+              `Os e-mails ${responseData?.data.failed.map((item) => `${item.email}, ocorreu o seguinte erro: ${item.detail}, `)}tente novamente.`
             )
           }
 

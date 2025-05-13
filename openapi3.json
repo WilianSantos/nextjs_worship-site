@@ -53,16 +53,6 @@
                 }
               }
             }
-          },
-          "400": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Message"
-                }
-              }
-            }
           }
         },
         "tags": ["praise"]
@@ -243,16 +233,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/MemberMe"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Message"
                 }
               }
             }
@@ -1317,16 +1297,6 @@
                 }
               }
             }
-          },
-          "400": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Message"
-                }
-              }
-            }
           }
         },
         "tags": ["praise"]
@@ -1429,16 +1399,6 @@
         },
         "responses": {
           "201": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Message"
-                }
-              }
-            }
-          },
-          "400": {
             "description": "",
             "content": {
               "application/json": {
@@ -2221,16 +2181,6 @@
                 }
               }
             }
-          },
-          "400": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Message"
-                }
-              }
-            }
           }
         },
         "tags": ["praise"]
@@ -2253,16 +2203,6 @@
         },
         "responses": {
           "201": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Message"
-                }
-              }
-            }
-          },
-          "400": {
             "description": "",
             "content": {
               "application/json": {
@@ -2325,43 +2265,31 @@
         "operationId": "praise_send-registration-email_create",
         "summary": "Enviar convites por e-mail",
         "description": "Recebe uma lista de e-mails e envia convites personalizados com um link de registro.",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SendEmail"
+        "parameters": [
+          {
+            "name": "emails",
+            "in": "query",
+            "description": "Lista de e-mails para os quais o convite será enviado.",
+            "required": true,
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "email",
+                "minLength": 1
               }
             }
-          },
-          "required": true
-        },
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Convites enviados",
+            "description": "",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SendEmailResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Message"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Message"
                 }
               }
             }
@@ -2400,26 +2328,6 @@
                 "schema": {
                   "type": "string",
                   "format": "binary"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Message"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Message"
                 }
               }
             }
@@ -2632,16 +2540,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/TokenVerification"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Message"
                 }
               }
             }
@@ -3392,21 +3290,6 @@
             "title": "Username",
             "type": "string",
             "minLength": 1
-          }
-        }
-      },
-      "SendEmail": {
-        "required": ["emails"],
-        "type": "object",
-        "properties": {
-          "emails": {
-            "description": "Lista de e-mails para os quais o convite será enviado.",
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "email",
-              "minLength": 1
-            }
           }
         }
       },

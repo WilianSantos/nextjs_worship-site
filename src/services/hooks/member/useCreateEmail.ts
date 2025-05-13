@@ -6,11 +6,9 @@ export const useCreateEmail = () => {
   return useMutation({
     onError: () => {},
     onSuccess: () => {},
-    mutationFn: async (values: SendEmail) => {
-      const res = await praiseSendRegistrationEmailCreate({
+    mutationFn: (values: SendEmail) =>
+      praiseSendRegistrationEmailCreate({
         emails: values.emails
       })
-      return res.data
-    }
   })
 }
