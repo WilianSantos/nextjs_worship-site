@@ -1,5 +1,6 @@
 import { useCreatePdfUpload } from '@/services/hooks/music/useCreatePdfUpload'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function usePdfUpload(formik: any) {
   const { mutate: mutatePdfUpload } = useCreatePdfUpload()
 

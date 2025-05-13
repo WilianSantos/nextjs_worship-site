@@ -121,6 +121,7 @@ export const ScaleForm = ({
         }
         return acc
       },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       {} as Record<number, any>
     ) || {}
 
@@ -366,6 +367,7 @@ export const ScaleForm = ({
         formik.setFieldValue('members', updatedMembers)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.values.members.map((m) => m.member).join(',')])
 
   // Função para verificar se um campo específico tem erro
