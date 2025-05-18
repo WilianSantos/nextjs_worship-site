@@ -1,6 +1,6 @@
 const baseUrl =
   process.env.NEXT_PUBLIC_API_URL ||
-  'https://84e6-143-255-126-18.ngrok-free.app/api'
+  'https://api-gerenc-louvor.onrender.com/api'
 
 /**
  * Fetcher customizado que adapta a resposta para o formato esperado pela documentação da API

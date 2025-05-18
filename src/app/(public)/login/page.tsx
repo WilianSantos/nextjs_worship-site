@@ -49,7 +49,7 @@ export default function LoginPage() {
   const [isValid, setIsValid] = useState(false)
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-indigo-50">
+    <div className="min-h-screen flex items-center p-5 justify-center bg-indigo-50">
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900">

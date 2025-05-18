@@ -7,8 +7,9 @@ const nextConfig: NextConfig = {
   },
   images: {
     domains: [
-      'https://84e6-143-255-126-18.ngrok-free.app',
-      'http://localhost:8000'
+      'https://api-gerenc-louvor.onrender.com',
+      '127.0.0.1',
+      'localhost'
     ]
   }
 }
