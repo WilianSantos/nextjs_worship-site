@@ -18,7 +18,6 @@ export type valueForm = {
   username: string
   email: string
   function: (number | undefined)[]
-  profilePicture: File | null
   cellPhone: string
   name: string
   availability: boolean
@@ -87,7 +86,6 @@ export function ProfileForm({
           email?: string
           function?: string
           cell_phone?: string
-          profile_picture?: string
           name?: string
         }
 
@@ -98,7 +96,6 @@ export function ProfileForm({
           email: err.email || '',
           function: err.function || '',
           cellPhone: err.cell_phone || '',
-          profilePicture: err.profile_picture || '',
           name: err.name || ''
         })
       }
@@ -216,30 +213,6 @@ export function ProfileForm({
         )}
         {formik.errors.function && (
           <p className="text-red-500 text-sm">{formik.errors.function}</p>
-        )}
-      </div>
-
-      <div className="mb-4">
-        <label
-          htmlFor="profilePicture"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Foto de Perfil
-        </label>
-        <Input
-          type="file"
-          id="profilePicture"
-          name="profilePicture"
-          className="w-full cursor-pointer"
-          onChange={(event) =>
-            formik.setFieldValue(
-              'profilePicture',
-              event.currentTarget.files?.[0] || null
-            )
-          }
-        />
-        {formik.errors.profilePicture && (
-          <p className="text-red-500 text-sm">{formik.errors.profilePicture}</p>
         )}
       </div>
 

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 import { Search, Check, X, User } from 'lucide-react'
 
 import { Input } from '@/components/ui/input'
@@ -101,17 +100,8 @@ export default function MembersPage() {
                     <TableRow key={member.id}>
                       <TableCell>
                         <div className="flex items-center gap-3">
-                          {member.profile_picture ? (
-                            <Image
-                              src={member.profile_picture}
-                              alt={member.name}
-                              width={60}
-                              height={60}
-                              className="rounded-full object-cover w-10 h-10"
-                            />
-                          ) : (
-                            <User size={16} className="w-10 h-10" />
-                          )}
+                          <User size={16} className="w-10 h-10" />
+
                           <span className="font-medium">{member.name}</span>
                         </div>
                       </TableCell>
@@ -159,17 +149,8 @@ export default function MembersPage() {
                     <TableRow key={member.id}>
                       <TableCell>
                         <div className="flex items-center gap-3">
-                          {member.profile_picture ? (
-                            <Image
-                              src={member.profile_picture}
-                              alt={member.name}
-                              width={60}
-                              height={60}
-                              className="rounded-full object-cover w-10 h-10"
-                            />
-                          ) : (
-                            <User size={16} className="w-10 h-10" />
-                          )}
+                          <User size={16} className="w-10 h-10" />
+
                           <span className="font-medium">{member.name}</span>
                         </div>
                       </TableCell>

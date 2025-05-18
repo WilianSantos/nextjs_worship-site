@@ -15,7 +15,6 @@ export type PraiseMemberCreateBody = {
   availability?: boolean;
   /** @maxLength 14 */
   cell_phone?: string;
-  profile_picture?: Blob;
   user: number;
   function?: number[];
 };

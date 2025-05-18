@@ -642,9 +642,6 @@ if(praiseMemberCreateBody.availability !== undefined) {
 if(praiseMemberCreateBody.cell_phone !== undefined) {
  formData.append(`cell_phone`, praiseMemberCreateBody.cell_phone)
  }
-if(praiseMemberCreateBody.profile_picture !== undefined) {
- formData.append(`profile_picture`, praiseMemberCreateBody.profile_picture)
- }
 formData.append(`user`, praiseMemberCreateBody.user.toString())
 if(praiseMemberCreateBody.function !== undefined) {
  praiseMemberCreateBody.function.forEach(value => formData.append(`function`, value.toString()));
@@ -796,9 +793,6 @@ if(praiseMemberCreateBody.availability !== undefined) {
 if(praiseMemberCreateBody.cell_phone !== undefined) {
  formData.append(`cell_phone`, praiseMemberCreateBody.cell_phone)
  }
-if(praiseMemberCreateBody.profile_picture !== undefined) {
- formData.append(`profile_picture`, praiseMemberCreateBody.profile_picture)
- }
 formData.append(`user`, praiseMemberCreateBody.user.toString())
 if(praiseMemberCreateBody.function !== undefined) {
  praiseMemberCreateBody.function.forEach(value => formData.append(`function`, value.toString()));
@@ -843,9 +837,6 @@ if(praiseMemberCreateBody.availability !== undefined) {
  }
 if(praiseMemberCreateBody.cell_phone !== undefined) {
  formData.append(`cell_phone`, praiseMemberCreateBody.cell_phone)
- }
-if(praiseMemberCreateBody.profile_picture !== undefined) {
- formData.append(`profile_picture`, praiseMemberCreateBody.profile_picture)
  }
 formData.append(`user`, praiseMemberCreateBody.user.toString())
 if(praiseMemberCreateBody.function !== undefined) {

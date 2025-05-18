@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import {
   Home,
@@ -58,17 +57,7 @@ export function Sidebar() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center">
-                {member?.profile_picture ? (
-                  <Image
-                    src={member?.profile_picture} // coloque um fallback para evitar erro
-                    alt="Foto de perfil"
-                    width={60}
-                    height={60}
-                    className="rounded-full object-cover w-10 h-10"
-                  />
-                ) : (
-                  <User size={16} className="w-10 h-10" />
-                )}
+                <User size={16} className="w-10 h-10" />
               </div>
               <div>
                 <p className="text-sm font-medium">

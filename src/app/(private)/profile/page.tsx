@@ -1,5 +1,4 @@
 'use client'
-import Image from 'next/image'
 import { useState } from 'react'
 import { Mail, Phone, User } from 'lucide-react'
 import { useQueryClient } from '@tanstack/react-query'
@@ -62,8 +61,7 @@ export default function ProfilePage() {
           function: values.function.map((item) => Number(item)),
           cell_phone: values.cellPhone,
           name: values.name,
-          availability: values.availability,
-          profile_picture: values.profilePicture as File | string
+          availability: values.availability
         }
       },
       {
@@ -91,17 +89,7 @@ export default function ProfilePage() {
             <CardContent className="pt-6 ">
               <div className="flex flex-col items-center">
                 <div className="relative mb-4">
-                  {member?.profile_picture ? (
-                    <Image
-                      src={member.profile_picture}
-                      alt="Foto de perfil"
-                      width={100}
-                      height={100}
-                      className="rounded-full object-cover h-28 w-28"
-                    />
-                  ) : (
-                    <User className="h-24 w-24 text-indigo-600" />
-                  )}
+                  <User className="h-24 w-24 text-indigo-600" />
                 </div>
                 <h2 className="text-xl font-bold">{member?.name}</h2>
 

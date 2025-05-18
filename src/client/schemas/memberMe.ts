@@ -12,7 +12,6 @@ export interface MemberMe {
   readonly id?: number;
   user?: UserSerializers;
   readonly function?: readonly MemberFunctionsSerializers[];
-  readonly profile_picture?: string;
   readonly created_at?: string;
   readonly updated_at?: string;
   /**

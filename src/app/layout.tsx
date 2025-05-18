@@ -13,7 +13,10 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Sistema de Gestão do Ministério de Louvor',
   description:
-    'Sistema para gerenciamento de músicas, membros e escalas para ministério de louvor'
+    'Sistema para gerenciamento de músicas, membros e escalas para ministério de louvor',
+  icons: {
+    icon: '/favicon.png'
+  }
 }
 
 export default function RootLayout({

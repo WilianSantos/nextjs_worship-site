@@ -2738,49 +2738,6 @@
     ],
     "components": {
         "requestBodies": {
-            "praise_member_create": {
-                "content": {
-                    "multipart/form-data": {
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "name": {
-                                    "type": "string",
-                                    "minLength": 1,
-                                    "maxLength": 150
-                                },
-                                "availability": {
-                                    "type": "boolean"
-                                },
-                                "cell_phone": {
-                                    "type": "string",
-                                    "maxLength": 14
-                                },
-                                "profile_picture": {
-                                    "type": "string",
-                                    "format": "binary",
-                                    "x-nullable": true
-                                },
-                                "user": {
-                                    "type": "integer"
-                                },
-                                "function": {
-                                    "type": "array",
-                                    "uniqueItems": true,
-                                    "items": {
-                                        "type": "integer"
-                                    }
-                                }
-                            },
-                            "required": [
-                                "name",
-                                "user"
-                            ]
-                        }
-                    }
-                },
-                "required": true
-            },
             "MusicSerializers": {
                 "content": {
                     "application/json": {
@@ -2806,6 +2763,44 @@
                     "application/json": {
                         "schema": {
                             "$ref": "#/components/schemas/LineupMemberSerializers"
+                        }
+                    }
+                },
+                "required": true
+            },
+            "praise_member_create": {
+                "content": {
+                    "multipart/form-data": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 150
+                                },
+                                "availability": {
+                                    "type": "boolean"
+                                },
+                                "cell_phone": {
+                                    "type": "string",
+                                    "maxLength": 14
+                                },
+                                "user": {
+                                    "type": "integer"
+                                },
+                                "function": {
+                                    "type": "array",
+                                    "uniqueItems": true,
+                                    "items": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "name",
+                                "user"
+                            ]
                         }
                     }
                 },
@@ -3049,11 +3044,6 @@
                         },
                         "readOnly": true
                     },
-                    "profile_picture": {
-                        "title": "Profile picture",
-                        "type": "string",
-                        "readOnly": true
-                    },
                     "created_at": {
                         "title": "Created at",
                         "type": "string",
@@ -3121,13 +3111,6 @@
                         "title": "Cell phone",
                         "type": "string",
                         "maxLength": 14
-                    },
-                    "profile_picture": {
-                        "title": "Profile picture",
-                        "type": "string",
-                        "readOnly": true,
-                        "format": "uri",
-                        "nullable": true
                     },
                     "user": {
                         "title": "User",

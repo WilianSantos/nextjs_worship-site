@@ -18,8 +18,6 @@ export interface Member {
   availability?: boolean;
   /** @maxLength 14 */
   cell_phone?: string;
-  /** @nullable */
-  readonly profile_picture?: string | null;
   user: number;
   function?: number[];
 }
