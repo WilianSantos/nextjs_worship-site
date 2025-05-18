@@ -43,7 +43,7 @@ export function Sidebar() {
 
   return (
     <div
-      className="bg-purple-900 text-white lg:relative lg:flex lg:flex-col lg:h-screen lg:w-64
+      className="bg-purple-900 w-screen text-white lg:relative lg:flex lg:flex-col lg:h-screen lg:w-64
                   md:fixed md:top-0 md:left-0 md:w-screen md:p-5 md:items-center md:z-10
                   sm:fixed sm:top-0 sm:left-0 sm:w-screen sm:p-5 sm:items-center sm:z-10
                 "
