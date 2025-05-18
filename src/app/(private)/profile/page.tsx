@@ -36,7 +36,6 @@ export default function ProfilePage() {
     username: member?.user?.username || '',
     email: member?.user?.email || '',
     function: member?.function?.map((item) => item.id) || [],
-    profilePicture: member?.profile_picture as unknown as File | null,
     cellPhone: member?.cell_phone || '',
     name: member?.name || '',
     availability: member?.availability || false
