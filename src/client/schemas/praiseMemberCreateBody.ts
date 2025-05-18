@@ -11,11 +11,11 @@ export type PraiseMemberCreateBody = {
    * @minLength 1
    * @maxLength 150
    */
-  name: string
-  availability?: boolean
+  name: string;
+  availability?: boolean;
   /** @maxLength 14 */
-  cell_phone?: string
-  profile_picture?: Blob
-  user: number
-  function?: number[]
-}
+  cell_phone?: string;
+  profile_picture?: Blob;
+  user: number;
+  function?: number[];
+};

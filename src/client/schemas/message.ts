@@ -11,5 +11,5 @@ export interface Message {
    * Mensagem de informação
    * @minLength 1
    */
-  detail: string
+  detail: string;
 }

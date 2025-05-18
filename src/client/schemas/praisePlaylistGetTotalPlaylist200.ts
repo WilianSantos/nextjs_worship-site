@@ -7,5 +7,5 @@
  */
 
 export type PraisePlaylistGetTotalPlaylist200 = {
-  total?: number
-}
+  total?: number;
+};

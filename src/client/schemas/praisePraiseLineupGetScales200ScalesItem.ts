@@ -7,10 +7,10 @@
  */
 
 export type PraisePraiseLineupGetScales200ScalesItem = {
-  id?: number
-  lineup_event?: string
-  lineup_date?: string
-  playlist?: number
-  playlist_display?: string
-  playlist_link_display?: string[]
-}
+  id?: number;
+  lineup_event?: string;
+  lineup_date?: string;
+  playlist?: number;
+  playlist_display?: string;
+  playlist_link_display?: string[];
+};

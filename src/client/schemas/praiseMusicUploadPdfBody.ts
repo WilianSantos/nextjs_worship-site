@@ -7,5 +7,5 @@
  */
 
 export type PraiseMusicUploadPdfBody = {
-  file: Blob
-}
+  file: Blob;
+};

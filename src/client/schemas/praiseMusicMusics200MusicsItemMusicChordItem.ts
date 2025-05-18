@@ -7,8 +7,8 @@
  */
 
 export type PraiseMusicMusics200MusicsItemMusicChordItem = {
-  id?: number
-  chord_name?: string
+  id?: number;
+  chord_name?: string;
   /** @nullable */
-  chord_image?: string | null
-}
+  chord_image?: string | null;
+};

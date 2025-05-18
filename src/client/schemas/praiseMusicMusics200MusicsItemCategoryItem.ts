@@ -7,6 +7,6 @@
  */
 
 export type PraiseMusicMusics200MusicsItemCategoryItem = {
-  id?: number
-  category_name?: string
-}
+  id?: number;
+  category_name?: string;
+};

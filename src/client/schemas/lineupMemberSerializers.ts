@@ -7,18 +7,18 @@
  */
 
 export interface LineupMemberSerializers {
-  readonly id?: number
-  readonly member_display?: string
-  readonly function_display?: string
-  readonly created_at?: string
-  readonly updated_at?: string
+  readonly id?: number;
+  readonly member_display?: string;
+  readonly function_display?: string;
+  readonly created_at?: string;
+  readonly updated_at?: string;
   /** @maxLength 150 */
-  member_name_snapshot?: string
+  member_name_snapshot?: string;
   /** @maxLength 100 */
-  function_name_snapshot?: string
-  lineup: number
+  function_name_snapshot?: string;
+  lineup: number;
   /** @nullable */
-  member: number | null
+  member?: number | null;
   /** @nullable */
-  function: number | null
+  function?: number | null;
 }

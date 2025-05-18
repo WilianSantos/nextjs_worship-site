@@ -8,7 +8,7 @@
 
 export type PraiseMusicUploadPdf200 = {
   /** HTML formatado com as cifras extraídas do PDF, dentro de uma tag <pre>. */
-  html?: string
+  html?: string;
   /** Todas as cifras presentes no texto. */
-  chords?: string[]
-}
+  chords?: string[];
+};

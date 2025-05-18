@@ -7,7 +7,7 @@
  */
 
 export type PraiseMusicMostPlayedList200TopMusicsItem = {
-  music?: string
-  author?: string
-  total?: number
-}
+  music?: string;
+  author?: string;
+  total?: number;
+};

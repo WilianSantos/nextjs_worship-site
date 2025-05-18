@@ -60,7 +60,9 @@ export const MemberForm = ({
         },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onError: (error: any) => {
-          setMessageError(`${error.message}` || `${error.detail}`)
+          setMessageError(
+            `${error.message}` || `${error.detail}` || `${error.emails}`
+          )
         }
       }
     )

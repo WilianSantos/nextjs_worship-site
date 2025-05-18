@@ -7,6 +7,6 @@
  */
 
 export type PraiseMemberMostEscalatedList200TopMembersItem = {
-  name?: string
-  'total-member'?: number
-}
+  name?: string;
+  'total-member'?: number;
+};

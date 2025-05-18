@@ -7,5 +7,5 @@
  */
 
 export type PraiseMemberGetTotalMember200 = {
-  total?: number
-}
+  total?: number;
+};

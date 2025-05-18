@@ -7,9 +7,9 @@
  */
 
 export type PraisePlaylistGetPlaylists200PlaylistsItem = {
-  id?: number
-  playlist_name?: string
-  playlist_date?: string
-  music?: number[]
-  playlist_link_display?: string[]
-}
+  id?: number;
+  playlist_name?: string;
+  playlist_date?: string;
+  music?: number[];
+  playlist_link_display?: string[];
+};
