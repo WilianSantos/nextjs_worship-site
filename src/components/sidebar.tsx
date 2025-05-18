@@ -44,17 +44,17 @@ export function Sidebar() {
   return (
     <div className="bg-purple-900 w-full text-white gap-2 relative lg:flex lg:flex-col lg:h-screen lg:w-64 items-center">
       <div className="flex items-center justify-between w-full lg:flex-none">
-        <div className="p-1">
+        <div className="p-1 w-1/3">
           <h1 className="text-xl font-bold text-orange-400">Louvor</h1>
         </div>
         <div
           onClick={() => setMenuIsOpen(!menuIsOpen)}
-          className="lg:hidden cursor-pointer px-4 py-2"
+          className="lg:hidden w-1/3 cursor-pointer px-4 py-2"
         >
           <Menu size={40} />
         </div>
 
-        <div className="p-4 w-1/4 lg:border-t md:w-1/4 lg:w-full lg:border-purple-800 lg:absolute lg:bottom-0 lg:left-0 z-10">
+        <div className="p-4 w-1/3 lg:border-t md:w-1/3 lg:w-full lg:border-purple-800 lg:absolute lg:bottom-0 lg:left-0 z-10">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center">
