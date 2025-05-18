@@ -42,8 +42,8 @@ export function Sidebar() {
   const requestLogout = () => mutate()
 
   return (
-    <div className="bg-purple-900 text-white flex flex-col h-screen lg:w-64 w-full relative z-10 p-5">
-      <div className="flex items-center justify-between gap-2 w-full lg:flex-none">
+    <div className="bg-purple-900 w-full text-white justify-between gap-2 flex relative lg:flex lg:flex-col lg:h-screen lg:w-64 items-center">
+      <div className="flex items-center justify-between w-full lg:flex-none">
         <div className="p-1">
           <h1 className="text-xl font-bold text-orange-400">Louvor</h1>
         </div>
