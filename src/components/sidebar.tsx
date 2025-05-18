@@ -54,7 +54,7 @@ export function Sidebar() {
           <Menu size={40} />
         </div>
 
-        <div className="p-4 w-full lg:border-t md:w-full lg:w-full lg:border-purple-800 lg:absolute lg:bottom-0 lg:left-0 z-10">
+        <div className="p-4 w-1/4 lg:border-t md:w-1/4 lg:w-full lg:border-purple-800 lg:absolute lg:bottom-0 lg:left-0 z-10">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center">
