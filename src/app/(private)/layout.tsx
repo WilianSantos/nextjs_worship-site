@@ -27,7 +27,7 @@ export default function PrivateLayout({
   }
 
   return (
-    <div className="lg:flex md:flex sm:block h-screen">
+    <div className="lg:flex md:flex sm:block h-screen w-full overflow-x-hidden">
       <Sidebar />
       <main className="flex-1 overflow-auto">{children}</main>
     </div>
