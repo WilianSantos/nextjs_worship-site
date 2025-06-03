@@ -66,7 +66,7 @@ export function Sidebar() {
               </div>
             </div>
             <Link
-              href="/login"
+              href="/logins"
               onClick={requestLogout}
               className="p-2 rounded-md hover:bg-purple-800 transition-colors"
               aria-label="Sair"
