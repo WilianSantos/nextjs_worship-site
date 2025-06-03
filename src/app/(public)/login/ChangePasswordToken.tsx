@@ -2,6 +2,7 @@
 
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useRouter } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -34,17 +35,15 @@ const validationSchema = Yup.object({
 })
 
 type ChangePasswordTokenFormProps = {
-  setIsValid: () => void
-  setMessageSuccess: (message: string) => void
   reset_token: string
 }
 
 export function ChangePasswordTokenForm({
-  setIsValid,
-  setMessageSuccess,
   reset_token
 }: ChangePasswordTokenFormProps) {
   const { mutate, isPending } = useCreatePasswordToken()
+
+  const router = useRouter()
 
   const formik = useFormik({
     initialValues: {
@@ -61,8 +60,8 @@ export function ChangePasswordTokenForm({
         },
         {
           onSuccess: () => {
-            setMessageSuccess('Senha alterada com sucesso')
-            setIsValid()
+            alert('Senha atualizada, faça o login.')
+            router.push('/logins')
           },
           onError(error) {
             const err = error as { new_password?: string; token?: string }

@@ -18,7 +18,7 @@ export default function PrivateLayout({
   React.useEffect(() => {
     if (status == 'error') {
       alert('Usuário não autenticado faça o login')
-      router.push('/login')
+      router.push('/logins')
     }
   }, [isError, router, status])
 

@@ -59,8 +59,8 @@ export function RegisterForm({ email, token }: RegisterFormProps) {
           },
           {
             onSuccess: () => {
-              alert('Úsuario Cadastrado, faça o login.')
-              router.push('/login')
+              alert('Usuário Cadastrado, faça o login.')
+              router.push('/logins')
             },
             onError: (error) => {
               const err = error as {
