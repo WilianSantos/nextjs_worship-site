@@ -35,12 +35,6 @@ export default function ChangePassword() {
             Atualizar Senha
           </h2>
 
-          {messageSuccess && (
-            <p className="text-lg text-green-500 text-center">
-              {messageSuccess}
-            </p>
-          )}
-
           {isValid && <ChangePasswordTokenForm reset_token={reset_token} />}
         </div>
       </div>
