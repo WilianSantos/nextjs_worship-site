@@ -134,7 +134,7 @@ export function ChangePasswordTokenForm({
       <div className="flex justify-end mt-6 gap-2.5">
         <Button
           type="button"
-          onClick={setIsValid}
+          onClick={() => router.push('/logins')}
           className="bg-red-600 hover:bg-red-700 cursor-pointer"
         >
           Cancelar
