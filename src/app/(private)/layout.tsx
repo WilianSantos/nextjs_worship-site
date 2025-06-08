@@ -22,6 +22,7 @@ export default function PrivateLayout({
       },
       onError: () => {
         alert('Usuário não autenticado.')
+        router.push('/login')
       }
     })
   })
