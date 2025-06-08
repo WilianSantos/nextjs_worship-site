@@ -1,11 +1,10 @@
-import { useQuery } from '@tanstack/react-query'
-import { praiseMeList } from '@/client/praise/praise'
+import { useMutation } from '@tanstack/react-query'
+import { praiseCheckAuthCreate } from '@/client/praise/praise'
 
 export const useCheckAuth = () => {
-  return useQuery({
-    queryKey: ['auth'],
-    queryFn: () => praiseMeList(),
-    retry: false,
-    refetchOnWindowFocus: false
+  return useMutation({
+    onSuccess: () => {},
+    onError: () => {},
+    mutationFn: () => praiseCheckAuthCreate()
   })
 }

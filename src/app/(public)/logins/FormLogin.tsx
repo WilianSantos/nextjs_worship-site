@@ -10,10 +10,12 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
 import { useCreateToken } from '@/services/hooks/token/useCreateToken'
+import { useCheckAuth } from '@/services/hooks/token/useCheckAuth'
 
 export function LoginForm() {
   const [messageError, setMessageError] = useState<string | null>(null)
   const { mutate, isPending } = useCreateToken()
+  const { mutate: mutateCheckAuth } = useCheckAuth()
   const router = useRouter()
 
   const formik = useFormik({
@@ -33,7 +35,18 @@ export function LoginForm() {
         },
         {
           onSuccess: () => {
-            router.push('/')
+            mutateCheckAuth(undefined, {
+              onSuccess: () => {
+                router.push('/')
+              },
+              onError: (error) => {
+                const err = error as {
+                  detail?: string
+                }
+
+                if (err.detail) setMessageError(err.detail)
+              }
+            })
           },
           onError: (error) => {
             const err = error as {
