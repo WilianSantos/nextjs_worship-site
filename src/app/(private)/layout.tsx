@@ -25,7 +25,7 @@ export default function PrivateLayout({
         router.push('/login')
       }
     })
-  })
+  }, [])
 
   if (isPending) {
     return <Loader />
