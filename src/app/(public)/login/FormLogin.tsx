@@ -39,12 +39,8 @@ export function LoginForm() {
               onSuccess: () => {
                 router.push('/')
               },
-              onError: (error) => {
-                const err = error as {
-                  detail?: string
-                }
-
-                if (err.detail) setMessageError(err.detail)
+              onError: () => {
+                setMessageError('Problemas de autenticação')
               }
             })
           },

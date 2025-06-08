@@ -61,7 +61,7 @@ export function ChangePasswordTokenForm({
         {
           onSuccess: () => {
             alert('Senha atualizada, faça o login.')
-            router.push('/logins')
+            router.push('/login')
           },
           onError(error) {
             const err = error as { new_password?: string; token?: string }
@@ -134,7 +134,7 @@ export function ChangePasswordTokenForm({
       <div className="flex justify-end mt-6 gap-2.5">
         <Button
           type="button"
-          onClick={() => router.push('/logins')}
+          onClick={() => router.push('/login')}
           className="bg-red-600 hover:bg-red-700 cursor-pointer"
         >
           Cancelar
